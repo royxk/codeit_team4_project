@@ -36,7 +36,7 @@ const breakpoints = {
 
 const colors = {
   purple: {
-    100: "##F8F0FF",
+    100: "#F8F0FF",
     200: "#ECD9FF",
     300: "#DCB9FF",
     400: "#C894FD",
@@ -91,6 +91,7 @@ const theme = {
   breakpoints,
   fontSizes,
   lineHeights,
+  fontWeights,
 };
 
 export default theme;
