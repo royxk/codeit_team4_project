@@ -8,6 +8,7 @@ import Router from "./Router";
 const queryClient = new QueryClient();
 
 function App() {
+  console.log("App");
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>
