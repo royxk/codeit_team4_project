@@ -91,6 +91,7 @@ const theme = {
   breakpoints,
   fontSizes,
   lineHeights,
+  fontWeights,
 };
 
 export default theme;
