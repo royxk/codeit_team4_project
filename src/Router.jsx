@@ -5,7 +5,7 @@ import List from "./pages/List";
 import Papers from "./pages/Papers";
 import PaperEdit from "./pages/PaperEdit";
 import PaperCreate from "./pages/PaperCreate";
-import Test from "./components/Test";
+import Test from "./components/Input/Test";
 
 const Router = () => {
   return (
