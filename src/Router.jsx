@@ -17,6 +17,7 @@ const Router = () => {
         <Route path="/post/:id/edit" element={<PaperEdit />} />
         <Route path="/post/:id/message" element={<PaperCreate />} />
         <Route path="/papercreate" element={<PaperCreate />} />
+        <Route path="/test" element={<Test />} />
       </Routes>
     </BrowserRouter>
   );
