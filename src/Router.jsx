@@ -1,11 +1,10 @@
-import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import List from "./pages/List";
 import Papers from "./pages/Papers";
 import PaperEdit from "./pages/PaperEdit";
 import PaperCreate from "./pages/PaperCreate";
-import Test from "./components/Input/Test";
+import ButtonTest from "./components/core/Button/ButtonTest";
 
 const Router = () => {
   return (
@@ -16,7 +15,7 @@ const Router = () => {
         <Route path="/post/:id" element={<Papers />} />
         <Route path="/post/:id/edit" element={<PaperEdit />} />
         <Route path="/post/:id/message" element={<PaperCreate />} />
-        <Route path="/test" element={<Test />} />
+        <Route path="/test" element={<ButtonTest />} />
       </Routes>
     </BrowserRouter>
   );
