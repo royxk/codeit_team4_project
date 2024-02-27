@@ -3,15 +3,24 @@ import Input from "./Input";
 import styled from "styled-components";
 import { useState } from "react";
 import { getAllRecipients } from "../../apiFetcher/recipients/getAllRecipients";
+import { useEffect } from "react";
+import { postRecipient } from "../../apiFetcher/recipients/postRecipient";
 
 const Test = () => {
   const [formData, setFormData] = useState({
     team: "",
-    userName: "",
+    name: "",
     backgroundColor: "",
   });
 
   const [recipients, setRecipients] = useState([]); // [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17
+
+  // useEffect(() => {
+  //   const response = getAllRecipients().then((res) => {
+  //     console.log(res.data);
+  //     setRecipients(res.data.results);
+  //   });
+  // }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,15 +33,17 @@ const Test = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
+    const response = postRecipient(formData).then((res) => {
+      console.log(res.data);
+      return res.data;
+    });
   };
 
   const handleOnClick = () => {
-    getAllRecipients().then((res) => {
-      console.log("전체조회...");
+    const response = getAllRecipients().then((res) => {
       console.log(res.data);
-      console.log(res.status);
-      setRecipients(res.data);
+      setRecipients(res.data.results);
+      return res.data;
     });
   };
   return (
@@ -52,9 +63,9 @@ const Test = () => {
           <label htmlFor="name">Name:</label>
           <input
             type="text"
-            id="userName"
-            name="userName"
-            value={formData.userName}
+            id="name"
+            name="name"
+            value={formData.name}
             onChange={handleChange}
           />
         </div>
@@ -68,6 +79,7 @@ const Test = () => {
             onChange={handleChange}
           />
         </div>
+        <button type="submit">등록</button>
       </form>
       {/* <Input error={false} disabled={false} />
       <Input error={true} disabled={false} />
@@ -76,7 +88,7 @@ const Test = () => {
       {recipients.map((recipient) => {
         return (
           <div key={recipient.id}>
-            <p>{recipient.team}</p>
+            <p>{recipient.id}</p>
             <p>{recipient.name}</p>
             <p>{recipient.backgroundColor}</p>
           </div>

@@ -1,11 +1,23 @@
 import React from "react";
 import styled from "styled-components";
 
-const Input = ({ error, disabled }) => {
+const Input = ({
+  id,
+  name,
+  formData,
+  handleChange,
+  error,
+  disabled,
+  children,
+}) => {
   return (
     <S.Input
       type="text"
-      placeholder="Placeholder"
+      id={id}
+      name={name}
+      value={formData[name]}
+      onChange={handleChange}
+      placeholder={children}
       error={error}
       disabled={disabled}
     />
@@ -16,7 +28,7 @@ export default Input;
 
 const S = {
   Input: styled.input`
-    width: 320px;
+    width: 100%;
     height: 50px;
     border-radius: 8px;
     padding: 12px 16px;
