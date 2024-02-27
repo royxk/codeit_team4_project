@@ -1,16 +1,21 @@
 import styled from "styled-components";
 
-const Button = () => {
-  return <ButtonStyle>버튼</ButtonStyle>;
+const smallButton = () => {
+  return (
+    <div>
+      <PrimaryButton40>버튼</PrimaryButton40>
+    </div>
+  );
 };
 
-export default Button;
+export default smallButton;
 
-const ButtonStyle = styled.button`
+const PrimaryButton40 = styled.button`
   width: 100%;
   height: 40px;
-  border: 0px solid;
+  border: 2px solid;
   border-radius: 6px;
+  border-color: ${({ theme }) => theme.colors.purple[600]};
   padding: 7px 16px;
   gap: 10px;
   font-weight: ${({ theme }) => theme.fontWeights.regular};

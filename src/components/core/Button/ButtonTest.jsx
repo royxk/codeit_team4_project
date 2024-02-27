@@ -1,17 +1,19 @@
-import React from "react";
 import styled from "styled-components";
-import Button from "./Button";
+import BicButton from "./BicButton";
+import SmallButton from "./SmallButton";
+import CircleButton from "./CircleButton";
+import WhiteButton from "./WhiteButton";
 
 const ButtonTest = () => {
   return (
     <S.Container>
-      <Button>Test</Button>
-      {/* <SButton>HomePage</SButton> */}
+      <BicButton>Test</BicButton>
+      <SmallButton>Test</SmallButton>
+      <CircleButton>Test</CircleButton>
+      <WhiteButton>Test</WhiteButton>
     </S.Container>
   );
 };
-
-
 
 export default ButtonTest;
 
