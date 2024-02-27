@@ -7,9 +7,9 @@ function handleChange(e) {
   return;
 }
 
-const ColorButton = ({ color }) => {
+const ColorButton = ({ color, onClick }) => {
   return (
-    <S.Box onClick={handleChange} color={color}>
+    <S.Box onClick={onClick} color={color}>
       ColorButton
     </S.Box>
   );
