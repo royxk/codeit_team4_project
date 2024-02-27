@@ -1,17 +1,22 @@
 import React from "react";
 import styled from "styled-components";
+import CButton from "./circleButton";
+import SButton from "./SecondaryButton";
+import Button40 from "./Button40";
+import Button56 from "./Button56";
 import Button from "./Button";
 
 const ButtonTest = () => {
   return (
     <S.Container>
       <Button>Test</Button>
-      {/* <SButton>HomePage</SButton> */}
+      <Button40>Test</Button40>
+      <Button56>Test</Button56>
+      <CButton>Test</CButton>
+      <SButton>Test</SButton>
     </S.Container>
   );
 };
-
-
 
 export default ButtonTest;
 
