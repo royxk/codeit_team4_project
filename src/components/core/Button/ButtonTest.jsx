@@ -1,24 +1,23 @@
+import React from "react";
 import styled from "styled-components";
-import Button56 from "./Button56";
-import Button40 from "./Button40";
-import SButton from "./SecondaryButton";
-import CButton from "./circleButton";
+import Button from "./Button";
 
-const Home = () => {
+const ButtonTest = () => {
   return (
     <S.Container>
-      <Button40>HomePage</Button40>
-      <Button56>HomePage</Button56>
-      <SButton>HomePage</SButton>
-      <CButton>HomePage</CButton>
+      <Button>Test</Button>
+      {/* <SButton>HomePage</SButton> */}
     </S.Container>
   );
 };
 
-export default Home;
+
+
+export default ButtonTest;
 
 const S = {
   Container: styled.div`
+    width: 150px;
     display: flex;
     flex-direction: column;
     align-items: center;
