@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const SmallButton = () => {
+const smallButton = () => {
   return (
     <div>
       <PrimaryButton40>버튼</PrimaryButton40>
@@ -8,7 +8,7 @@ const SmallButton = () => {
   );
 };
 
-export default SmallButton;
+export default smallButton;
 
 const PrimaryButton40 = styled.button`
   width: 100%;
