@@ -8,17 +8,25 @@ import { postRecipient } from "./recipients/postRecipient.js";
 const data = {
   team: "team",
   name: "name",
-  backgroundColor: "blue",
+  backgroundColor: "green",
 };
 
-const response = getAllRecipients().then((res) => {
+getAllRecipients().then((res) => {
   console.log("전체조회...");
+  console.log(res.data);
+  console.log(res.status);
+  return res.data;
+});
+
+postRecipient(data).then((res) => {
+  console.log("등록...");
   console.log(res.data);
   return res.data;
 });
 
-// const responses = postRecipient(data).then((res) => {
-//   console.log("등록...");
+// const responses2 = deleteRecipient(2717).then((res) => {
+//   console.log("삭제...");
 //   console.log(res.data);
+//   console.log(res.status);
 //   return res.data;
 // });

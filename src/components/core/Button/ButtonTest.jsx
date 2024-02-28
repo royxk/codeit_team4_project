@@ -1,4 +1,5 @@
 import styled from "styled-components";
+
 import BicButton from "./BicButton";
 import SmallButton from "./SmallButton";
 import CircleButton from "./CircleButton";
@@ -11,6 +12,7 @@ const ButtonTest = () => {
       <SmallButton>Test</SmallButton>
       <CircleButton>Test</CircleButton>
       <WhiteButton>Test</WhiteButton>
+
     </S.Container>
   );
 };

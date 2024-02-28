@@ -5,6 +5,7 @@ import Papers from "./pages/Papers";
 import PaperEdit from "./pages/PaperEdit";
 import PaperCreate from "./pages/PaperCreate";
 import ButtonTest from "./components/core/Button/ButtonTest";
+import Test from "./components/Input/Test";
 
 const Router = () => {
   return (
@@ -15,7 +16,7 @@ const Router = () => {
         <Route path="/post/:id" element={<Papers />} />
         <Route path="/post/:id/edit" element={<PaperEdit />} />
         <Route path="/post/:id/message" element={<PaperCreate />} />
-        <Route path="/test" element={<ButtonTest />} />
+        <Route path="/papercreate" element={<PaperCreate />} />
       </Routes>
     </BrowserRouter>
   );
