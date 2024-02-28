@@ -15,12 +15,9 @@ const CARD_DATA_INIT = {
 };
 
 // eslint-disable-next-line react/prop-types
-function RollingPaper({ cardData = CARD_DATA_INIT, onClick }) {
-  const handlePaperClick = () => {
-    onClick();
-  };
+function RollingPaper({ cardData = CARD_DATA_INIT }) {
   return (
-    <S.CardContainer onClick={handlePaperClick}>
+    <S.CardContainer>
       <S.FlexColum>
         <div>
           <S.CardHeader>
