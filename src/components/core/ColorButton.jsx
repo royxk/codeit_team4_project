@@ -19,6 +19,7 @@ export default ColorButton;
 
 const S = {
   Box: styled.button`
+    border: none;
     width: 154px;
     display: flex;
     flex-direction: column;

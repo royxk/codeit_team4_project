@@ -5,8 +5,6 @@ import Papers from "./pages/Papers";
 import PaperEdit from "./pages/PaperEdit";
 import PaperCreate from "./pages/PaperCreate";
 
-import CardPurple from "./components/core/CardList/CardBlue";
-
 const Router = () => {
   return (
     <BrowserRouter>
@@ -17,7 +15,6 @@ const Router = () => {
         <Route path="/post/:id/edit" element={<PaperEdit />} />
         <Route path="/post/:id/message" element={<PaperCreate />} />
         <Route path="/PaperCreate" element={<PaperCreate />} />
-        <Route path="/test" element={<CardPurple />} />
       </Routes>
     </BrowserRouter>
   );
