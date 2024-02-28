@@ -1,28 +1,24 @@
 import styled from "styled-components";
 
-
-const BicButton = () => {
-
+const SmallButton = () => {
   return (
     <div>
-      <PrimaryButton56>버튼</PrimaryButton56>
+      <PrimaryButton40>버튼</PrimaryButton40>
     </div>
   );
 };
 
-export default BicButton;
+export default SmallButton;
 
-
-const PrimaryButton56 = styled.button`
+const PrimaryButton40 = styled.button`
   width: 100%;
-  height: 56px;
+  height: 40px;
   border: 2px solid;
-  border-radius: 12px;
-  padding: 14px 24px;
-  gap: 10px;
+  border-radius: 6px;
   border-color: ${({ theme }) => theme.colors.purple[600]};
-
-  font-weight: ${({ theme }) => theme.fontWeights.bold};
+  padding: 7px 16px;
+  gap: 10px;
+  font-weight: ${({ theme }) => theme.fontWeights.regular};
   background-color: ${({ theme }) => theme.colors.purple[600]};
   color: ${({ theme }) => theme.colors.white};
 
