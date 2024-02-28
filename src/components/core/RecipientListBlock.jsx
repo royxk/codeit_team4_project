@@ -4,7 +4,7 @@ function RecipientListBlock({data}) {
     let visibleState = [null, null, null].map((x, index) => {
         return index + 1 <= data.count;
     })
-    let remainedCount = (Math.max(data.count - 3, 0)).toString() + "+";
+    let remainedCount = (Math.min(data.count - 3, 99)).toString() + "+";
 
     console.log(data.count > 3);
 
