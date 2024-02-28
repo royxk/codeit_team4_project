@@ -5,8 +5,7 @@ import Papers from "./pages/Papers";
 import PaperEdit from "./pages/PaperEdit";
 import PaperCreate from "./pages/PaperCreate";
 
-import CardPurple from "./components/core/CardList/CardOrange";
-
+import CardPurple from "./components/core/CardList/CardBlue";
 
 const Router = () => {
   return (
@@ -19,7 +18,6 @@ const Router = () => {
         <Route path="/post/:id/message" element={<PaperCreate />} />
         <Route path="/PaperCreate" element={<PaperCreate />} />
         <Route path="/test" element={<CardPurple />} />
-
       </Routes>
     </BrowserRouter>
   );
