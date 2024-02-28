@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
+
 const BicButton = () => {
+
   return (
     <div>
       <PrimaryButton56>버튼</PrimaryButton56>
@@ -9,6 +11,7 @@ const BicButton = () => {
 };
 
 export default BicButton;
+
 
 const PrimaryButton56 = styled.button`
   width: 100%;

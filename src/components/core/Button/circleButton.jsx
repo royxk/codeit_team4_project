@@ -1,35 +1,54 @@
+import { useState } from "react";
 import styled from "styled-components";
+import enabled from "../../../assets/images/EnabledButtonImg.svg";
+import hover from "../../../assets/images/HoverButtonImg.svg";
+import disabled from "../../../assets/images/DisabledButtonImg.svg";
+import pressed from "../../../assets/images/PressedButtonImg.svg";
+import focus from "../../../assets/images/FocusButtonImg.svg";
 
-const CircleButton = styled.button`
-  width: 56px;
-  height: 56px;
-  border-radius: 100px;
-  border: 0px solid;
-  background-color: ${({ theme }) => theme.colors.grey[500]};
+const CircleButton = () => {
+  const [buttonState, setButtonState] = useState(enabled);
 
-  &:hover {
-    background-color: ${({ theme }) => theme.colors.grey[600]};
-  }
+  const handleButtonClick = () => {
+    setButtonState(pressed);
+  };
 
-  &:active {
-    background-color: ${({ theme }) => theme.colors.grey[700]};
-    border: 1px solid;
+  const handleMouseEnter = () => {
+    setButtonState(hover);
+  };
 
-    &:focus {
-      background-color: ${({ theme }) => theme.colors.grey[700]};
-      border: 1px solid;
-      border-color: ${({ theme }) => theme.colors.grey[800]};
-    }
+  const handleMouseLeave = () => {
+    setButtonState(enabled);
+  };
 
-    &:disabled {
-      background-color: ${({ theme }) => theme.colors.grey[300]};
-      cursor: not-allowed;
-    }
-  }
-`;
+  const handleFocus = () => {
+    setButtonState(focus);
+  };
 
-const CButton = () => {
-  return <CircleButton></CircleButton>;
+  const handleBlur = () => {
+    setButtonState(enabled);
+  };
+
+  return (
+    <div>
+      <ImageButton
+        onClick={handleButtonClick}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
+        disabled={buttonState === disabled}
+      >
+        <img src={buttonState} alt="buttonImg"></img>
+      </ImageButton>
+    </div>
+  );
 };
 
-export default CButton;
+const ImageButton = styled.button`
+  border: none;
+  background: none;
+  cursor: pointer;
+`;
+
+export default CircleButton;

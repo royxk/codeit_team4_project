@@ -2,7 +2,7 @@ import React from "react";
 import Input from "../components/Input/Input";
 import styled from "styled-components";
 import ColorButton from "../components/core/ColorButton";
-import Button from "../components/core/Button/Button";
+// import Button from "../components/core/Button/Button";
 import { useState } from "react";
 import theme from "../styles/theme";
 
