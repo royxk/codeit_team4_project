@@ -1,12 +1,14 @@
 import styled from "styled-components";
 
-const SButton = () => {
+const WhiteButton = () => {
   return (
     <div>
       <SecondaryButton>버튼</SecondaryButton>
     </div>
   );
 };
+
+export default WhiteButton;
 
 const SecondaryButton = styled.button`
   width: 100%;
@@ -44,5 +46,3 @@ const SecondaryButton = styled.button`
     }
   }
 `;
-
-export default SButton;
