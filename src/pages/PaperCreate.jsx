@@ -5,6 +5,8 @@ import ColorButton from "../components/core/ColorButton";
 import Button from "../components/core/Button/Button";
 import { useState } from "react";
 import theme from "../styles/theme";
+import { postRecipient } from "../apiFetcher/recipients/postRecipient";
+import { getAllRecipients } from "../apiFetcher/recipients/getAllRecipients";
 
 // TODO : formData를 저장하고 submitbutton을 눌렀을때 post요청을 보내는 로직을 작성해주세요.
 // TODO : data를 받아서 화면에 조회할 수 있는 버튼을 만들어서 확인 가능하게 등록된 함수가 확인 가능하게 하기.
@@ -12,9 +14,11 @@ import theme from "../styles/theme";
 const PaperCreate = () => {
   const [formData, setFormData] = useState({
     team: "4",
-    name: "",
-    backgroundColor: "",
+    name: "none",
+    backgroundColor: "green",
   });
+
+  const [recipients, setRecipients] = useState([]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -33,11 +37,27 @@ const PaperCreate = () => {
     }));
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const response = postRecipient(formData).then((res) => {
+      console.log(res.data);
+      return res.data;
+    });
+  };
+
+  const handleGetRecipients = () => {
+    const response = getAllRecipients().then((res) => {
+      console.log(res.data);
+      setRecipients(res.data.results);
+      return res.data;
+    });
+  };
+
   return (
     console.log(formData),
     (
       <S.PaperCreateContainer>
-        <form action="">
+        <form onSubmit={handleSubmit}>
           <S.InputContainer>
             <label htmlFor="">To.</label>
             <Input
@@ -55,7 +75,7 @@ const PaperCreate = () => {
           </div>
           <S.ColorButtonContainer>
             <ColorButton
-              onClick={handleColorChange("oragne")}
+              onClick={handleColorChange("beige")}
               color={theme.colors.orange[200]}
             />
             <ColorButton
@@ -71,8 +91,18 @@ const PaperCreate = () => {
               color={theme.colors.green[200]}
             />
           </S.ColorButtonContainer>
-          {/* <Button>등록</Button> */}
+          <button onClick={handleSubmit}>데이터추가</button>
         </form>
+        <button onClick={handleGetRecipients}>조회하기</button>
+        {recipients.map((recipient) => {
+          return (
+            <div key={recipient.id}>
+              <p>{recipient.id}</p>
+              <p>{recipient.name}</p>
+              <p>{recipient.backgroundColor}</p>
+            </div>
+          );
+        })}
       </S.PaperCreateContainer>
     )
   );
