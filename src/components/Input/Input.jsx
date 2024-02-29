@@ -32,7 +32,7 @@ const S = {
     height: 50px;
     border-radius: 8px;
     padding: 12px 16px;
-    border-color: ${({ theme }) => theme.colors.grey[200]};
+    border: 1px solid ${({ theme }) => theme.colors.grey[200]};
     margin: 10px 0;
 
     &:focus {
@@ -42,7 +42,7 @@ const S = {
     }
 
     &:active {
-      border-color: border-color: ${({ theme, error }) =>
+      border-color: ${({ theme, error }) =>
         error ? theme.colors.error : theme.colors.grey[700]};
     }
 
@@ -52,10 +52,10 @@ const S = {
     }
 
     &:disabled {
-        background-color: ${({ theme }) => theme.colors.grey[100]};
-        border-color: ${({ theme }) => theme.colors.grey[300]};
-        color: ${({ theme }) => theme.colors.grey[400]};
-        cursor: not-allowed;
-      }
+      background-color: ${({ theme }) => theme.colors.grey[100]};
+      border-color: ${({ theme }) => theme.colors.grey[300]};
+      color: ${({ theme }) => theme.colors.grey[400]};
+      cursor: not-allowed;
+    }
   `,
 };
