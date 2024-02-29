@@ -16,13 +16,13 @@ const S = {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 80px;
-    height: 28px;
+    width: 100px;
+    height: 35px;
     background-color: ${({ theme }) => theme.colors.purple[600]};
     border-radius: 50px;
   `,
   PointText: styled.div`
-    font-size: ${({ theme }) => theme.fontSizes.xxs};
+    font-size: ${({ theme }) => theme.fontSizes.xs};
     font-weight: ${({ theme }) => theme.fontWeights.bold};
     color: ${({ theme }) => theme.colors.white};
   `,
