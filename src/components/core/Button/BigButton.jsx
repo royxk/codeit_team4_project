@@ -12,7 +12,9 @@ const BigButton = (props) => {
 
 export default BigButton;
 
-const PrimaryButton56 = styled.button`
+const PrimaryButton56 = styled.button.attrs({
+  disabled: (props) => props.disabled,
+})`
   width: 100%;
   height: 56px;
   border: 2px solid;
