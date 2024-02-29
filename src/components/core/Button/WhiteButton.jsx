@@ -1,9 +1,11 @@
 import styled from "styled-components";
 
-const WhiteButton = () => {
+const WhiteButton = (props) => {
+  const text = props.text;
+
   return (
     <div>
-      <SecondaryButton>버튼</SecondaryButton>
+      <SecondaryButton>{text}</SecondaryButton>
     </div>
   );
 };

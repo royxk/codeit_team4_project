@@ -1,9 +1,11 @@
 import styled from "styled-components";
 
-const BigButton = () => {
+const BigButton = (props) => {
+  const text = props.text;
+
   return (
     <div>
-      <PrimaryButton56>버튼</PrimaryButton56>
+      <PrimaryButton56>{text}</PrimaryButton56>
     </div>
   );
 };

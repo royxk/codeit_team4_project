@@ -1,9 +1,11 @@
 import styled from "styled-components";
 
-const SmallButton = () => {
+const SmallButton = (props) => {
+  const text = props.text;
+
   return (
     <div>
-      <PrimaryButton40>버튼</PrimaryButton40>
+      <PrimaryButton40>{text}</PrimaryButton40>
     </div>
   );
 };
