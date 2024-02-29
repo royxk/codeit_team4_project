@@ -23,21 +23,21 @@ function RollingPaper({ cardData = CARD_DATA_INIT }) {
           <S.CardHeader>
             <S.FlexBox>
               <S.ProfileImg>
-                <img src={cardData.profileImageURL} alt="profile" />
+                <img src={cardData?.profileImageURL} alt="profile" />
               </S.ProfileImg>
               <S.FlexColum>
                 <S.Sender>
-                  From. <span>{cardData.sender}</span>
+                  From. <span>{cardData?.sender}</span>
                 </S.Sender>
                 <div>
-                  <RelationBadge relationship={cardData.relationship} />
+                  <RelationBadge relationship={cardData?.relationship} />
                 </div>
               </S.FlexColum>
             </S.FlexBox>
           </S.CardHeader>
-          <S.CardContent>{cardData.content}</S.CardContent>
+          <S.CardContent>{cardData?.content}</S.CardContent>
         </div>
-        <S.CreateAt>{cardData.createdAt.substring(0, 10)}</S.CreateAt>
+        <S.CreateAt>{cardData?.createdAt.substring(0, 10)}</S.CreateAt>
       </S.FlexColum>
     </S.CardContainer>
   );
@@ -66,7 +66,7 @@ const S = {
   `,
   CardContent: styled.div`
     width: 100%;
-    height: 65px;
+    height: 80px;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     overflow: hidden;

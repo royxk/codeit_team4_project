@@ -1,41 +1,52 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import theme from '../styles/theme';
 import RollingPaper from '../components/core/RollingPaper';
 import { media } from '../styles/utils/mediaQuery';
 import Modal from '../components/modal/Modal';
+import { getRecipientMessages } from '../apiFetcher/recipients/getRecipientMessages';
+
+const MODAL_INIT = {
+  open: false,
+  data: {},
+};
 
 function Papers() {
-  const [isModal, setIsModal] = useState(false);
-  const handlePaperCardClick = () => {
-    setIsModal(true);
+  const [ModalInfo, setModalInfo] = useState(MODAL_INIT);
+  const [paperList, setPaperList] = useState([]);
+  const { id } = useParams();
+
+  const handlePaperCardClick = (data) => {
+    setModalInfo({
+      open: true,
+      data: data,
+    });
   };
+
+  const handleGetPaperData = useCallback(async () => {
+    const response = await getRecipientMessages(id, 6);
+    const { next, count, results } = response.data;
+    setPaperList(results);
+  }, [id]);
+
   useEffect(() => {
-    setIsModal(false);
-  }, []);
+    handleGetPaperData();
+    setModalInfo(false);
+  }, [handleGetPaperData]);
   return (
     <>
-      {isModal && <Modal onClose={() => setIsModal(false)} />}
+      {ModalInfo.open && <Modal cardData={ModalInfo.data} onClose={() => setModalInfo(false)} />}
       <S.Container>
         <S.PaperList>
-          <div onClick={handlePaperCardClick}>
-            <RollingPaper />
-          </div>
-          <div onClick={handlePaperCardClick}>
-            <RollingPaper />
-          </div>
-          <div onClick={handlePaperCardClick}>
-            <RollingPaper />
-          </div>
-          <div onClick={handlePaperCardClick}>
-            <RollingPaper />
-          </div>
-          <div onClick={handlePaperCardClick}>
-            <RollingPaper />
-          </div>
-          <div onClick={handlePaperCardClick}>
-            <RollingPaper />
-          </div>
+          {paperList &&
+            paperList.map((data) => {
+              return (
+                <div key={data.id} onClick={() => handlePaperCardClick(data)}>
+                  <RollingPaper cardData={data} />
+                </div>
+              );
+            })}
         </S.PaperList>
       </S.Container>
     </>
