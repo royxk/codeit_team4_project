@@ -5,7 +5,7 @@ import ErrorTrash from "../../../assets/images/ErrorTrash.svg";
 const TrashButton = () => {
   return (
     <div>
-      <StyledTrashButton disabled>
+      <StyledTrashButton>
         <img src={Trash}></img>
       </StyledTrashButton>
     </div>
@@ -17,30 +17,29 @@ export default TrashButton;
 const StyledTrashButton = styled.button`
   width: 36px;
   height: 36px;
-  border: 1px solid;
+  border: 1px solid ${({ theme }) => theme.colors.grey[300]};
   border-radius: 6px;
   padding: 6px;
   gap: 10px;
-  background-color: rgba(255, 255, 255, 1);
-  border-color: rgba(204, 204, 204, 1);
+  background-color: ${({ theme }) => theme.colors.white};
 
   &:hover {
-    background-color: rgba(246, 246, 246, 1);
+    background-color: ${({ theme }) => theme.colors.grey[100]};
   }
 
   &:active {
-    background-color: rgba(246, 246, 246, 1);
-    border-color: rgba(204, 204, 204, 1);
+    background-color: ${({ theme }) => theme.colors.grey[100]};
+    border-color: ${({ theme }) => theme.colors.grey[300]};
 
     &:focus {
-      background-color: rgba(255, 255, 255, 1);
-      border-color: rgba(85, 85, 85, 1);
+      background-color: ${({ theme }) => theme.colors.white};
+      border-color: ${({ theme }) => theme.colors.grey[500]};
     }
 
     &:disabled {
-      background-color: rgba(204, 204, 204, 1);
-      border-color: rgba(204, 204, 204, 1);
-      color: rgba(255, 255, 255, 1);
+      background-color: ${({ theme }) => theme.colors.grey[300]};
+      border-color: ${({ theme }) => theme.colors.grey[300]};
+      color: ${({ theme }) => theme.colors.white};
       cursor: not-allowed;
       img {
         content: url(${ErrorTrash});

@@ -15,32 +15,31 @@ export default OutlinedButton56;
 const BlankButton56 = styled.button`
   width: 100%;
   height: 56px;
-  border: 1px solid;
+  border: 1px solid ${({ theme }) => theme.colors.grey[300]};
   border-radius: 12px;
   padding: 14px 16px;
   gap: 10px;
-  background-color: rgba(255, 255, 255, 1);
-  border-color: rgba(204, 204, 204, 1);
-  font-weight: ${({ theme }) => theme.fontWeights.bold};
-  color: rgba(24, 24, 24, 1);
+  background-color: ${({ theme }) => theme.colors.white};
+  font-weight: ${({ theme }) => theme.fontWeights.bold}
+  color: ${({ theme }) => theme.colors.grey[900]};
 
   &:hover {
-    background-color: rgba(246, 246, 246, 1);
+    background-color: ${({ theme }) => theme.colors.grey[100]};
   }
 
   &:active {
-    background-color: rgba(246, 246, 246, 1);
-    border-color: rgba(204, 204, 204, 1);
+    background-color: ${({ theme }) => theme.colors.grey[100]};
+    border-color: ${({ theme }) => theme.colors.grey[300]};
 
     &:focus {
-      background-color: rgba(255, 255, 255, 1);
-      border-color: rgba(85, 85, 85, 1);
+      background-color: ${({ theme }) => theme.colors.white};
+      border-color: ${({ theme }) => theme.colors.grey[500]};
     }
 
     &:disabled {
-      background-color: rgba(204, 204, 204, 1);
-      border-color: rgba(204, 204, 204, 1);
-      color: rgba(255, 255, 255, 1);
+      background-color: ${({ theme }) => theme.colors.grey[300]};
+      border-color: ${({ theme }) => theme.colors.grey[300]};
+      color: ${({ theme }) => theme.colors.white};
       cursor: not-allowed;
     }
   }
