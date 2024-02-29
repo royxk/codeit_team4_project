@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const smallButton = () => {
+const SmallButton = () => {
   return (
     <div>
       <PrimaryButton40>버튼</PrimaryButton40>
@@ -8,7 +8,7 @@ const smallButton = () => {
   );
 };
 
-export default smallButton;
+export default SmallButton;
 
 const PrimaryButton40 = styled.button`
   width: 100%;
@@ -21,21 +21,17 @@ const PrimaryButton40 = styled.button`
   font-weight: ${({ theme }) => theme.fontWeights.regular};
   background-color: ${({ theme }) => theme.colors.purple[600]};
   color: ${({ theme }) => theme.colors.white};
-
   &:hover {
     background-color: ${({ theme }) => theme.colors.purple[700]};
   }
-
   &:active {
     background-color: ${({ theme }) => theme.colors.purple[800]};
     border: 1px solid;
-
     &:focus {
       background-color: ${({ theme }) => theme.colors.purple[800]};
       border: 2px solid;
       border-color: ${({ theme }) => theme.colors.purple[900]};
     }
-
     &:disabled {
       background-color: ${({ theme }) => theme.colors.grey[100]};
       border-color: ${({ theme }) => theme.colors.grey[300]};
