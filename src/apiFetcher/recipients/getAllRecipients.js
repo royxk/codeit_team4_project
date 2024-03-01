@@ -1,9 +1,9 @@
 import customAxios from "../customAxios.js";
 
-export const getAllRecipients = async () => {
+export const getAllRecipients = async (limit = 8, offset = 0) => {
   return await customAxios({
     method: "get",
-    url: "/recipients/",
+    url: `/recipients/?limit=${limit}&offset=${offset}`,
     headers: {
       "Content-Type": "application/json",
     },
