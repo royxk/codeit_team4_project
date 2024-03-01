@@ -18,7 +18,7 @@ const PaperCreate = () => {
     team: "4",
     name: "",
     backgroundColor: "",
-    backgroundImageURL: "",
+    // backgroundImageURL: "",
   });
 
   const [recipients, setRecipients] = useState([]);
