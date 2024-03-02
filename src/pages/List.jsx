@@ -3,6 +3,7 @@ import CardBlue from "../components/core/CardList/CardBlue";
 import styled from "styled-components";
 import "swiper/css";
 import { getAllRecipients } from "../apiFetcher/recipients/getAllRecipients";
+import { Swiper, SwiperSlide } from "swiper/react";
 
 const List = () => {
   const [recipients, setRecipients] = useState([]);
@@ -18,7 +19,8 @@ const List = () => {
     });
   };
 
-  const fetchRecipients = async (totalRecipients) => {
+  const fetchRecipients = async () => {
+    getTotalRecipients();
     const response = getAllRecipients(totalRecipients).then((res) => {
       console.log("전체조회...");
       console.log(res.data.results.length);
@@ -28,37 +30,34 @@ const List = () => {
   };
 
   useEffect(() => {
-    getTotalRecipients();
     fetchRecipients(totalRecipients);
   }, []);
 
   return (
-    console.log(totalRecipients),
-    (
-      <div>
-        <S.CardsContainer>
-          {recipients.map((recipient) => (
-            <div key={recipient.key}>
-              <div>name :{recipient.name}</div>
-            </div>
-          ))}
-        </S.CardsContainer>
-      </div>
-    )
+    <Swiper spaceBetween={50} slidePerVide={1}>
+      <S.CardsContainer>
+        {recipients.map((recipient) => (
+          <SwiperSlide>
+            <S.Card>{recipient.name}</S.Card>
+          </SwiperSlide>
+        ))}
+      </S.CardsContainer>
+    </Swiper>
   );
 };
 
 export default List;
 
 const S = {
-  SliderContainer: styled.div`
-    overflow: hidden;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-  `,
   CardsContainer: styled.div`
     display: flex;
-    transition: transform 0.5s ease-in-out;
+    flex-wrap: wrap;
+    justify-content: start;
+    gap: 20px;
+  `,
+  Card: styled.div`
+    width: 100px;
+    height: 100px;
+    border: 1px solid black;
   `,
 };
