@@ -1,92 +1,65 @@
 // import React from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
+// // import { Swiper, SwiperSlide, Navigation } from "swiper/react";
+// import { Swiper, SwiperSlide } from "swiper/react";
+// import "swiper/css"; // core Swiper
+// import "swiper/css/navigation"; // Navigation module
 
-// const Carousel = ({ items, itemsPerPage }) => {
-//   const [currentIndex, setCurrentIndex] = React.useState(0);
-
-//   const next = () => {
-//     setCurrentIndex((prevIndex) =>
-//       prevIndex + itemsPerPage >= items.length ? 0 : prevIndex + itemsPerPage
-//     );
-//   };
-
-//   const prev = () => {
-//     setCurrentIndex((prevIndex) =>
-//       prevIndex - itemsPerPage < 0
-//         ? items.length - itemsPerPage
-//         : prevIndex - itemsPerPage
-//     );
-//   };
-
-//   const currentItems = items.slice(currentIndex, currentIndex + itemsPerPage);
-
+// export default function App() {
 //   return (
-//     <div>
-//       <S.CarouselContainer>
-//         {currentItems.map((item, index) => (
-//           <S.CarouselItem key={index}>{item}</S.CarouselItem>
-//         ))}
-//       </S.CarouselContainer>
-//       <button onClick={prev}>Prev</button>
-//       <button onClick={next}>Next</button>
-//     </div>
+//     <Swiper
+//       // install Swiper modules
+//       spaceBetween={50}
+//       // slidesPerView={3}
+//       // navigation={true} // Enable navigation
+//     >
+//       <SwiperSlide>Slide 1</SwiperSlide>
+//       <SwiperSlide>Slide 2</SwiperSlide>
+//       <SwiperSlide>Slide 3</SwiperSlide>
+//       <SwiperSlide>Slide 4</SwiperSlide>
+//       {/* Add more slides if needed */}
+//     </Swiper>
 //   );
-// };
+// }
 
-// const ListTest = () => {
-//   const items = [
-//     "Item 1",
-//     "Item 2",
-//     "Item 3",
-//     "Item 4",
-//     "Item 5",
-//     "Item 6",
-//     "Item 7",
-//     "Item 8",
-//   ]; // Example items
+import React from "react";
+import styled from "styled-components";
 
-//   return (
-//     <div className="App">
-//       <Carousel items={items} itemsPerPage={4} />
-//     </div>
-//   );
-// };
-// export default ListTest;
-
-// const S = {
-//   CarouselContainer: styled.div`
-//     display: flex;
-//     overflow: hidden;
-//     width: 100%;
-//   `,
-//   CarouselItem: styled.div`
-//     flex: 0 0 25%;
-//     text-align: center;
-//   `,
-// };
-
-// Import Swiper React components
-
-// Import Swiper styles
-import "swiper/css";
-
-export default () => {
+const ListTest = () => {
   return (
-    <Swiper
-      spaceBetween={50}
-      slidesPerView={4}
-      onSlideChange={() => console.log("slide change")}
-      onSwiper={(swiper) => console.log(swiper)}
-    >
-      <SwiperSlide>Slide 1</SwiperSlide>
-      <SwiperSlide>Slide 2</SwiperSlide>
-      <SwiperSlide>Slide 3</SwiperSlide>
-      <SwiperSlide>Slide 4</SwiperSlide>
-      <SwiperSlide>Slide 1</SwiperSlide>
-      <SwiperSlide>Slide 2</SwiperSlide>
-      <SwiperSlide>Slide 3</SwiperSlide>
-      <SwiperSlide>Slide 4</SwiperSlide>
-    </Swiper>
+    <S.ScrollContainer>
+      <S.ScrollItem>1</S.ScrollItem>
+      <S.ScrollItem>2</S.ScrollItem>
+      <S.ScrollItem>3</S.ScrollItem>
+      <S.ScrollItem>4</S.ScrollItem>
+      <S.ScrollItem>5</S.ScrollItem>
+      <S.ScrollItem>6</S.ScrollItem>
+      <S.ScrollItem>7</S.ScrollItem>
+      <S.ScrollItem>8</S.ScrollItem>
+      <S.ScrollItem>9</S.ScrollItem>
+      <S.ScrollItem>10</S.ScrollItem>
+    </S.ScrollContainer>
   );
+};
+
+export default ListTest;
+
+const S = {
+  ScrollContainer: styled.div`
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  `,
+
+  ScrollItem: styled.div`
+    flex: 0 0 auto; /* Prevent flex items from growing or shrinking */
+    width: 100vw; /* Assuming you want each item to be the full width of the viewport */
+    height: 100vh; /* Example height, adjust as needed */
+    scroll-snap-align: start; /* Align the snap point at the start edge of the scroll container */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2em;
+    border-right: 2px solid #fff;
+  `,
 };
