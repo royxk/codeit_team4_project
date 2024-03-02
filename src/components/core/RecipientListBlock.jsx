@@ -1,26 +1,27 @@
 import styled from "styled-components";
 
 function RecipientListBlock({data}) {
-    let visibleState = [null, null, null].map((x, index) => {
-        return index + 1 <= data.count;
+    let visibleState = new Array(Math.min(3, data.messageCount)).fill(null).map((x, index) => {
+        return index + 1 <= data.messageCount;
     })
-    let remainedCount = (Math.min(data.count - 3, 99)).toString() + "+";
-
-    console.log(data.count > 3);
+    let remainedCount = (Math.min(data.messageCount - 3, 99)).toString() + "+";
 
     return (
         <S.RecipientListBlock>
-                {
-                    visibleState.map((isVisible, index) => (
-                        <S.ProfileBadge
-                            key = {index}
-                            $isVisible = {isVisible}
-                            $imageUrl = {data.profileImageURL[index]}
-                            $position = {(index) * 16 + 'px'}
-                        />
-                    ))
-                }
-            <S.RemainedCountBadge $isVisible = {data.count > 3}>{remainedCount}</S.RemainedCountBadge>
+            {
+                visibleState.map((isVisible, index) => {
+                    let imageURL = data.recentMessages[index].profileImageURL;
+
+                    return isVisible ? <S.ProfileBadge
+                        key={index}
+                        $imageUrl={imageURL}
+                        $position={(index) * 16 + 'px'}
+                    /> : null;
+                })
+            }
+            {
+                data.messageCount > 3 ? <S.RemainedCountBadge>{remainedCount}</S.RemainedCountBadge> : null
+            }
         </S.RecipientListBlock>
     )
 }
@@ -33,12 +34,12 @@ const S = {
       position: relative;
       justify-content: center;
       align-items: center;
-      width: fit-content;
+      width: 81px;
       height: 28px;
     `,
 
     ProfileBadge:styled.div`
-      display: ${(props) => props.$isVisible ? 'flex' : 'none'};
+      display: flex;
       position: absolute;
       width: 28px;
       height: 28px;
@@ -47,10 +48,11 @@ const S = {
       border-radius: 50px;
       background-size: cover;
       background-image: url(${(props) => props.$imageUrl});
+      overflow: hidden;
     `,
 
     RemainedCountBadge:styled.div`
-      display: ${(props) => props.$isVisible ? 'flex' : 'none'};
+      display: flex;
       position: absolute;
       justify-content: center;
       align-items: center;

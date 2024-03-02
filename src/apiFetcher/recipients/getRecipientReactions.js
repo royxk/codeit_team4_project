@@ -5,8 +5,7 @@ export const getRecipientReaction = async(recipientId, limit = 8, offset = 0) =>
         method: 'get',
         url: `/recipients/${recipientId}/reactions/?limit=${limit}&offset=${offset}`,
         headers: {
-            'Content-Type': 'application/json',
-            charset: 'utf-8'
+            'Content-Type': 'application/json'
         },
     })
 }
