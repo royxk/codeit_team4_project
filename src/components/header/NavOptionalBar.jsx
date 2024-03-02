@@ -13,8 +13,6 @@ import {isEqual} from "lodash";
 import theme from "../../styles/theme.js";
 
 function NavOptionalBar({data}) {
-    let visibleEmojiState = new Array(Math.min(data.reactionCount, 3)).fill(null);
-
     let innerMessageCount = data.messageCount > 99 ?
         "99+명이 작성했어요 !" : `${data.messageCount}명이 작성했어요 !`;
 
