@@ -1,60 +1,64 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
-import { getAllRecipients } from "../apiFetcher/recipients/getAllRecipients";
+import React, { useEffect, useState } from "react";
 import CardBlue from "../components/core/CardList/CardBlue";
 import styled from "styled-components";
+import "swiper/css";
+import { getAllRecipients } from "../apiFetcher/recipients/getAllRecipients";
 
 const List = () => {
   const [recipients, setRecipients] = useState([]);
-  const [nextUrl, setNextUrl] = useState(
-    "https://rolling-api.vercel.app/4-4/recipients/?limit=4"
-  );
+  // const [visibleRecipients, setVisibleRecipients] = useState([]);
+  const [totalRecipients, setTotalRecipients] = useState(0);
 
-  const fetchRecipients = async () => {
-    if (!nextUrl) return;
-    const response = await fetch(nextUrl);
-    const data = await response.json();
-    setRecipients((prev) => [...prev, ...data.results]);
-    setNextUrl(data.next);
+  const getTotalRecipients = async () => {
+    const response = getAllRecipients().then((res) => {
+      console.log("전체조회...");
+      console.log(res.data);
+      setTotalRecipients(res.data.count);
+      return res.data;
+    });
   };
 
-  const handleNextClick = () => {
-    fetchRecipients();
+  const fetchRecipients = async (totalRecipients) => {
+    const response = getAllRecipients(totalRecipients).then((res) => {
+      console.log("전체조회...");
+      console.log(res.data.results.length);
+      setRecipients(res.data.results);
+      return res.data;
+    });
   };
 
   useEffect(() => {
-    // fetchRecipientsNumber();
-    fetchRecipients();
+    getTotalRecipients();
+    fetchRecipients(totalRecipients);
   }, []);
+
   return (
-    <>
-      <S.CardContainer>
-        {recipients.map((recipient) => (
-          <CardBlue
-            key={recipient.id}
-            name={recipient.name}
-            messageCount={recipient.messageCount} // Assuming you have a messageCount or similar data
-            // Add other props as needed
-          />
-        ))}
-        <button onClick={handleNextClick}>Load More</button>
-      </S.CardContainer>
-    </>
+    console.log(totalRecipients),
+    (
+      <div>
+        <S.CardsContainer>
+          {recipients.map((recipient) => (
+            <div key={recipient.key}>
+              <div>name :{recipient.name}</div>
+            </div>
+          ))}
+        </S.CardsContainer>
+      </div>
+    )
   );
 };
 
 export default List;
 
 const S = {
-  CardContainer: styled.div`
-    display: flex;
-    overflow-x: auto;
-    white-space: nowrap;
-    scroll-snap-type: x mandatory;
-    -ms-overflow-style: none;
-    &::-webkit-scrollbar {
-      display: none;
-    }
+  SliderContainer: styled.div`
+    overflow: hidden;
     width: 100%;
+    display: flex;
+    justify-content: center;
+  `,
+  CardsContainer: styled.div`
+    display: flex;
+    transition: transform 0.5s ease-in-out;
   `,
 };
