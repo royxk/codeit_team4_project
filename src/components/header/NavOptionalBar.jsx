@@ -339,6 +339,7 @@ const S= {
       position: absolute;
       left: 50%;
       transform: translateX(-95%) translateY(5%);
+      z-index: 7;
     `,
 
     EmojiListModal:styled.div`
@@ -355,6 +356,7 @@ const S= {
       padding: 16px;
       gap: 10px;
       overflow: hidden;
+      z-index: 7;
       
       left: 50%;
       transform: translateX(-95%) translateY(70%);
@@ -431,6 +433,7 @@ const S= {
       border: 1px solid ${({theme}) => theme.colors.grey["300"]};
       border-radius: 8px;
       box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.08);
+      z-index: 7;
 
       left: 50%;
       transform: translateX(-95%) translateY(30%);
