@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import SmallButton from '../core/Button/SmallButton';
 import ModalPortal from './ModalPortal';
 import theme from '../../styles/theme';
+import { media } from '../../styles/utils/mediaQuery';
 import RelationBadge from '../core/RelationBadge';
 import useOutSideClick from '../../hooks/useOutSideClick';
 
@@ -89,7 +90,10 @@ const S = {
     box-shadow: 0px 2px 12px 0px #00000014;
     border-radius: 16px;
     padding: 40px;
-    width: 600px;
+    width: 360px;
+    ${media.tablet`
+      width: 600px
+    `}
   `,
   ModalHeader: styled.div`
     display: flex;

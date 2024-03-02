@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import theme from '../../styles/theme';
 import RelationBadge from '../core/RelationBadge';
 import { media } from '../../styles/utils/mediaQuery';
+import TrashButton from '../core/Button/TrashButton';
 
 const CARD_DATA_INIT = {
   id: 0,
@@ -15,7 +16,7 @@ const CARD_DATA_INIT = {
 };
 
 // eslint-disable-next-line react/prop-types
-function RollingPaper({ cardData = CARD_DATA_INIT }) {
+function RollingPaper({ cardData = CARD_DATA_INIT, editPermission }) {
   return (
     <S.CardContainer>
       <S.FlexColum>
@@ -34,6 +35,11 @@ function RollingPaper({ cardData = CARD_DATA_INIT }) {
                 </div>
               </S.FlexColum>
             </S.FlexBox>
+            {editPermission && (
+              <div onClick={(e) => e.stopPropagation()}>
+                <TrashButton />
+              </div>
+            )}
           </S.CardHeader>
           <S.CardContent>{cardData?.content}</S.CardContent>
         </div>
@@ -60,6 +66,7 @@ const S = {
   CardHeader: styled.div`
     display: flex;
     align-items: center;
+    justify-content: space-between;
     border-bottom: 1px solid ${theme.colors.grey[200]};
     padding-bottom: 16px;
     margin-bottom: 8px;

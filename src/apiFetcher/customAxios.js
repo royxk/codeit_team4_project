@@ -1,6 +1,6 @@
-import axios from "axios";
+import axios from 'axios';
 
-const BASE_URL = "https://rolling-api.vercel.app/4-4/";
+const BASE_URL = 'https://rolling-api.vercel.app/4-6/';
 
 const customAxios = axios.create({
   baseURL: BASE_URL,
