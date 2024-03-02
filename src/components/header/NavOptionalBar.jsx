@@ -11,6 +11,7 @@ import {postRecipientReaction} from "../../apiFetcher/recipients/postRecipientRe
 import {getRecipientReaction} from "../../apiFetcher/recipients/getRecipientReactions.js";
 import {isEqual} from "lodash";
 import theme from "../../styles/theme.js";
+import TopEmojiBlock from "./emoji/TopEmojiBlock.jsx";
 
 function NavOptionalBar({data}) {
     let innerMessageCount = data.messageCount > 99 ?
@@ -80,15 +81,7 @@ function NavOptionalBar({data}) {
                 <VerticalRule/>
                 <S.OptionWrapper>
                     <S.ViewEmojiWrapper>
-                        <S.EmojiWrapper>
-                            {
-                                new Array(Math.min(3, Object.keys(emojiData).length) || 0).fill(0).map((x, index) => {
-                                    let emoji = emojiData[index].emoji;
-                                    let count = emojiData[index].count;
-                                    return <ReactionBadge key={index} emoji={emoji} count={count} />
-                                })
-                            }
-                        </S.EmojiWrapper>
+                        <TopEmojiBlock emojiData = {emojiData} maxLength = "3"/>
                         <S.EmojiOpenButton onClick={() => modalOpenButton(1)}>
                             {
                                 viewModal === 1 ?
