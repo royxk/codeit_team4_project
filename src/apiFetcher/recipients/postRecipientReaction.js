@@ -6,7 +6,6 @@ export const postRecipientReaction = async(data, recipientId) => {
         url: `/recipients/${recipientId}/reactions/`,
         headers: {
             'Content-Type': 'application/json',
-            charset: 'utf-8'
         },
         data: data
     })
