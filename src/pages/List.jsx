@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
+
 import styled from "styled-components";
 import "swiper/css";
 import {
   getAllRecipients,
   getRecipient,
 } from "../apiFetcher/recipients/getAllRecipients";
-import { Swiper, SwiperSlide } from "swiper/react";
 import TopEmojiBlock from "../components/header/emoji/TopEmojiBlock";
 import CardBlue from "../components/core/CardList/CardBlue";
 import NavBar from "../components/core/NavBar";

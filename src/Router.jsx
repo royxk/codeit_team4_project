@@ -6,7 +6,6 @@ import PaperEdit from "./pages/PaperEdit";
 import PaperCreate from "./pages/PaperCreate";
 import Test from "./components/Input/Test";
 import ModalTest from "./components/modal/ModalTest";
-import ListTest from "./pages/ListTest";
 
 const Router = () => {
   return (
@@ -18,7 +17,6 @@ const Router = () => {
         <Route path="/post/:id/edit" element={<PaperEdit />} />
         <Route path="/post/:id/message" element={<PaperCreate />} />
         <Route path="/PaperCreate" element={<PaperCreate />} />
-        <Route path="/listTest" element={<ListTest />} />
       </Routes>
     </BrowserRouter>
   );
