@@ -12,7 +12,7 @@ const S = {
     display: inline-block;
     border-radius: 4px;
     padding: 1px 8px;
-    font-size: ${({ theme }) => theme.fontSizes.sm};
+    font-size: ${({ theme }) => theme.fontSizes.xxs};
     line-height: ${({ theme }) => theme.lineHeights.base};
     background-color: ${({ relationship, theme }) => {
       switch (relationship) {

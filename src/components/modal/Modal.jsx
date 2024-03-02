@@ -1,8 +1,9 @@
 import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import Button40 from '../core/Button/Button40';
+import SmallButton from '../core/Button/SmallButton';
 import ModalPortal from './ModalPortal';
 import theme from '../../styles/theme';
+import { media } from '../../styles/utils/mediaQuery';
 import RelationBadge from '../core/RelationBadge';
 import useOutSideClick from '../../hooks/useOutSideClick';
 
@@ -41,22 +42,22 @@ function Modal({ cardData = CARD_DATA_INIT, onClose }) {
             <S.ModalHeader>
               <S.FlexBox>
                 <S.ProfileImg>
-                  <img src={cardData.profileImageURL} alt="profile" />
+                  <img src={cardData?.profileImageURL} alt="profile" />
                 </S.ProfileImg>
                 <S.FlexColum>
                   <S.Sender>
-                    From. <span>{cardData.sender}</span>
+                    From. <span>{cardData?.sender}</span>
                   </S.Sender>
                   <div>
-                    <RelationBadge relationship={cardData.relationship} />
+                    <RelationBadge relationship={cardData?.relationship} />
                   </div>
                 </S.FlexColum>
               </S.FlexBox>
-              <S.CreateAt>{cardData.createdAt.substring(0, 10)}</S.CreateAt>
+              <S.CreateAt>{cardData?.createdAt.substring(0, 10)}</S.CreateAt>
             </S.ModalHeader>
-            <S.ModalContent>{cardData.content}</S.ModalContent>
+            <S.ModalContent>{cardData?.content}</S.ModalContent>
             <S.ModalButton onClick={handleCloseClick}>
-              <Button40>확인</Button40>
+              <SmallButton text="확인" />
             </S.ModalButton>
           </S.ModalContainer>
         </S.ModalWrap>
@@ -89,7 +90,10 @@ const S = {
     box-shadow: 0px 2px 12px 0px #00000014;
     border-radius: 16px;
     padding: 40px;
-    width: 600px;
+    width: 360px;
+    ${media.tablet`
+      width: 600px
+    `}
   `,
   ModalHeader: styled.div`
     display: flex;
