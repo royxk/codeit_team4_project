@@ -5,6 +5,7 @@ import theme from '../styles/theme';
 import { getRecipientMessages } from '../apiFetcher/recipients/getRecipientMessages';
 import { getRecipient } from '../apiFetcher/recipients/getAllRecipients';
 import RollingPaper from '../components/core/RollingPaper';
+import EmptyPaper from '../components/core/EmptyPaper';
 import { media } from '../styles/utils/mediaQuery';
 import Modal from '../components/modal/Modal';
 import SmallButton from '../components/core/Button/SmallButton';
@@ -74,6 +75,11 @@ function Papers() {
               <SmallButton text="삭제하기" />
             </S.DeleteBtn>
           )}
+          {editPermission || (
+            <div>
+              <EmptyPaper />
+            </div>
+          )}
           {paperList &&
             paperList.map((data) => {
               return (
@@ -102,7 +108,7 @@ const S = {
     align-items: center;
     justify-content: start;
     flex-direction: column;
-    padding: 80px 24px 0 24px;
+    padding: 80px 24px;
     min-height: 100vh;
     max-height: 100%;
     min-width: 360px;
