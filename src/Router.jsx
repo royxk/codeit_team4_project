@@ -1,12 +1,9 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Home from './pages/Home';
-import List from './pages/List';
-import Papers from './pages/Papers';
-import PaperEdit from './pages/PaperEdit';
-import PaperCreate from './pages/PaperCreate';
-import ButtonTest from './components/core/Button/ButtonTest';
-import Test from './components/Input/Test';
-import ModalTest from './components/modal/ModalTest';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Home from "./pages/Home";
+import List from "./pages/List";
+import Papers from "./pages/Papers";
+import PaperEdit from "./pages/PaperEdit";
+import PaperCreate from "./pages/PaperCreate";
 
 const Router = () => {
   return (
