@@ -13,21 +13,22 @@ import { media } from "../styles/utils/mediaQuery";
 import FetchMoreRecipients from "../utils/FetchMoreRecipients";
 
 const List = () => {
-  const [recipients, setRecipients] = useState([]);
-  const [page, setPage] = useState(1);
-  const [loading, setLoading] = useState(false);
-  const [index, setIndex] = useState(8);
-  const [recipient2777, setRecipient2777] = useState([]);
+  // const [recipients, setRecipients] = useState([]);
+  // const [recipient2777, setRecipient2777] = useState([]);
+
+  const [populartRecipients, setPopularRecipients] = useState([]);
+  const [recentRecipients, setRecentRecipients] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const cardsContainerRef1 = useRef();
   const cardsContainerRef2 = useRef();
   const navigate = useNavigate();
 
-  // const getTotalRecipients = async () => {
-  //   const response = getAllRecipients().then((res) => {
-  //     return res.data.count;
-  //   });
-  //   return response;
-  // };
+  const getTotalRecipients = async () => {
+    const response = getAllRecipients().then((res) => {
+      return res.data.count;
+    });
+    return response;
+  };
 
   // const fetch2777 = async () => {
   //   getRecipient(2777).then((res) => {
@@ -75,96 +76,107 @@ const List = () => {
 
   useEffect(() => {
     // fetch2777();
-    setLoading(true);
+
+    setIsLoading(true);
     async function fetchData() {
-      const list = await getAllRecipients(index).then((res) => {
+      const count = await getTotalRecipients();
+      const list = await getAllRecipients(count).then((res) => {
         console.log("전체조회...");
         console.log(res.data.results.length);
-
+        const sortedByPopularity = [...res.data.results].sort(
+          (a, b) =>
+            b.messageCount - a.messageCount || b.reactionCount - a.reactionCount
+        );
+        const sortedByRecent = [...res.data.results].sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        );
+        setPopularRecipients(sortedByPopularity);
+        setRecentRecipients(sortedByRecent);
+        setIsLoading(false);
         return res.data.results;
       });
-
-      setRecipients((prev) => [...prev, ...list]);
-      setLoading(false);
     }
     fetchData();
+
     // const fetchData = async () => {
     //   const count = await getTotalRecipients();
     //   console.log(count);
     //   await fetchRecipients(count);
     // };
     // fetchData();
-  }, [page]);
+  }, []);
 
   return (
-    console.log(page),
-    (
-      <S.HomePageWrapper>
-        <S.NavContainer>
-          <NavBar />
-          <button>롤링 페이퍼 만들기</button>
-        </S.NavContainer>
-        <S.ContentContainer>
-          <S.Title>인기 롤링 페이퍼 🔥</S.Title>
-          <S.ButtonCardsContainer>
-            <button onClick={() => scrollCards("left", cardsContainerRef1)}>
-              Left
-            </button>
-            <S.CardsContainer ref={cardsContainerRef1}>
-              {recipients.map((recipient) => (
-                <S.Card
-                  key={recipient.key}
-                  onClick={() => handleCardClick(recipient)}
-                >
-                  <Card
-                    key={recipient.key}
-                    name={recipient.name}
-                    backgroundColor={recipient.backgroundColor}
-                    backgroundImageURL={recipient.backgroundImageURL}
-                    // emojiData={recipient2777.topReactions}
-                    messageCount={recipient.messageCount}
-                  />
-                </S.Card>
-              ))}
+    <S.HomePageWrapper>
+      <S.NavContainer>
+        <NavBar />
+        <button>롤링 페이퍼 만들기</button>
+      </S.NavContainer>
+      <S.ContentContainer>
+        <S.Title>
+          인기 롤링 페이퍼 🔥 {isLoading && <div>로딩중...</div>}
+        </S.Title>
 
-              {/* <FetchMoreRecipients loading={loading} setPage={setPage} /> */}
-            </S.CardsContainer>
-            <button onClick={() => scrollCards("right", cardsContainerRef1)}>
-              Right
-            </button>
-          </S.ButtonCardsContainer>
-        </S.ContentContainer>
-        <S.ContentContainer>
-          <S.Title>최근에 만든 롤링 페이퍼⭐️</S.Title>
-          <S.ButtonCardsContainer>
-            <button onClick={() => scrollCards("left", cardsContainerRef2)}>
-              Left
-            </button>
-            <S.CardsContainer ref={cardsContainerRef2}>
-              {recipients.map((recipient) => (
-                <S.Card
+        <S.ButtonCardsContainer>
+          <button onClick={() => scrollCards("left", cardsContainerRef1)}>
+            Left
+          </button>
+          <S.CardsContainer ref={cardsContainerRef1}>
+            {populartRecipients.map((recipient) => (
+              <S.Card
+                key={recipient.key}
+                onClick={() => handleCardClick(recipient)}
+              >
+                <Card
                   key={recipient.key}
-                  onClick={() => handleCardClick(recipient)}
-                >
-                  <Card
-                    key={recipient.key}
-                    name={recipient.name}
-                    backgroundColor={recipient.backgroundColor}
-                    backgroundImageURL={recipient.backgroundImageURL}
-                    // emojiData={recipient2777.topReactions}
-                    messageCount={recipient.messageCount}
-                  />
-                </S.Card>
-              ))}
-            </S.CardsContainer>
-            <button onClick={() => scrollCards("right", cardsContainerRef2)}>
-              Right
-            </button>
-          </S.ButtonCardsContainer>
-        </S.ContentContainer>
-        <button>구경해보기</button>
-      </S.HomePageWrapper>
-    )
+                  name={recipient.name}
+                  backgroundColor={recipient.backgroundColor}
+                  backgroundImageURL={recipient.backgroundImageURL}
+                  // emojiData={recipient2777.topReactions}
+                  messageCount={recipient.messageCount}
+                />
+              </S.Card>
+            ))}
+
+            {/* <FetchMoreRecipients loading={loading} setPage={setPage} /> */}
+          </S.CardsContainer>
+          <button onClick={() => scrollCards("right", cardsContainerRef1)}>
+            Right
+          </button>
+        </S.ButtonCardsContainer>
+      </S.ContentContainer>
+      <S.ContentContainer>
+        <S.Title>
+          최근에 만든 롤링 페이퍼⭐️{isLoading && <div>로딩중...</div>}
+        </S.Title>
+        <S.ButtonCardsContainer>
+          <button onClick={() => scrollCards("left", cardsContainerRef2)}>
+            Left
+          </button>
+          <S.CardsContainer ref={cardsContainerRef2}>
+            {recentRecipients.map((recipient) => (
+              <S.Card
+                key={recipient.key}
+                onClick={() => handleCardClick(recipient)}
+              >
+                <Card
+                  key={recipient.key}
+                  name={recipient.name}
+                  backgroundColor={recipient.backgroundColor}
+                  backgroundImageURL={recipient.backgroundImageURL}
+                  // emojiData={recipient2777.topReactions}
+                  messageCount={recipient.messageCount}
+                />
+              </S.Card>
+            ))}
+          </S.CardsContainer>
+          <button onClick={() => scrollCards("right", cardsContainerRef2)}>
+            Right
+          </button>
+        </S.ButtonCardsContainer>
+      </S.ContentContainer>
+      <button>구경해보기</button>
+    </S.HomePageWrapper>
   );
 };
 
@@ -247,12 +259,14 @@ const S = {
   CardsContainer: styled.div`
     padding-left: 20px;
     display: flex;
-
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     scroll-snap-align: center;
     gap: 50px;
+    &::-webkit-scrollbar {
+      display: none;
+    }
   `,
   Card: styled.div`
     flex: 0 0 auto;
