@@ -1,9 +1,15 @@
 import styled from "styled-components";
 import { textStyle } from "./CardText";
 
-const CardBlue = (props) => {
+const Card = (props) => {
+  const background = props.backgroundImageURL
+    ? "picture"
+    : props.backgroundColor;
+
+  const backgroundImageURL = props.backgroundImageURL;
+
   return (
-    <S.container className={props.color}>
+    <S.container className={background} backgroundImageURL={backgroundImageURL}>
       <S.contents>
         <S.information>
           <S.name>To. {props.name}</S.name>
@@ -19,12 +25,12 @@ const CardBlue = (props) => {
         </S.information>
         <S.emoji>이모지</S.emoji>
       </S.contents>
-      <S.pattern className={props.color}></S.pattern>
+      <S.pattern className={background}></S.pattern>
     </S.container>
   );
 };
 
-export default CardBlue;
+export default Card;
 
 const S = {
   container: styled.div`
@@ -40,17 +46,19 @@ const S = {
     &.blue {
       background-color: ${({ theme }) => theme.colors.blue[200]};
     }
-
     &.purple {
       background-color: ${({ theme }) => theme.colors.purple[200]};
     }
-
     &.orange {
       background-color: ${({ theme }) => theme.colors.orange[200]};
     }
-
     &.green {
       background-color: ${({ theme }) => theme.colors.green[200]};
+    }
+    &.picture {
+      background-image: url(${(props) => props.backgroundImageURL});
+      background-size: cover;
+      background-position: center;
     }
   `,
 
