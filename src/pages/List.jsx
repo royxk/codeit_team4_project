@@ -7,7 +7,7 @@ import {
   getRecipient,
 } from "../apiFetcher/recipients/getAllRecipients";
 import TopEmojiBlock from "../components/header/emoji/TopEmojiBlock";
-import CardBlue from "../components/core/CardList/CardBlue";
+import Card from "../components/core/CardList/Card";
 import NavBar from "../components/core/NavBar";
 import { media } from "../styles/utils/mediaQuery";
 import FetchMoreRecipients from "../utils/FetchMoreRecipients";
@@ -116,9 +116,11 @@ const List = () => {
                   key={recipient.key}
                   onClick={() => handleCardClick(recipient)}
                 >
-                  <CardBlue
+                  <Card
                     key={recipient.key}
                     name={recipient.name}
+                    backgroundColor={recipient.backgroundColor}
+                    backgroundImageURL={recipient.backgroundImageURL}
                     // emojiData={recipient2777.topReactions}
                     messageCount={recipient.messageCount}
                   />
@@ -144,9 +146,11 @@ const List = () => {
                   key={recipient.key}
                   onClick={() => handleCardClick(recipient)}
                 >
-                  <CardBlue
+                  <Card
                     key={recipient.key}
                     name={recipient.name}
+                    backgroundColor={recipient.backgroundColor}
+                    backgroundImageURL={recipient.backgroundImageURL}
                     // emojiData={recipient2777.topReactions}
                     messageCount={recipient.messageCount}
                   />
