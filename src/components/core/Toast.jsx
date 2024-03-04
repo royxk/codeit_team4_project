@@ -2,7 +2,11 @@ import styled from 'styled-components';
 import completed from '../../assets/images/completed.svg';
 import close from '../../assets/images/close.svg';
 
-function Toast() {
+function Toast({ onClose }) {
+  const handleCloseClick = () => {
+    onClose();
+  };
+
   return (
     <S.Wrap>
       <S.FlexBox>
@@ -10,7 +14,7 @@ function Toast() {
           <img src={completed} alt="completed" />
           <span>URL이 복사 되었습니다.</span>
         </S.InnerFlexBox>
-        <img src={close} alt="close" />
+        <img src={close} alt="close" onClick={handleCloseClick} />
       </S.FlexBox>
     </S.Wrap>
   );
@@ -20,7 +24,6 @@ export default Toast;
 
 const S = {
   Wrap: styled.div`
-    position: absolute;
     width: inherit;
     background: #000000cc;
     border-radius: 8px;
@@ -37,13 +40,13 @@ const S = {
     display: flex;
     align-items: center;
     gap: 12px;
-    
-    span{
+
+    span {
       font-family: ${({ theme }) => theme.fontFamily.base};
       font-weight: ${({ theme }) => theme.fontWeights.regular};
       color: ${({ theme }) => theme.colors.white};
       font-size: ${({ theme }) => theme.fontSizes.sm};
-      line-height: ${({ theme }) => theme.lineHeights.xl};;
+      line-height: ${({ theme }) => theme.lineHeights.xl};
     }
   `,
 };

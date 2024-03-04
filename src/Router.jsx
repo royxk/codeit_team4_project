@@ -4,7 +4,9 @@ import List from "./pages/List";
 import Papers from "./pages/Papers";
 import PaperEdit from "./pages/PaperEdit";
 import PaperCreate from "./pages/PaperCreate";
-import Test from "./components/core/CardList/CardTest";
+import Test from "./components/Input/Test";
+import ModalTest from "./components/modal/ModalTest";
+import ListTest from "./pages/ListTest";
 
 const Router = () => {
   return (
@@ -15,8 +17,8 @@ const Router = () => {
         <Route path="/post/:id" element={<Papers />} />
         <Route path="/post/:id/edit" element={<PaperEdit />} />
         <Route path="/post/:id/message" element={<PaperCreate />} />
-        <Route path="/papercreate" element={<PaperCreate />} />
-        <Route path="/test" element={<Test />} />
+        <Route path="/PaperCreate" element={<PaperCreate />} />
+        <Route path="/test" element={<ListTest />} />
       </Routes>
     </BrowserRouter>
   );
