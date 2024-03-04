@@ -16,7 +16,6 @@ const List = () => {
   const [loadedCount, setLoadedCount] = useState(8);
   const [hasMore, setHadMore] = useState(true);
   const [isLoadning, setIsLoading] = useState(false);
-  const [page, setPage] = useState(1);
   const [totalRecipients, setTotalRecipients] = useState(0);
   const [recipient2777, setRecipient2777] = useState([]);
   const cardsContainerRef = useRef(null);
