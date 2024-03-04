@@ -3,7 +3,6 @@ import Home from "./pages/Home";
 import List from "./pages/List";
 import Papers from "./pages/Papers";
 import PaperEdit from "./pages/PaperEdit";
-import NavTest from "./pages/NavTest.jsx";
 import MessageCreate from "./pages/MessageCreate.jsx";
 
 const Router = () => {

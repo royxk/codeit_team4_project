@@ -1,5 +1,4 @@
 import AWS from 'aws-sdk'
-import {useState} from "react";
 
 export const uploadImage = async (formData) => {
     const S3_REGION = import.meta.env.VITE_S3_REGION;
