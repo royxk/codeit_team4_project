@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import theme from '../styles/theme';
 import { getRecipientMessages } from '../apiFetcher/recipients/getRecipientMessages';
@@ -94,9 +94,9 @@ function Papers() {
               </S.DeleteBtn>
             )}
             {editPermission || (
-              <div>
+              <Link to={`/post/${id}/message`}>
                 <EmptyPaper />
-              </div>
+              </Link>
             )}
             {paperList &&
               paperList.map((data) => {
