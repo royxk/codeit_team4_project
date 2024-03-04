@@ -17,7 +17,7 @@ const MODAL_INIT = {
   open: false,
   data: {},
 };
-// TODO: 롤링페이퍼 클릭하고 back color넘겨주면 받아서 적용
+
 // TODO: 4팀 데이터 추가가능해지면 삭제기능 만들기
 // TODO: 무한스크롤
 function Papers() {
@@ -27,8 +27,25 @@ function Papers() {
   const [isToast, setIsToast] = useState(false);
   const { id } = useParams();
   const location = useLocation();
-
   const editPermission = location.pathname.includes('/edit');
+
+  switch (location.state.color) {
+    case 'beige':
+      location.state.color = theme.colors.orange[200];
+      break;
+    case 'purple':
+      location.state.color = theme.colors.purple[200];
+      break;
+    case 'blue':
+      location.state.color = theme.colors.blue[200];
+      break;
+    case 'green':
+      location.state.color = theme.colors.green[200];
+      break;
+    default:
+      location.state.color = theme.colors.orange[200];
+      break;
+  }
 
   const handlePaperCardClick = (data) => {
     setModalInfo({
@@ -64,7 +81,7 @@ function Papers() {
   return (
     <>
       {ModalInfo.open && <Modal cardData={ModalInfo.data} onClose={() => setModalInfo(false)} />}
-      <S.Container>
+      <S.Container background={location.state}>
         <S.HeaderBox>
           <NavBar />
           {recipientInfo && <NavOptionalBar data={recipientInfo} onToast={handleUrlCopyClick} />}
@@ -105,8 +122,11 @@ export default Papers;
 
 const S = {
   Container: styled.div`
-    background-color: ${theme.colors.orange[200]};
-    //background-image: url();
+    background-color: ${({ background }) => background.color};
+    background-image: url(${({ background }) => background.img});
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
     display: flex;
     align-items: center;
     justify-content: start;
