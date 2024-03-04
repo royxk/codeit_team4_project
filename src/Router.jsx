@@ -4,6 +4,7 @@ import List from "./pages/List";
 import Papers from "./pages/Papers";
 import PaperEdit from "./pages/PaperEdit";
 import MessageCreate from "./pages/MessageCreate.jsx";
+import PaperCreate from "./pages/PaperCreate";
 
 const Router = () => {
   return (
@@ -14,6 +15,7 @@ const Router = () => {
         <Route path="/post/:id" element={<Papers />} />
         <Route path="/post/:id/edit" element={<PaperEdit />} />
         <Route path="/post/:id/message" element={<MessageCreate />} />
+        <Route path="/PaperCreate" element={<PaperCreate />} />
       </Routes>
     </BrowserRouter>
   );

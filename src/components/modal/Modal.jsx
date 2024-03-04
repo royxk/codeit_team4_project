@@ -108,6 +108,8 @@ const S = {
     height: 250px;
     word-wrap: break-word;
     overflow-y: auto;
+    font-size: ${theme.fontSizes.base};
+    line-height: ${theme.lineHeights.xxl};
   `,
   ModalButton: styled.div`
     margin: 15px auto 0 auto;
