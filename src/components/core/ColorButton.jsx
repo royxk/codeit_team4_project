@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 function handleChange(e) {
   e.preventDefault();
@@ -7,9 +7,9 @@ function handleChange(e) {
   return;
 }
 
-const ColorButton = ({ color, onClick }) => {
+const ColorButton = ({ color, onClick, selected }) => {
   return (
-    <S.Box type="button" onClick={onClick} color={color}>
+    <S.Box type="button" onClick={onClick} color={color} selected={selected}>
       ColorButton
     </S.Box>
   );
@@ -28,5 +28,10 @@ const S = {
     gap: 20px;
     height: 154px;
     background-color: ${({ color }) => color || "white"};
+    ${({ selected }) =>
+      selected &&
+      css`
+        opacity: 0.5;
+      `}
   `,
 };

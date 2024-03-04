@@ -27,6 +27,10 @@ const PaperCreate = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    if (name === "name" && value.length > 10) {
+      alert("10자 이내로 입력해주세요");
+      return;
+    }
     setFormData({
       ...formData,
       [name]: value,
@@ -127,18 +131,22 @@ const PaperCreate = () => {
               <ColorButton
                 onClick={handleColorChange("beige")}
                 color={theme.colors.orange[200]}
+                selected={formData.backgroundColor === "beige"}
               />
               <ColorButton
                 onClick={handleColorChange("purple")}
                 color={theme.colors.purple[200]}
+                selected={formData.backgroundColor === "purple"}
               />
               <ColorButton
                 onClick={handleColorChange("blue")}
                 color={theme.colors.blue[200]}
+                selected={formData.backgroundColor === "blue"}
               />
               <ColorButton
                 onClick={handleColorChange("green")}
                 color={theme.colors.green[200]}
+                selected={formData.backgroundColor === "green"}
               />
             </S.ColorButtonContainer>
           )}
