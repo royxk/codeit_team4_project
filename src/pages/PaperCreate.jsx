@@ -18,7 +18,7 @@ const PaperCreate = () => {
     team: "4",
     name: "",
     backgroundColor: "",
-    backgroundImageURL: "",
+    // backgroundImageURL: "",
   });
 
   const [recipients, setRecipients] = useState([]);
@@ -169,12 +169,15 @@ const PaperCreate = () => {
         <button onClick={handleGetRecipients}>조회하기</button>
         {recipients.map((recipient) => {
           return (
-            <div key={recipient.id}>
-              <p>{recipient.id}</p>
-              <p>{recipient.name}</p>
-              <p>{recipient.backgroundColor}</p>
-              <p>{recipient.backgroundImageURL}</p>
-            </div>
+            console.log(recipient),
+            (
+              <div key={recipient.id}>
+                <p>{recipient.id}</p>
+                <p>{recipient.name}</p>
+                <p>{recipient.backgroundColor}</p>
+                <p>{recipient.backgroundImageURL}</p>
+              </div>
+            )
           );
         })}
       </S.PaperCreateContainer>
