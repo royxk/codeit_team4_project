@@ -10,36 +10,43 @@ import TopEmojiBlock from "../components/header/emoji/TopEmojiBlock";
 import CardBlue from "../components/core/CardList/CardBlue";
 import NavBar from "../components/core/NavBar";
 import { media } from "../styles/utils/mediaQuery";
+import FetchMoreRecipients from "../utils/FetchMoreRecipients";
 
 const List = () => {
   const [recipients, setRecipients] = useState([]);
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [index, setIndex] = useState(8);
   const [recipient2777, setRecipient2777] = useState([]);
   const cardsContainerRef1 = useRef();
   const cardsContainerRef2 = useRef();
   const navigate = useNavigate();
 
-  const getTotalRecipients = async () => {
-    const response = getAllRecipients().then((res) => {
-      return res.data.count;
-    });
-    return response;
-  };
+  // const getTotalRecipients = async () => {
+  //   const response = getAllRecipients().then((res) => {
+  //     return res.data.count;
+  //   });
+  //   return response;
+  // };
 
-  const fetchRecipients = async (count) => {
-    const response = await getAllRecipients(count).then((res) => {
+  // const fetch2777 = async () => {
+  //   getRecipient(2777).then((res) => {
+  //     console.log("2777 조회...");
+  //     setRecipient2777(res.data);
+  //     return res.data;
+  //   });
+  // };
+
+  const fetchRecipients = async (index) => {
+    const response = await getAllRecipients(index).then((res) => {
       console.log("전체조회...");
       console.log(res.data.results.length);
       setRecipients(res.data.results);
-      return res.data;
+      setIndex((prev) => prev + 7);
+      return res.data.results;
     });
-  };
 
-  const fetch2777 = async () => {
-    getRecipient(2777).then((res) => {
-      console.log("2777 조회...");
-      setRecipient2777(res.data);
-      return res.data;
-    });
+    return response;
   };
 
   const scrollCards = (direction, ref) => {
@@ -68,74 +75,92 @@ const List = () => {
 
   useEffect(() => {
     // fetch2777();
-    const fetchData = async () => {
-      const count = await getTotalRecipients();
-      console.log(count);
-      await fetchRecipients(count);
-    };
+    setLoading(true);
+    async function fetchData() {
+      const list = await getAllRecipients(index).then((res) => {
+        console.log("전체조회...");
+        console.log(res.data.results.length);
+
+        return res.data.results;
+      });
+
+      setRecipients((prev) => [...prev, ...list]);
+      setLoading(false);
+    }
     fetchData();
-  }, []);
+    // const fetchData = async () => {
+    //   const count = await getTotalRecipients();
+    //   console.log(count);
+    //   await fetchRecipients(count);
+    // };
+    // fetchData();
+  }, [page]);
 
   return (
-    <S.HomePageWrapper>
-      <S.NavContainer>
-        <NavBar />
-        <button>롤링 페이퍼 만들기</button>
-      </S.NavContainer>
-      <S.ContentContainer>
-        <S.Title>인기 롤링 페이퍼 🔥</S.Title>
-        <S.ButtonCardsContainer>
-          <button onClick={() => scrollCards("left", cardsContainerRef1)}>
-            Left
-          </button>
-          <S.CardsContainer ref={cardsContainerRef1}>
-            {recipients.map((recipient) => (
-              <S.Card
-                key={recipient.key}
-                onClick={() => handleCardClick(recipient)}
-              >
-                <CardBlue
+    console.log(page),
+    (
+      <S.HomePageWrapper>
+        <S.NavContainer>
+          <NavBar />
+          <button>롤링 페이퍼 만들기</button>
+        </S.NavContainer>
+        <S.ContentContainer>
+          <S.Title>인기 롤링 페이퍼 🔥</S.Title>
+          <S.ButtonCardsContainer>
+            <button onClick={() => scrollCards("left", cardsContainerRef1)}>
+              Left
+            </button>
+            <S.CardsContainer ref={cardsContainerRef1}>
+              {recipients.map((recipient) => (
+                <S.Card
                   key={recipient.key}
-                  name={recipient.name}
-                  // emojiData={recipient2777.topReactions}
-                  messageCount={recipient.messageCount}
-                />
-              </S.Card>
-            ))}
-          </S.CardsContainer>
-          <button onClick={() => scrollCards("right", cardsContainerRef1)}>
-            Right
-          </button>
-        </S.ButtonCardsContainer>
-      </S.ContentContainer>
-      <S.ContentContainer>
-        <S.Title>최근에 만든 롤링 페이퍼⭐️</S.Title>
-        <S.ButtonCardsContainer>
-          <button onClick={() => scrollCards("left", cardsContainerRef2)}>
-            Left
-          </button>
-          <S.CardsContainer ref={cardsContainerRef2}>
-            {recipients.map((recipient) => (
-              <S.Card
-                key={recipient.key}
-                onClick={() => handleCardClick(recipient)}
-              >
-                <CardBlue
+                  onClick={() => handleCardClick(recipient)}
+                >
+                  <CardBlue
+                    key={recipient.key}
+                    name={recipient.name}
+                    // emojiData={recipient2777.topReactions}
+                    messageCount={recipient.messageCount}
+                  />
+                </S.Card>
+              ))}
+
+              {/* <FetchMoreRecipients loading={loading} setPage={setPage} /> */}
+            </S.CardsContainer>
+            <button onClick={() => scrollCards("right", cardsContainerRef1)}>
+              Right
+            </button>
+          </S.ButtonCardsContainer>
+        </S.ContentContainer>
+        <S.ContentContainer>
+          <S.Title>최근에 만든 롤링 페이퍼⭐️</S.Title>
+          <S.ButtonCardsContainer>
+            <button onClick={() => scrollCards("left", cardsContainerRef2)}>
+              Left
+            </button>
+            <S.CardsContainer ref={cardsContainerRef2}>
+              {recipients.map((recipient) => (
+                <S.Card
                   key={recipient.key}
-                  name={recipient.name}
-                  // emojiData={recipient2777.topReactions}
-                  messageCount={recipient.messageCount}
-                />
-              </S.Card>
-            ))}
-          </S.CardsContainer>
-          <button onClick={() => scrollCards("right", cardsContainerRef2)}>
-            Right
-          </button>
-        </S.ButtonCardsContainer>
-      </S.ContentContainer>
-      <button>구경해보기</button>
-    </S.HomePageWrapper>
+                  onClick={() => handleCardClick(recipient)}
+                >
+                  <CardBlue
+                    key={recipient.key}
+                    name={recipient.name}
+                    // emojiData={recipient2777.topReactions}
+                    messageCount={recipient.messageCount}
+                  />
+                </S.Card>
+              ))}
+            </S.CardsContainer>
+            <button onClick={() => scrollCards("right", cardsContainerRef2)}>
+              Right
+            </button>
+          </S.ButtonCardsContainer>
+        </S.ContentContainer>
+        <button>구경해보기</button>
+      </S.HomePageWrapper>
+    )
   );
 };
 
