@@ -49,7 +49,7 @@ const S = {
     &.purple {
       background-color: ${({ theme }) => theme.colors.purple[200]};
     }
-    &.orange {
+    &.beige {
       background-color: ${({ theme }) => theme.colors.orange[200]};
     }
     &.green {
@@ -210,7 +210,7 @@ const S = {
       z-index: 0;
     }
 
-    &.orange {
+    &.beige {
       width: 332px;
       height: 318px;
       top: 130px;
