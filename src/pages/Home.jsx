@@ -4,6 +4,7 @@ import PointBox from "../components/core/PointBox";
 import homeImage1 from "../assets/images/homepageImage1.svg";
 import homeImage2 from "../assets/images/homepageImg2.png";
 import { media } from "../styles/utils/mediaQuery";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   return (
@@ -11,7 +12,7 @@ const Home = () => {
       <S.ContentWrapper>
         <S.NavContainer>
           <NavBar />
-          <button>롤링 페이퍼 만들기</button>
+          <Link to={"/PaperCreate"}>롤링 페이퍼 만들기</Link>
         </S.NavContainer>
         <S.ContentContainer>
           <S.TextContainer>
@@ -36,7 +37,7 @@ const Home = () => {
             <S.Image secondImg src={homeImage2} alt="homeImage1" />
           </S.ImageContainer>
         </S.ContentContainer>
-        <button>구경해보기</button>
+        <Link to={"/list"}>구경해보기</Link>
       </S.ContentWrapper>
     </S.HomePageWrapper>
   );

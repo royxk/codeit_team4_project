@@ -126,7 +126,7 @@ const List = () => {
 
             <S.CardsContainer ref={cardsContainerRef}>
               {recipients.map((recipient, index) => (
-                <S.Card key={index}>
+                <S.Card key={index} onClick={() => console.log("click")}>
                   <CardBlue
                     key={recipient.key}
                     name={recipient.name}
