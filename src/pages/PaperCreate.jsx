@@ -121,40 +121,41 @@ const PaperCreate = () => {
             Select Image
           </button>
         </div>
-
-        {selectionType === "color" && (
-          <S.ColorButtonContainer>
-            <ColorButton
-              onClick={handleColorChange("beige")}
-              color={theme.colors.orange[200]}
-            />
-            <ColorButton
-              onClick={handleColorChange("purple")}
-              color={theme.colors.purple[200]}
-            />
-            <ColorButton
-              onClick={handleColorChange("blue")}
-              color={theme.colors.blue[200]}
-            />
-            <ColorButton
-              onClick={handleColorChange("green")}
-              color={theme.colors.green[200]}
-            />
-          </S.ColorButtonContainer>
-        )}
-        {selectionType === "image" && (
-          <S.ColorButtonContainer>
-            {backgroundImages.map((image) => {
-              return (
-                <ImageButton
-                  key={image}
-                  onClick={handleImageChange(image)}
-                  url={image}
-                />
-              );
-            })}
-          </S.ColorButtonContainer>
-        )}
+        <S.ButtonContainer>
+          {selectionType === "color" && (
+            <S.ColorButtonContainer>
+              <ColorButton
+                onClick={handleColorChange("beige")}
+                color={theme.colors.orange[200]}
+              />
+              <ColorButton
+                onClick={handleColorChange("purple")}
+                color={theme.colors.purple[200]}
+              />
+              <ColorButton
+                onClick={handleColorChange("blue")}
+                color={theme.colors.blue[200]}
+              />
+              <ColorButton
+                onClick={handleColorChange("green")}
+                color={theme.colors.green[200]}
+              />
+            </S.ColorButtonContainer>
+          )}
+          {selectionType === "image" && (
+            <S.ColorButtonContainer>
+              {backgroundImages.map((image) => {
+                return (
+                  <ImageButton
+                    key={image}
+                    onClick={handleImageChange(image)}
+                    url={image}
+                  />
+                );
+              })}
+            </S.ColorButtonContainer>
+          )}
+        </S.ButtonContainer>
 
         <button onClick={handleSubmit}>데이터추가</button>
       </S.Container>
@@ -205,6 +206,16 @@ const S = {
     justify-content: center;
     gap: 10px;
     margin-bottom: 50px;
+  `,
+  ButtonContainer: styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    ${media.tablet`
+      align-items: start;
+    `}
   `,
   ColorButtonContainer: styled.div`
     display: grid;
