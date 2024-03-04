@@ -10,6 +10,7 @@ import TopEmojiBlock from "../components/header/emoji/TopEmojiBlock";
 import CardBlue from "../components/core/CardList/CardBlue";
 import NavBar from "../components/core/NavBar";
 import { media } from "../styles/utils/mediaQuery";
+import { useNavigate } from "react-router-dom";
 
 const List = () => {
   const [recipients, setRecipients] = useState([]);
@@ -20,6 +21,7 @@ const List = () => {
   const [recipient2777, setRecipient2777] = useState([]);
   const cardsContainerRef = useRef(null);
   const observerRef = useRef(null);
+  const navigate = useNavigate();
 
   const getTotalRecipients = async () => {
     const response = getAllRecipients().then((res) => {
@@ -80,6 +82,14 @@ const List = () => {
     }
   };
 
+  const handleCardClick = (recipient) => {
+    const { id, backgroundColor, backgroundImageURL } = recipient;
+
+    navigate(`/post/${id}`, {
+      background: { color: backgroundColor, img: backgroundImageURL },
+    });
+  };
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -126,7 +136,7 @@ const List = () => {
 
             <S.CardsContainer ref={cardsContainerRef}>
               {recipients.map((recipient, index) => (
-                <S.Card key={index} onClick={() => console.log("click")}>
+                <S.Card key={index} onClick={() => handleCardClick(recipient)}>
                   <CardBlue
                     key={recipient.key}
                     name={recipient.name}
