@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import { useRef } from "react";
 import styled from "styled-components";
 import "swiper/css";
 import {
@@ -13,13 +13,17 @@ import { media } from "../styles/utils/mediaQuery";
 
 const List = () => {
   const [recipients, setRecipients] = useState([]);
+  const [loadedCount, setLoadedCount] = useState(8);
+  const [hasMore, setHadMore] = useState(true);
+  const [isLoadning, setIsLoading] = useState(false);
+  const [page, setPage] = useState(1);
   const [totalRecipients, setTotalRecipients] = useState(0);
   const [recipient2777, setRecipient2777] = useState([]);
+  const cardsContainerRef = useRef(null);
+  const observerRef = useRef(null);
 
   const getTotalRecipients = async () => {
     const response = getAllRecipients().then((res) => {
-      console.log("전체조회...");
-      console.log(res.data.count);
       setTotalRecipients(res.data.count);
       return res.data.count;
     });
@@ -35,6 +39,24 @@ const List = () => {
     });
   };
 
+  const fetchRecipientsTest = async () => {
+    if (!hasMore || isLoadning) return;
+
+    setIsLoading(true);
+
+    const response = await getAllRecipients(loadedCount).then((res) => {
+      console.log(loadedCount);
+      if (res.data.results.count < loadedCount) {
+        setHadMore(false);
+      }
+      setRecipients((prevRecipients) => [
+        ...prevRecipients,
+        ...res.data.results,
+      ]);
+      return res.data;
+    });
+  };
+
   const fetch2777 = async () => {
     getRecipient(2777).then((res) => {
       console.log("2777 조회...");
@@ -43,15 +65,53 @@ const List = () => {
     });
   };
 
+  const scrollCards = (direction) => {
+    if (cardsContainerRef.current) {
+      const { current } = cardsContainerRef;
+      const scrollAmount = 500;
+      const scrollPosition =
+        direction === "left"
+          ? current.scrollLeft - scrollAmount
+          : current.scrollLeft + scrollAmount;
+
+      current.scrollTo({
+        left: scrollPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+
   useEffect(() => {
-    fetch2777();
-    const fetchData = async () => {
-      const count = await getTotalRecipients();
-      console.log(count);
-      await fetchRecipients(count);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasMore) {
+          setLoadedCount((prevCount) => prevCount + 8); // Load 8 more items
+        }
+      },
+      { threshold: 1.0 } // Trigger when the observed element is fully visible
+    );
+
+    if (observerRef.current) {
+      observer.observe(observerRef.current);
+    }
+
+    return () => {
+      if (observerRef.current) {
+        observer.unobserve(observerRef.current);
+      }
     };
-    fetchData();
-  }, []);
+  }, [hasMore]);
+
+  useEffect(() => {
+    // fetch2777();
+    // const fetchData = async () => {
+    //   const count = await getTotalRecipients();
+    //   console.log(count);
+    //   await fetchRecipients(count);
+    //   await fetchRecipients();
+    // };
+    fetchRecipientsTest();
+  }, [loadedCount]);
 
   return (
     <S.HomePageWrapper>
@@ -62,18 +122,24 @@ const List = () => {
         </S.NavContainer>
         <S.ContentContainer>
           <S.Title>인기 롤링 페이퍼 🔥</S.Title>
-          <S.CardsContainer>
-            {recipients.map((recipient) => (
-              <S.Card>
-                <CardBlue
-                  key={recipient.key}
-                  title={recipient.name}
-                  emojiData={recipient2777.topReactions}
-                  maxLength={3}
-                />
-              </S.Card>
-            ))}
-          </S.CardsContainer>
+          <S.ButtonCardsContainer>
+            <button onClick={() => scrollCards("left")}> Left</button>
+
+            <S.CardsContainer ref={cardsContainerRef}>
+              {recipients.map((recipient, index) => (
+                <S.Card key={index}>
+                  <CardBlue
+                    key={recipient.key}
+                    name={recipient.name}
+                    // emojiData={recipient2777.topReactions}
+                    messageCount={recipient.messageCount}
+                  />
+                </S.Card>
+              ))}
+            </S.CardsContainer>
+
+            <button onClick={() => scrollCards("right")}> Right</button>
+          </S.ButtonCardsContainer>
         </S.ContentContainer>
         <S.ContentContainer>
           <S.Title>최근에 만든 롤링 페이퍼⭐️</S.Title>
@@ -82,12 +148,13 @@ const List = () => {
               <S.Card>
                 <CardBlue
                   key={recipient.key}
-                  title={recipient.name}
-                  emojiData={recipient2777.topReactions}
-                  maxLength={3}
+                  name={recipient.name}
+                  // emojiData={recipient2777.topReactions}
+                  messageCount={recipient.messageCount}
                 />
               </S.Card>
             ))}
+            <div ref={observerRef}></div>
           </S.CardsContainer>
         </S.ContentContainer>
         <button>구경해보기</button>
@@ -134,7 +201,7 @@ const S = {
     display: flex;
     flex-direction: column;
     justify-content: start;
-    align-items: center;
+    align-items: start;
     gap: 30px;
     padding: 40px;
     width: 100%;
@@ -146,6 +213,24 @@ const S = {
   Title: styled.div`
     font-size: ${({ theme }) => theme.fontSizes.xl};
     font-weight: bold;
+  `,
+
+  ButtonCardsContainer: styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap: 20px;
+
+    button {
+      display: none;
+    }
+
+    ${media.widescreen`
+    button {
+      display: inline-block;
+    }
+    `}
   `,
 
   CardsContainer: styled.div`
