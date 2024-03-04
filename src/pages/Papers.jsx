@@ -46,7 +46,7 @@ function Papers() {
   };
 
   const handleGetPaperData = useCallback(async () => {
-    const response = await getRecipientMessages(id, 6);
+    const response = await getRecipientMessages(id, 10);
     const { next, count, results } = response.data;
     setPaperList(results);
   }, [id]);
@@ -64,31 +64,33 @@ function Papers() {
   return (
     <>
       {ModalInfo.open && <Modal cardData={ModalInfo.data} onClose={() => setModalInfo(false)} />}
-      <S.HeaderBox>
-        <NavBar />
-        {recipientInfo && <NavOptionalBar data={recipientInfo} onToast={handleUrlCopyClick} />}
-      </S.HeaderBox>
       <S.Container>
-        <S.PaperList>
-          {editPermission && (
-            <S.DeleteBtn>
-              <SmallButton text="삭제하기" />
-            </S.DeleteBtn>
-          )}
-          {editPermission || (
-            <div>
-              <EmptyPaper />
-            </div>
-          )}
-          {paperList &&
-            paperList.map((data) => {
-              return (
-                <div key={data.id} onClick={() => handlePaperCardClick(data)}>
-                  <RollingPaper cardData={data} editPermission={editPermission} />
-                </div>
-              );
-            })}
-        </S.PaperList>
+        <S.HeaderBox>
+          <NavBar />
+          {recipientInfo && <NavOptionalBar data={recipientInfo} onToast={handleUrlCopyClick} />}
+        </S.HeaderBox>
+        <S.PaperListWrap>
+          <S.PaperList>
+            {editPermission && (
+              <S.DeleteBtn>
+                <SmallButton text="삭제하기" />
+              </S.DeleteBtn>
+            )}
+            {editPermission || (
+              <div>
+                <EmptyPaper />
+              </div>
+            )}
+            {paperList &&
+              paperList.map((data) => {
+                return (
+                  <div key={data.id} onClick={() => handlePaperCardClick(data)}>
+                    <RollingPaper cardData={data} editPermission={editPermission} />
+                  </div>
+                );
+              })}
+          </S.PaperList>
+        </S.PaperListWrap>
       </S.Container>
       {isToast && (
         <S.ToastBox>
@@ -104,14 +106,25 @@ export default Papers;
 const S = {
   Container: styled.div`
     background-color: ${theme.colors.orange[200]};
+    //background-image: url();
     display: flex;
     align-items: center;
     justify-content: start;
     flex-direction: column;
-    padding: 80px 24px;
+    gap: 90px;
     min-height: 100vh;
     max-height: 100%;
     min-width: 360px;
+  `,
+  PaperListWrap: styled.div`
+    padding-inline: 24px;
+    overflow-y: auto;
+    height: 75vh;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
   `,
   PaperList: styled.div`
     position: relative;
@@ -149,13 +162,10 @@ const S = {
     `}
   `,
   HeaderBox: styled.div`
-    /* width: 1200px; */
+    width: 100%;
     padding-inline: 24px;
     margin: 0 auto;
     background-color: ${theme.colors.white};
-    position: sticky;
-    top: 0;
-    z-index: 10;
   `,
   ToastBox: styled.div`
     position: fixed;
