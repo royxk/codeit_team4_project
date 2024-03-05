@@ -12,9 +12,6 @@ import ImageButton from "../components/core/ImageButton";
 import { media } from "../styles/utils/mediaQuery";
 import NavBar from "../components/core/NavBar";
 
-// TODO : formData를 저장하고 submitbutton을 눌렀을때 post요청을 보내는 로직을 작성해주세요.
-// TODO : data를 받아서 화면에 조회할 수 있는 버튼을 만들어서 확인 가능하게 등록된 함수가 확인 가능하게 하기.
-
 const PaperCreate = () => {
   const [formData, setFormData] = useState({
     team: "4",
