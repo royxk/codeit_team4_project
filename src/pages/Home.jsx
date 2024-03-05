@@ -5,14 +5,32 @@ import homeImage1 from "../assets/images/homepageImage1.svg";
 import homeImage2 from "../assets/images/homepageImg2.png";
 import { media } from "../styles/utils/mediaQuery";
 import { Link } from "react-router-dom";
+import Button from "../components/core/Button/Button";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const navigate = useNavigate();
+
+  const onClick = (link) => {
+    navigate(`/${link}`);
+  };
+
   return (
     <S.HomePageWrapper>
       <S.ContentWrapper>
         <S.NavContainer>
           <NavBar />
-          <Link to={"/PaperCreate"}>롤링 페이퍼 만들기</Link>
+          <S.ButtonWrapper>
+            <Button
+              variant="outLine"
+              size={40}
+              onClick={() => onClick("papercreate")}
+            >
+              롤링 페이퍼 만들기
+            </Button>
+          </S.ButtonWrapper>
+
+          {/* <Link to={"/PaperCreate"}></Link> */}
         </S.NavContainer>
         <S.ContentContainer>
           <S.TextContainer>
@@ -37,7 +55,10 @@ const Home = () => {
             <S.Image secondImg src={homeImage2} alt="homeImage1" />
           </S.ImageContainer>
         </S.ContentContainer>
-        <Link to={"/list"}>구경해보기</Link>
+        {/* <Link to={"/list"}>구경해보기</Link> */}
+        <Button variant="primary" size={50} onClick={() => onClick("list")}>
+          구경해보기
+        </Button>
       </S.ContentWrapper>
     </S.HomePageWrapper>
   );
@@ -61,6 +82,9 @@ const S = {
     align-items: center;
     gap: 20px;
     width: 100%;
+  `,
+  ButtonWrapper: styled.div`
+    width: 300px;
   `,
   ContentWrapper: styled.div`
     display: flex;

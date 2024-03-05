@@ -1,25 +1,31 @@
-import React, { useEffect, useState } from 'react';
-import { useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
-import { getAllRecipients, getRecipient } from '../apiFetcher/recipients/getAllRecipients';
-import TopEmojiBlock from '../components/header/emoji/TopEmojiBlock';
-import Card from '../components/core/CardList/Card';
-import NavBar from '../components/core/NavBar';
-import { media } from '../styles/utils/mediaQuery';
-import FetchMoreRecipients from '../utils/FetchMoreRecipients';
 
+import React, { useEffect, useState } from "react";
+import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import {
+  getAllRecipients,
+  getRecipient,
+} from "../apiFetcher/recipients/getAllRecipients";
+import TopEmojiBlock from "../components/header/emoji/TopEmojiBlock";
+import Card from "../components/core/CardList/Card";
+import NavBar from "../components/core/NavBar";
+import { media } from "../styles/utils/mediaQuery";
+import Button from "../components/core/Button/Button";
+import FetchMoreRecipients from "../utils/FetchMoreRecipients";
 const List = () => {
   // const [recipients, setRecipients] = useState([]);
   // const [recipient2777, setRecipient2777] = useState([]);
-
+  const navigate = useNavigate();
   const [populartRecipients, setPopularRecipients] = useState([]);
   const [recentRecipients, setRecentRecipients] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const cardsContainerRef1 = useRef();
   const cardsContainerRef2 = useRef();
-  const navigate = useNavigate();
 
+  const onClick = (link) => {
+    navigate(`/${link}`);
+  };
   const getTotalRecipients = async () => {
     const response = getAllRecipients().then((res) => {
       return res.data.count;
@@ -97,8 +103,16 @@ const List = () => {
   return (
     <S.HomePageWrapper>
       <S.NavContainer>
-        <NavBar />
-        <button>롤링 페이퍼 만들기</button>
+        <NavBar onClick={() => onClick("")} />
+        <S.ButtonWrapper>
+          <Button
+            variant="outLine"
+            size={40}
+            onClick={() => onClick("papercreate")}
+          >
+            롤링 페이퍼 만들기
+          </Button>
+        </S.ButtonWrapper>
       </S.NavContainer>
       <S.ContentContainer>
         <S.Title>인기 롤링 페이퍼 🔥 {isLoading && <div>로딩중...</div>}</S.Title>
@@ -142,10 +156,21 @@ const List = () => {
               </S.Card>
             ))}
           </S.CardsContainer>
-          <button onClick={() => scrollCards('right', cardsContainerRef2)}>Right</button>
-        </S.ButtonCardsContainer>
+
+          <button onClick={() => scrollCards("right", cardsContainerRef2)}>
+            Right
+          </button>
+        </S.ButtonCardsContainer>{" "}
       </S.ContentContainer>
-      <button>구경해보기</button>
+      <S.BottomButtonWrapper>
+        <Button
+          variant="primary"
+          size={56}
+          onClick={() => onClick("papercreate")}
+        >
+          나도 만들어보기
+        </Button>
+      </S.BottomButtonWrapper>
     </S.HomePageWrapper>
   );
 };
@@ -159,7 +184,7 @@ const S = {
     justify-content: center;
     align-items: center;
     align-items: center;
-    gap: 70px;
+    gap: 50px;
     width: 100%;
   `,
   ContentWrapper: styled.div`
@@ -185,6 +210,23 @@ const S = {
     border-bottom: 2px solid ${({ theme }) => theme.colors.grey[200]};
     ${media.widescreen`
     padding: 0 200px;
+    `}
+  `,
+
+  ButtonWrapper: styled.div`
+    width: 300px;
+  `,
+
+  BottomButtonWrapper: styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 40px;
+
+    width: 100%;
+    padding: 0 20px;
+    ${media.widescreen`
+    width: 300px;
     `}
   `,
 
