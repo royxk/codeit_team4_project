@@ -1,21 +1,22 @@
-import { useEffect, useRef } from 'react';
-import styled from 'styled-components';
-import SmallButton from '../core/Button/SmallButton';
-import ModalPortal from './ModalPortal';
-import theme from '../../styles/theme';
-import { media } from '../../styles/utils/mediaQuery';
-import RelationBadge from '../core/RelationBadge';
-import useOutSideClick from '../../hooks/useOutSideClick';
+import { useEffect, useRef } from "react";
+import styled from "styled-components";
+import Button from "../core/Button/Button";
+import ModalPortal from "./ModalPortal";
+import theme from "../../styles/theme";
+import { media } from "../../styles/utils/mediaQuery";
+import RelationBadge from "../core/RelationBadge";
+import useOutSideClick from "../../hooks/useOutSideClick";
 
 const CARD_DATA_INIT = {
   id: 0,
   recipientId: 0,
-  sender: '테스트',
-  profileImageURL: 'https://fastly.picsum.photos/id/311/200/200.jpg?hmac=CHiYGYQ3Xpesshw5eYWH7U0Kyl9zMTZLQuRDU4OtyH8',
-  relationship: '지인',
-  content: '테스트입니다',
-  font: 'Pretendard',
-  createdAt: '2023-11-01T08:05:25.399056Z',
+  sender: "테스트",
+  profileImageURL:
+    "https://fastly.picsum.photos/id/311/200/200.jpg?hmac=CHiYGYQ3Xpesshw5eYWH7U0Kyl9zMTZLQuRDU4OtyH8",
+  relationship: "지인",
+  content: "테스트입니다",
+  font: "Pretendard",
+  createdAt: "2023-11-01T08:05:25.399056Z",
 };
 
 // eslint-disable-next-line react/prop-types
@@ -28,10 +29,10 @@ function Modal({ cardData = CARD_DATA_INIT, onClose }) {
   useOutSideClick(modalRef, handleCloseClick);
 
   useEffect(() => {
-    const body = document.querySelector('body');
-    body.style.overflow = 'hidden';
+    const body = document.querySelector("body");
+    body.style.overflow = "hidden";
     return () => {
-      body.style.overflow = 'auto';
+      body.style.overflow = "auto";
     };
   }, []);
   return (
@@ -57,7 +58,7 @@ function Modal({ cardData = CARD_DATA_INIT, onClose }) {
             </S.ModalHeader>
             <S.ModalContent>{cardData?.content}</S.ModalContent>
             <S.ModalButton onClick={handleCloseClick}>
-              <SmallButton text="확인" />
+              <Button variant={"primary"} size={40} text="확인" />
             </S.ModalButton>
           </S.ModalContainer>
         </S.ModalWrap>

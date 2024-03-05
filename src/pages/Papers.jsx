@@ -1,17 +1,17 @@
-import { useCallback, useEffect, useState } from 'react';
-import { Link, useLocation, useParams } from 'react-router-dom';
-import styled from 'styled-components';
-import theme from '../styles/theme';
-import { getRecipientMessages } from '../apiFetcher/recipients/getRecipientMessages';
-import { getRecipient } from '../apiFetcher/recipients/getAllRecipients';
-import RollingPaper from '../components/core/RollingPaper';
-import EmptyPaper from '../components/core/EmptyPaper';
-import { media } from '../styles/utils/mediaQuery';
-import Modal from '../components/modal/Modal';
-import SmallButton from '../components/core/Button/SmallButton';
-import NavBar from '../components/core/NavBar';
-import NavOptionalBar from '../components/header/NavOptionalBar';
-import Toast from '../components/core/Toast';
+import { useCallback, useEffect, useState } from "react";
+import { Link, useLocation, useParams } from "react-router-dom";
+import styled from "styled-components";
+import theme from "../styles/theme";
+import { getRecipientMessages } from "../apiFetcher/recipients/getRecipientMessages";
+import { getRecipient } from "../apiFetcher/recipients/getAllRecipients";
+import RollingPaper from "../components/core/RollingPaper";
+import EmptyPaper from "../components/core/EmptyPaper";
+import { media } from "../styles/utils/mediaQuery";
+import Modal from "../components/modal/Modal";
+import Button from "../components/core/Button/Button";
+import NavBar from "../components/core/NavBar";
+import NavOptionalBar from "../components/header/NavOptionalBar";
+import Toast from "../components/core/Toast";
 
 const MODAL_INIT = {
   open: false,
@@ -27,19 +27,19 @@ function Papers() {
   const [isToast, setIsToast] = useState(false);
   const { id } = useParams();
   const location = useLocation();
-  const editPermission = location.pathname.includes('/edit');
+  const editPermission = location.pathname.includes("/edit");
 
   switch (location.state.color) {
-    case 'beige':
+    case "beige":
       location.state.color = theme.colors.orange[200];
       break;
-    case 'purple':
+    case "purple":
       location.state.color = theme.colors.purple[200];
       break;
-    case 'blue':
+    case "blue":
       location.state.color = theme.colors.blue[200];
       break;
-    case 'green':
+    case "green":
       location.state.color = theme.colors.green[200];
       break;
     default:
@@ -56,7 +56,9 @@ function Papers() {
 
   const handleUrlCopyClick = () => {
     setIsToast(true);
-    navigator.clipboard.writeText(`${window.location.origin}${location.pathname}`);
+    navigator.clipboard.writeText(
+      `${window.location.origin}${location.pathname}`
+    );
     setTimeout(() => {
       setIsToast(false);
     }, 5000);
@@ -80,17 +82,21 @@ function Papers() {
   }, [handleGetPaperData, handleGetRecipientData]);
   return (
     <>
-      {ModalInfo.open && <Modal cardData={ModalInfo.data} onClose={() => setModalInfo(false)} />}
+      {ModalInfo.open && (
+        <Modal cardData={ModalInfo.data} onClose={() => setModalInfo(false)} />
+      )}
       <S.Container background={location.state}>
         <S.HeaderBox>
           <NavBar />
-          {recipientInfo && <NavOptionalBar data={recipientInfo} onToast={handleUrlCopyClick} />}
+          {recipientInfo && (
+            <NavOptionalBar data={recipientInfo} onToast={handleUrlCopyClick} />
+          )}
         </S.HeaderBox>
         <S.PaperListWrap>
           <S.PaperList>
             {editPermission && (
               <S.DeleteBtn>
-                <SmallButton text="삭제하기" />
+                <Button variant={"primary"} size={40} text="삭제하기" />
               </S.DeleteBtn>
             )}
             {editPermission || (
@@ -102,7 +108,10 @@ function Papers() {
               paperList.map((data) => {
                 return (
                   <div key={data.id} onClick={() => handlePaperCardClick(data)}>
-                    <RollingPaper cardData={data} editPermission={editPermission} />
+                    <RollingPaper
+                      cardData={data}
+                      editPermission={editPermission}
+                    />
                   </div>
                 );
               })}
