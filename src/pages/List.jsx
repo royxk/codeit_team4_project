@@ -12,6 +12,8 @@ import NavBar from "../components/core/NavBar";
 import { media } from "../styles/utils/mediaQuery";
 import Button from "../components/core/Button/Button";
 import FetchMoreRecipients from "../utils/FetchMoreRecipients";
+import ArrowLeftButton from "../components/core/Button/ArrowLeftButton";
+import ArrowRightButton from "../components/core/Button/ArrowRightButton";
 const List = () => {
   // const [recipients, setRecipients] = useState([]);
   // const [recipient2777, setRecipient2777] = useState([]);
@@ -128,9 +130,9 @@ const List = () => {
         </S.Title>
 
         <S.ButtonCardsContainer>
-          <button onClick={() => scrollCards("left", cardsContainerRef1)}>
-            Left
-          </button>
+          <ArrowLeftButton
+            onClick={() => scrollCards("left", cardsContainerRef1)}
+          />
           <S.CardsContainer ref={cardsContainerRef1}>
             {populartRecipients.map((recipient) => (
               <S.Card
@@ -150,9 +152,9 @@ const List = () => {
 
             {/* <FetchMoreRecipients loading={loading} setPage={setPage} /> */}
           </S.CardsContainer>
-          <button onClick={() => scrollCards("right", cardsContainerRef1)}>
-            Right
-          </button>
+          <ArrowRightButton
+            onClick={() => scrollCards("right", cardsContainerRef1)}
+          />
         </S.ButtonCardsContainer>
       </S.ContentContainer>
       <S.ContentContainer>
@@ -160,9 +162,9 @@ const List = () => {
           최근에 만든 롤링 페이퍼⭐️{isLoading && <div>로딩중...</div>}
         </S.Title>
         <S.ButtonCardsContainer>
-          <button onClick={() => scrollCards("left", cardsContainerRef2)}>
-            Left
-          </button>
+          <ArrowLeftButton
+            onClick={() => scrollCards("left", cardsContainerRef2)}
+          />
           <S.CardsContainer ref={cardsContainerRef2}>
             {recentRecipients.map((recipient) => (
               <S.Card
@@ -180,9 +182,9 @@ const List = () => {
               </S.Card>
             ))}
           </S.CardsContainer>
-          <button onClick={() => scrollCards("right", cardsContainerRef2)}>
-            Right
-          </button>
+          <ArrowRightButton
+            onClick={() => scrollCards("right", cardsContainerRef2)}
+          />
         </S.ButtonCardsContainer>{" "}
       </S.ContentContainer>
       <S.BottomButtonWrapper>
