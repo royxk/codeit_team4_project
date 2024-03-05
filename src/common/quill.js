@@ -17,7 +17,3 @@ export const DEFAULT_QUILL_STYLE = {
     "maxWidth": "720px",
     "backgroundColor": theme.colors.white
 }
-
-export const changeInnerHTMLSafely = (HTML) => {
-    const sanitizedHTML = DOMPurify.sanitize(HTML, whitelist);
-}
