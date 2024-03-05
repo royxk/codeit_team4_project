@@ -18,6 +18,7 @@ export default Button;
 
 const S = {
   Button: styled.button`
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -149,28 +150,24 @@ const buttonVariantMap = {
 const buttonSizeMap = {
   56: css`
     ${textStyle("bold", "bold", "base", "xxl")};
-    min-width: 160px;
     height: 56px;
     border-radius: 12px;
   `,
 
   40: css`
-    ${textStyle("base", 500, "sm", "xl")};
-    min-width: 90px;
+    ${textStyle("base", 400, "sm", "xl")};
     height: 40px;
   `,
 
   36: css`
     ${textStyle("base", 500, "sm")};
     line-heights: 24px;
-    min-width: 90px;
     height: 36px;
   `,
 
   28: css`
     ${textStyle("base", 400, "xxs")};
     line-heights: 20px;
-    min-width: 80px;
     height: 28px;
   `,
 };
