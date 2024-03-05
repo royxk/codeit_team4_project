@@ -12,8 +12,11 @@ import {getRecipientReaction} from "../../apiFetcher/recipients/getRecipientReac
 import {isEqual} from "lodash";
 import theme from "../../styles/theme.js";
 import TopEmojiBlock from "./emoji/TopEmojiBlock.jsx";
+import {handleShareKakao} from "../../apiFetcher/kakao/shareKakao.js";
 
 function NavOptionalBar({data, onToast}) {
+    const KAKAO_API_KEY = import.meta.env.VITE_KAKAO_API_KEY;
+
     let innerMessageCount = data.messageCount > 99 ?
         "99+명이 작성했어요 !" : `${data.messageCount}명이 작성했어요 !`;
 
@@ -44,6 +47,13 @@ function NavOptionalBar({data, onToast}) {
         }
 
         getEmojiData();
+    }, []);
+
+    useEffect(() => {
+        if(!window.Kakao.isInitialized()) {
+            window.Kakao.init(KAKAO_API_KEY);
+            console.log(window.Kakao);
+        }
     }, []);
 
     useEffect(() => {
@@ -173,7 +183,7 @@ function NavOptionalBar({data, onToast}) {
                             {
                                 viewModal === 3 ? <S.ShareModal
                                 >
-                                    <S.InnerShare>카카오톡 공유</S.InnerShare>
+                                    <S.InnerShare onClick={() => handleShareKakao(data)}>카카오톡 공유</S.InnerShare>
                                     <S.InnerShare onClick={() => {
                                         console.log(onToast);
                                         onToast();
