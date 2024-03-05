@@ -13,7 +13,7 @@ import {isEqual} from "lodash";
 import theme from "../../styles/theme.js";
 import TopEmojiBlock from "./emoji/TopEmojiBlock.jsx";
 
-function NavOptionalBar({data}) {
+function NavOptionalBar({data, onToast}) {
     let innerMessageCount = data.messageCount > 99 ?
         "99+명이 작성했어요 !" : `${data.messageCount}명이 작성했어요 !`;
 
@@ -174,7 +174,10 @@ function NavOptionalBar({data}) {
                                 viewModal === 3 ? <S.ShareModal
                                 >
                                     <S.InnerShare>카카오톡 공유</S.InnerShare>
-                                    <S.InnerShare>URL 공유</S.InnerShare>
+                                    <S.InnerShare onClick={() => {
+                                        console.log(onToast);
+                                        onToast();
+                                    }}>URL 공유</S.InnerShare>
                                 </S.ShareModal>: null
                             }
                         </S.EmojiButton>
@@ -357,6 +360,7 @@ const S= {
       gap: 10px;
       overflow: hidden;
       z-index: 7;
+      background-color: ${({theme}) => theme.colors.white};
       
       left: 50%;
       transform: translateX(-95%) translateY(70%);
@@ -434,6 +438,7 @@ const S= {
       border-radius: 8px;
       box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.08);
       z-index: 7;
+      background-color: ${({theme}) => theme.colors.white};
 
       left: 50%;
       transform: translateX(-95%) translateY(30%);
