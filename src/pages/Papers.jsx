@@ -1,9 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import theme from '../styles/theme';
 import { getRecipientMessages } from '../apiFetcher/recipients/getRecipientMessages';
 import { getRecipient } from '../apiFetcher/recipients/getAllRecipients';
+import { deleteRecipient } from '../apiFetcher/recipients/deleteRecipient';
+import { deleteMessage } from '../apiFetcher/messages/deleteMessage';
 import RollingPaper from '../components/core/RollingPaper';
 import EmptyPaper from '../components/core/EmptyPaper';
 import { media } from '../styles/utils/mediaQuery';
@@ -25,12 +27,13 @@ function Papers() {
   const [paperList, setPaperList] = useState([]);
   const [recipientInfo, setRecipientInfo] = useState(null);
   const [isToast, setIsToast] = useState(false);
-  const [paperOffset, setPaperOffset] = useState(5);
+  const [paperOffset, setPaperOffset] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const { id } = useParams();
   const location = useLocation();
   const editPermission = location.pathname.includes('/edit');
   const endData = useRef(false);
+  const navigate = useNavigate();
 
   if (recipientInfo) {
     switch (recipientInfo.backgroundColor) {
@@ -65,15 +68,26 @@ function Papers() {
     }, 5000);
   };
 
+  const handleDeletePaper = async (msgId) => {
+    await deleteMessage(msgId);
+    alert('메세지가 삭제되었습니다');
+    setPaperList((prev) => prev.filter((value) => value.id !== msgId));
+  };
+
+  const handleDeleteRecipient = async () => {
+    await deleteRecipient(id);
+    alert('롤링페이퍼가 삭제되었습니다');
+    navigate('/list', { replace: true });
+  };
+
   const handleGetPaperData = useCallback(async () => {
     setIsLoading(true);
-    const response = await getRecipientMessages(id, 6);
+    const response = await getRecipientMessages(id, 5);
     const { results } = response.data;
-    console.log(response);
     setIsLoading(false);
     setPaperList(results);
     if (JSON.stringify(results) === JSON.stringify(paperList)) {
-      endData.current = true;
+      //endData.current = true;
     }
   }, [id, paperOffset]);
 
@@ -95,31 +109,33 @@ function Papers() {
           <NavBar />
           {recipientInfo && <NavOptionalBar data={recipientInfo} onToast={handleUrlCopyClick} />}
         </S.HeaderBox>
-        <S.PaperListWrap>
-          <S.PaperList>
-            {editPermission && (
-              <S.DeleteBtn>
-                <Button variant={'primary'} size={40}>
-                  삭제하기
-                </Button>
-              </S.DeleteBtn>
-            )}
-            {editPermission || (
-              <Link to={`/post/${id}/message`}>
-                <EmptyPaper />
-              </Link>
-            )}
-            {paperList &&
-              paperList.map((data) => {
-                return (
-                  <div key={data.id} onClick={() => handlePaperCardClick(data)}>
-                    <RollingPaper cardData={data} editPermission={editPermission} />
-                  </div>
-                );
-              })}
-            {endData.current || <FetchMore loading={isLoading} setPage={setPaperOffset} />}
-          </S.PaperList>
-        </S.PaperListWrap>
+        <S.ContentWrap>
+          {editPermission && (
+            <S.DeleteBtn onClick={handleDeleteRecipient}>
+              <Button variant={'primary'} size={40}>
+                삭제하기
+              </Button>
+            </S.DeleteBtn>
+          )}
+          <S.PaperListWrap>
+            <S.PaperList>
+              {editPermission || (
+                <Link to={`/post/${id}/message`}>
+                  <EmptyPaper />
+                </Link>
+              )}
+              {paperList &&
+                paperList.map((data) => {
+                  return (
+                    <div key={data.id} onClick={() => handlePaperCardClick(data)}>
+                      <RollingPaper cardData={data} editPermission={editPermission} onDelete={() => handleDeletePaper(data.id)} />
+                    </div>
+                  );
+                })}
+              {endData.current || <FetchMore loading={isLoading} setPage={setPaperOffset} />}
+            </S.PaperList>
+          </S.PaperListWrap>
+        </S.ContentWrap>
       </S.Container>
       {isToast && (
         <S.ToastBox>
@@ -188,8 +204,8 @@ const S = {
     ${media.desktop`
       position: absolute;
       inset: initial;
-      top: -10%;
-      right: 0;
+      top: -7%;
+      right: 2%;
       margin: initial;
       width: initial;
     `}
@@ -210,5 +226,8 @@ const S = {
     ${media.tablet`
       width: 720px
     `}
+  `,
+  ContentWrap: styled.div`
+    position: relative;
   `,
 };
