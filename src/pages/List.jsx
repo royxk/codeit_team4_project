@@ -15,8 +15,6 @@ import FetchMoreRecipients from "../utils/FetchMoreRecipients";
 import ArrowLeftButton from "../components/core/Button/ArrowLeftButton";
 import ArrowRightButton from "../components/core/Button/ArrowRightButton";
 const List = () => {
-  // const [recipients, setRecipients] = useState([]);
-  // const [recipient2777, setRecipient2777] = useState([]);
   const navigate = useNavigate();
   const [populartRecipients, setPopularRecipients] = useState([]);
   const [recentRecipients, setRecentRecipients] = useState([]);
@@ -34,14 +32,6 @@ const List = () => {
     });
     return response;
   };
-
-  // const fetch2777 = async () => {
-  //   getRecipient(2777).then((res) => {
-  //     console.log("2777 조회...");
-  //     setRecipient2777(res.data);
-  //     return res.data;
-  //   });
-  // };
 
   const fetchRecipients = async (index) => {
     const response = await getAllRecipients(index).then((res) => {
@@ -112,92 +102,101 @@ const List = () => {
   }, []);
 
   return (
-    <S.HomePageWrapper>
-      <S.NavContainer>
-        <NavBar onClick={() => onClick("")} />
-        <S.ButtonWrapper>
+    console.log(populartRecipients),
+    (
+      <S.HomePageWrapper>
+        <S.NavContainer>
+          <NavBar onClick={() => onClick("")} />
+          <S.ButtonWrapper>
+            <Button
+              variant="outLine"
+              size={40}
+              onClick={() => onClick("papercreate")}
+            >
+              롤링 페이퍼 만들기
+            </Button>
+          </S.ButtonWrapper>
+        </S.NavContainer>
+        <S.ContentContainer>
+          <S.Title>
+            인기 롤링 페이퍼 🔥 {isLoading && <div>로딩중...</div>}
+          </S.Title>
+
+          <S.ButtonCardsContainer>
+            <ArrowLeftButton
+              onClick={() => scrollCards("left", cardsContainerRef1)}
+            />
+            <S.CardsContainer ref={cardsContainerRef1}>
+              {populartRecipients.map((recipient) => (
+                <S.Card
+                  key={recipient.id}
+                  onClick={() => handleCardClick(recipient)}
+                >
+                  <Card
+                    // name={recipient.name}
+                    // backgroundColor={recipient.backgroundColor}
+                    // backgroundImageURL={recipient.backgroundImageURL}
+                    // // emojiData={recipient2777.topReactions}
+                    // messageCount={recipient.messageCount}
+                    // recentMessages={recipient.recentMessages}
+                    data={recipient}
+                  />
+                </S.Card>
+              ))}
+
+              {/* <FetchMoreRecipients loading={loading} setPage={setPage} /> */}
+            </S.CardsContainer>
+            <ArrowRightButton
+              onClick={() => scrollCards("right", cardsContainerRef1)}
+            />
+          </S.ButtonCardsContainer>
+        </S.ContentContainer>
+        <S.ContentContainer>
+          <S.Title>
+            최근에 만든 롤링 페이퍼⭐️{isLoading && <div>로딩중...</div>}
+          </S.Title>
+          <S.ButtonCardsContainer>
+            <ArrowLeftButton
+              onClick={() => scrollCards("left", cardsContainerRef2)}
+            />
+            <S.CardsContainer ref={cardsContainerRef2}>
+              {recentRecipients.map(
+                (recipient) => (
+                  console.log(recipient),
+                  (
+                    <S.Card
+                      key={recipient.id}
+                      onClick={() => handleCardClick(recipient)}
+                    >
+                      <Card
+                        // name={recipient.name}
+                        // backgroundColor={recipient.backgroundColor}
+                        // backgroundImageURL={recipient.backgroundImageURL}
+                        // // emojiData={recipient2777.topReactions}
+                        // messageCount={recipient.messageCount}
+                        data={recipient}
+                      />
+                    </S.Card>
+                  )
+                )
+              )}
+            </S.CardsContainer>
+            <ArrowRightButton
+              onClick={() => scrollCards("right", cardsContainerRef2)}
+            />
+          </S.ButtonCardsContainer>{" "}
+        </S.ContentContainer>
+        <S.BottomButtonWrapper>
           <Button
-            variant="outLine"
-            size={40}
+            variant="primary"
+            size={56}
             onClick={() => onClick("papercreate")}
           >
-            롤링 페이퍼 만들기
+            나도 만들어보기
           </Button>
-        </S.ButtonWrapper>
-      </S.NavContainer>
-      <S.ContentContainer>
-        <S.Title>
-          인기 롤링 페이퍼 🔥 {isLoading && <div>로딩중...</div>}
-        </S.Title>
-
-        <S.ButtonCardsContainer>
-          <ArrowLeftButton
-            onClick={() => scrollCards("left", cardsContainerRef1)}
-          />
-          <S.CardsContainer ref={cardsContainerRef1}>
-            {populartRecipients.map((recipient) => (
-              <S.Card
-                key={recipient.key}
-                onClick={() => handleCardClick(recipient)}
-              >
-                <Card
-                  key={recipient.key}
-                  name={recipient.name}
-                  backgroundColor={recipient.backgroundColor}
-                  backgroundImageURL={recipient.backgroundImageURL}
-                  // emojiData={recipient2777.topReactions}
-                  messageCount={recipient.messageCount}
-                />
-              </S.Card>
-            ))}
-
-            {/* <FetchMoreRecipients loading={loading} setPage={setPage} /> */}
-          </S.CardsContainer>
-          <ArrowRightButton
-            onClick={() => scrollCards("right", cardsContainerRef1)}
-          />
-        </S.ButtonCardsContainer>
-      </S.ContentContainer>
-      <S.ContentContainer>
-        <S.Title>
-          최근에 만든 롤링 페이퍼⭐️{isLoading && <div>로딩중...</div>}
-        </S.Title>
-        <S.ButtonCardsContainer>
-          <ArrowLeftButton
-            onClick={() => scrollCards("left", cardsContainerRef2)}
-          />
-          <S.CardsContainer ref={cardsContainerRef2}>
-            {recentRecipients.map((recipient) => (
-              <S.Card
-                key={recipient.key}
-                onClick={() => handleCardClick(recipient)}
-              >
-                <Card
-                  key={recipient.key}
-                  name={recipient.name}
-                  backgroundColor={recipient.backgroundColor}
-                  backgroundImageURL={recipient.backgroundImageURL}
-                  // emojiData={recipient2777.topReactions}
-                  messageCount={recipient.messageCount}
-                />
-              </S.Card>
-            ))}
-          </S.CardsContainer>
-          <ArrowRightButton
-            onClick={() => scrollCards("right", cardsContainerRef2)}
-          />
-        </S.ButtonCardsContainer>{" "}
-      </S.ContentContainer>
-      <S.BottomButtonWrapper>
-        <Button
-          variant="primary"
-          size={56}
-          onClick={() => onClick("papercreate")}
-        >
-          나도 만들어보기
-        </Button>
-      </S.BottomButtonWrapper>
-    </S.HomePageWrapper>
+        </S.BottomButtonWrapper>
+      </S.HomePageWrapper>
+    )
   );
 };
 
@@ -302,9 +301,9 @@ const S = {
     -webkit-overflow-scrolling: touch;
     scroll-snap-align: center;
     gap: 50px;
-    &::-webkit-scrollbar {
+    /* &::-webkit-scrollbar {
       display: none;
-    }
+    } */
   `,
   Card: styled.div`
     flex: 0 0 auto;
