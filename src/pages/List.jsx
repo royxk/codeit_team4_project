@@ -6,12 +6,10 @@ import {
   getAllRecipients,
   getRecipient,
 } from "../apiFetcher/recipients/getAllRecipients";
-import TopEmojiBlock from "../components/header/emoji/TopEmojiBlock";
 import Card from "../components/core/CardList/Card";
 import NavBar from "../components/core/NavBar";
 import { media } from "../styles/utils/mediaQuery";
 import Button from "../components/core/Button/Button";
-import FetchMoreRecipients from "../utils/FetchMoreRecipients";
 import ArrowLeftButton from "../components/core/Button/ArrowLeftButton";
 import ArrowRightButton from "../components/core/Button/ArrowRightButton";
 const List = () => {
@@ -132,15 +130,7 @@ const List = () => {
                   key={recipient.id}
                   onClick={() => handleCardClick(recipient)}
                 >
-                  <Card
-                    // name={recipient.name}
-                    // backgroundColor={recipient.backgroundColor}
-                    // backgroundImageURL={recipient.backgroundImageURL}
-                    // // emojiData={recipient2777.topReactions}
-                    // messageCount={recipient.messageCount}
-                    // recentMessages={recipient.recentMessages}
-                    data={recipient}
-                  />
+                  <Card data={recipient} />
                 </S.Card>
               ))}
 
@@ -168,14 +158,7 @@ const List = () => {
                       key={recipient.id}
                       onClick={() => handleCardClick(recipient)}
                     >
-                      <Card
-                        // name={recipient.name}
-                        // backgroundColor={recipient.backgroundColor}
-                        // backgroundImageURL={recipient.backgroundImageURL}
-                        // // emojiData={recipient2777.topReactions}
-                        // messageCount={recipient.messageCount}
-                        data={recipient}
-                      />
+                      <Card data={recipient} />
                     </S.Card>
                   )
                 )

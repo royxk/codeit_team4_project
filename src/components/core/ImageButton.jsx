@@ -1,14 +1,15 @@
 import React from "react";
 import styled from "styled-components";
+import selectedImage from "../../assets/images/selectedImage.svg";
 
 function handleChange(url) {
   console.log(url);
 }
 
-const ImageButton = ({ url, onClick }) => {
+const ImageButton = ({ url, onClick, isSelected }) => {
   return (
     <S.Box onClick={onClick} $paint={url}>
-      ImageButton
+      {isSelected && <S.SelectedImage src={selectedImage} alt="Selected" />}
     </S.Box>
   );
 };
@@ -27,5 +28,8 @@ const S = {
     justify-content: center;
     gap: 20px;
     height: 154px;
+  `,
+  SelectedImage: styled.img`
+    position: absolute;
   `,
 };
