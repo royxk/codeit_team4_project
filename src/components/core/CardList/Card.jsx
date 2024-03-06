@@ -1,29 +1,26 @@
 import styled from "styled-components";
 import { textStyle } from "./CardText";
+import RecipientListBlock from "../../core/RecipientListBlock";
+import TopEmojiBlock from "../../header/emoji/TopEmojiBlock";
 
-const Card = (props) => {
-  const background = props.backgroundImageURL
-    ? "picture"
-    : props.backgroundColor;
+const Card = ({ data }) => {
+  const background = data.backgroundImageURL ? "picture" : data.backgroundColor;
 
-  const backgroundImageURL = props.backgroundImageURL;
+  const backgroundImageURL = data.backgroundImageURL;
 
   return (
     <S.container className={background} backgroundImageURL={backgroundImageURL}>
       <S.contents>
         <S.information>
-          <S.name>To. {props.name}</S.name>
+          <S.name>To. {data.name}</S.name>
           <S.profileList>
-            <S.profileFirst></S.profileFirst>
-            <S.profileSecond></S.profileSecond>
-            <S.profileThird></S.profileThird>
-            <S.profileCountBox>
-              <S.profileCount>+27</S.profileCount>
-            </S.profileCountBox>
+            <RecipientListBlock data={data} />
           </S.profileList>
-          <S.messageCount>{props.messageCount}명이 작성했어요!</S.messageCount>
+          <S.messageCount>{data.messageCount}명이 작성했어요!</S.messageCount>
         </S.information>
-        <S.emoji>이모지</S.emoji>
+        <S.emoji>
+          <TopEmojiBlock emojiData={data.topReactions} maxLength={3} />
+        </S.emoji>
       </S.contents>
       <S.pattern className={background}></S.pattern>
     </S.container>
@@ -93,35 +90,6 @@ const S = {
     position: relative;
   `,
 
-  profileFirst: styled.div`
-    width: 28px;
-    height: 28px;
-    border-radius: 50px;
-    border: 1.5px solid ${({ theme }) => theme.colors.white};
-    background-color: ${({ theme }) => theme.colors.white};
-    position: absolute;
-  `,
-
-  profileSecond: styled.div`
-    width: 28px;
-    height: 28px;
-    border-radius: 50px;
-    border: 1.5px solid ${({ theme }) => theme.colors.white};
-    background-color: ${({ theme }) => theme.colors.white};
-    position: absolute;
-    left: 15px;
-  `,
-
-  profileThird: styled.div`
-    width: 28px;
-    height: 28px;
-    border-radius: 50px;
-    border: 1.5px solid ${({ theme }) => theme.colors.white};
-    background-color: ${({ theme }) => theme.colors.white};
-    position: absolute;
-    left: 30px;
-  `,
-
   profileCountBox: styled.div`
     width: 33px;
     height: 28px;
@@ -152,6 +120,7 @@ const S = {
   `,
 
   pattern: styled.div`
+    z-index: 0;
     &.blue {
       bottom: 95px;
       right: 0px;
@@ -185,7 +154,6 @@ const S = {
         transform: rotate(135deg) skewY(-45deg) scale(0.707, 1.414)
           translate(50%);
       }
-      z-index: 2;
     }
 
     &.purple {
