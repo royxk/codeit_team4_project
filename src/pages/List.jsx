@@ -27,6 +27,7 @@ const List = () => {
   const onClick = (link) => {
     navigate(`/${link}`);
   };
+
   const getTotalRecipients = async () => {
     const response = getAllRecipients().then((res) => {
       return res.data.count;
@@ -83,6 +84,7 @@ const List = () => {
 
     setIsLoading(true);
     async function fetchData() {
+      const index = await getTotalRecipients();
       const list = await getAllRecipients(index).then((res) => {
         console.log("전체조회...");
         console.log(res.data.results.length);
