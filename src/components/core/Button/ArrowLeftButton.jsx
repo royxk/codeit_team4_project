@@ -1,9 +1,9 @@
 import arrowLeftButton from "../../../assets/images/arrowLeftButton.svg";
 import styled from "styled-components";
 
-const ArrowLeftButton = () => {
+const ArrowLeftButton = ({ ...props }) => {
   return (
-    <StyledArrowButton>
+    <StyledArrowButton {...props}>
       <img src={arrowLeftButton}></img>
     </StyledArrowButton>
   );
