@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import Input from "../components/Input/Input";
 import styled from "styled-components";
 import ColorButton from "../components/core/ColorButton";
-// import Button from "../components/core/Button/Button";
 import { useState } from "react";
 import theme from "../styles/theme";
 import { postRecipient } from "../apiFetcher/recipients/postRecipient";
@@ -11,17 +10,19 @@ import { getBackgroundImages } from "../apiFetcher/backgroundImages";
 import ImageButton from "../components/core/ImageButton";
 import { media } from "../styles/utils/mediaQuery";
 import NavBar from "../components/core/NavBar";
+import { useNavigate } from "react-router-dom";
+import Button from "../components/core/Button/Button";
 
 const PaperCreate = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     team: "4",
     name: "",
     backgroundColor: "beige",
   });
-
-  const [recipients, setRecipients] = useState([]);
   const [selectionType, setSelectionType] = useState("color");
   const [backgroundImages, setBackgroundImages] = useState([]);
+  const [selectedImagge, setSelectedImage] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -42,21 +43,25 @@ const PaperCreate = () => {
     });
   }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    postRecipient(formData)
-      .then((res) => {})
-      .catch((error) => {
-        console.error("Submission error:", error);
-      });
-  };
 
-  const handleGetRecipients = () => {
-    const response = getAllRecipients().then((res) => {
-      console.log(res);
-      setRecipients(res.data.results);
-      return res.data;
-    });
+    try {
+      await postRecipient(formData);
+      const res = await getAllRecipients(1);
+      const results = res.data.results;
+      if (results.length > 0) {
+        const { id, backgroundColor, backgroundImageURL } = results[0];
+        console.log(id);
+        navigate(`/post/${id}`, {
+          state: { color: backgroundColor, img: backgroundImageURL },
+        });
+      } else {
+        console.log("No recipients found");
+      }
+    } catch (error) {
+      console.error("Submission error:", error);
+    }
   };
 
   const handleColorChange = (color) => (e) => {
@@ -75,6 +80,7 @@ const PaperCreate = () => {
       ...prevFormData,
       backgroundImageURL: image,
     }));
+    setSelectedImage(image);
   };
 
   const handleSelectColor = (e) => {
@@ -160,26 +166,17 @@ const PaperCreate = () => {
                       key={image}
                       onClick={handleImageChange(image)}
                       url={image}
+                      isSelected={selectedImagge === image}
                     />
                   );
                 })}
               </S.ColorButtonContainer>
             )}
           </S.ButtonContainer>
-
-          <button onClick={handleSubmit}>데이터추가</button>
+          <Button variant="primary" size={40} onClick={handleSubmit}>
+            데이터추가
+          </Button>
         </S.Container>
-        <button onClick={handleGetRecipients}>조회하기</button>
-        {recipients.map((recipient) => {
-          return (
-            <div key={recipient.id}>
-              <p>{recipient.id}</p>
-              <p>{recipient.name}</p>
-              <p>{recipient.backgroundColor}</p>
-              <p>{recipient.backgroundImageURL}</p>
-            </div>
-          );
-        })}
       </S.PaperCreateContainer>
     </>
   );
