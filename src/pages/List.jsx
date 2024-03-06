@@ -12,6 +12,7 @@ import { media } from "../styles/utils/mediaQuery";
 import Button from "../components/core/Button/Button";
 import ArrowLeftButton from "../components/core/Button/ArrowLeftButton";
 import ArrowRightButton from "../components/core/Button/ArrowRightButton";
+import Loading from "../components/core/Loading";
 const List = () => {
   const navigate = useNavigate();
   const [populartRecipients, setPopularRecipients] = useState([]);
@@ -83,8 +84,8 @@ const List = () => {
         const sortedByRecent = [...res.data.results].sort(
           (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
         );
-        setPopularRecipients(sortedByPopularity);
-        setRecentRecipients(sortedByRecent);
+        setPopularRecipients(sortedByPopularity.slice(0, 7));
+        setRecentRecipients(sortedByRecent.slice(0, 7));
         setIsLoading(false);
         return res.data.results;
       });
@@ -103,6 +104,7 @@ const List = () => {
     console.log(populartRecipients),
     (
       <S.HomePageWrapper>
+        {isLoading && <Loading isLoading={isLoading}></Loading>}
         <S.NavContainer>
           <NavBar onClick={() => onClick("")} />
           <S.ButtonWrapper>
@@ -116,9 +118,7 @@ const List = () => {
           </S.ButtonWrapper>
         </S.NavContainer>
         <S.ContentContainer>
-          <S.Title>
-            인기 롤링 페이퍼 🔥 {isLoading && <div>로딩중...</div>}
-          </S.Title>
+          <S.Title>인기 롤링 페이퍼 🔥 </S.Title>
 
           <S.ButtonCardsContainer>
             <ArrowLeftButton
@@ -142,9 +142,7 @@ const List = () => {
           </S.ButtonCardsContainer>
         </S.ContentContainer>
         <S.ContentContainer>
-          <S.Title>
-            최근에 만든 롤링 페이퍼⭐️{isLoading && <div>로딩중...</div>}
-          </S.Title>
+          <S.Title>최근에 만든 롤링 페이퍼⭐️</S.Title>
           <S.ButtonCardsContainer>
             <ArrowLeftButton
               onClick={() => scrollCards("left", cardsContainerRef2)}
