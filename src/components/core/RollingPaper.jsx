@@ -3,6 +3,7 @@ import theme from '../../styles/theme';
 import RelationBadge from '../core/RelationBadge';
 import { media } from '../../styles/utils/mediaQuery';
 import TrashButton from '../core/Button/TrashButton';
+import { ChangeInnerHTMLSafely } from '../../utils/ChangeInnerHTMLSafely';
 
 const CARD_DATA_INIT = {
   id: 0,
@@ -41,7 +42,7 @@ function RollingPaper({ cardData = CARD_DATA_INIT, editPermission }) {
               </div>
             )}
           </S.CardHeader>
-          <S.CardContent>{cardData?.content}</S.CardContent>
+          <S.CardContent>{ChangeInnerHTMLSafely(cardData?.content)}</S.CardContent>
         </div>
         <S.CreateAt>{cardData?.createdAt.substring(0, 10)}</S.CreateAt>
       </S.FlexColum>

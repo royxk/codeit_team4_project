@@ -30,12 +30,10 @@ const S = {
       margin-top: 10px;
       text-align: center;
       line-height: 28px;
-      border-top: solid 1px #000;
-      border-bottom: solid 1px #000;
-      background-color: #ff9;
+      background-color: transparent;
     }
     &.loading:after {
-      content: '... 로딩중 ...';
+      content: '  ';
     }
   `,
 };
