@@ -12,6 +12,7 @@ import { media } from "../styles/utils/mediaQuery";
 import Button from "../components/core/Button/Button";
 import ArrowLeftButton from "../components/core/Button/ArrowLeftButton";
 import ArrowRightButton from "../components/core/Button/ArrowRightButton";
+import Loading from "../components/core/Loading";
 const List = () => {
   const navigate = useNavigate();
   const [populartRecipients, setPopularRecipients] = useState([]);
@@ -83,8 +84,8 @@ const List = () => {
         const sortedByRecent = [...res.data.results].sort(
           (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
         );
-        setPopularRecipients(sortedByPopularity);
-        setRecentRecipients(sortedByRecent);
+        setPopularRecipients(sortedByPopularity.slice(0, 7));
+        setRecentRecipients(sortedByRecent.slice(0, 7));
         setIsLoading(false);
         return res.data.results;
       });
@@ -102,74 +103,82 @@ const List = () => {
   return (
     console.log(populartRecipients),
     (
-      <>
-      <NavBar buttonVisible={true} paddingInline="24px"/>
-        <S.HomePageWrapper>
-          <S.ContentContainer>
-            <S.Title>
-              인기 롤링 페이퍼 🔥 {isLoading && <div>로딩중...</div>}
-            </S.Title>
-
-            <S.ButtonCardsContainer>
-              <ArrowLeftButton
-                onClick={() => scrollCards("left", cardsContainerRef1)}
-              />
-              <S.CardsContainer ref={cardsContainerRef1}>
-                {populartRecipients.map((recipient) => (
-                  <S.Card
-                    key={recipient.id}
-                    onClick={() => handleCardClick(recipient)}
-                  >
-                    <Card data={recipient} />
-                  </S.Card>
-                ))}
-
-                {/* <FetchMoreRecipients loading={loading} setPage={setPage} /> */}
-              </S.CardsContainer>
-              <ArrowRightButton
-                onClick={() => scrollCards("right", cardsContainerRef1)}
-              />
-            </S.ButtonCardsContainer>
-          </S.ContentContainer>
-          <S.ContentContainer>
-            <S.Title>
-              최근에 만든 롤링 페이퍼⭐️{isLoading && <div>로딩중...</div>}
-            </S.Title>
-            <S.ButtonCardsContainer>
-              <ArrowLeftButton
-                onClick={() => scrollCards("left", cardsContainerRef2)}
-              />
-              <S.CardsContainer ref={cardsContainerRef2}>
-                {recentRecipients.map(
-                  (recipient) => (
-                    console.log(recipient),
-                    (
-                      <S.Card
-                        key={recipient.id}
-                        onClick={() => handleCardClick(recipient)}
-                      >
-                        <Card data={recipient} />
-                      </S.Card>
-                    )
-                  )
-                )}
-              </S.CardsContainer>
-              <ArrowRightButton
-                onClick={() => scrollCards("right", cardsContainerRef2)}
-              />
-            </S.ButtonCardsContainer>{" "}
-          </S.ContentContainer>
-          <S.BottomButtonWrapper>
+      <S.HomePageWrapper>
+        {isLoading && <Loading isLoading={isLoading}></Loading>}
+        <S.NavContainer>
+          <NavBar onClick={() => onClick("")} />
+          <S.ButtonWrapper>
             <Button
-              variant="primary"
-              size={56}
+              variant="outLine"
+              size={40}
               onClick={() => onClick("papercreate")}
             >
-              나도 만들어보기
+              롤링 페이퍼 만들기
             </Button>
-          </S.BottomButtonWrapper>
-        </S.HomePageWrapper>
-      </>
+          </S.ButtonWrapper>
+        </S.NavContainer>
+        <S.ContentContainer>
+          <S.Title>인기 롤링 페이퍼 🔥 </S.Title>
+
+          <S.ButtonCardsContainer>
+            <ArrowLeftButton
+              onClick={() => scrollCards("left", cardsContainerRef1)}
+            />
+            <S.CardsContainer ref={cardsContainerRef1}>
+              {populartRecipients.map((recipient) => (
+                <S.Card
+                  key={recipient.id}
+                  onClick={() => handleCardClick(recipient)}
+                >
+                  <Card data={recipient} />
+                </S.Card>
+              ))}
+
+              {/* <FetchMoreRecipients loading={loading} setPage={setPage} /> */}
+            </S.CardsContainer>
+            <ArrowRightButton
+              onClick={() => scrollCards("right", cardsContainerRef1)}
+            />
+          </S.ButtonCardsContainer>
+        </S.ContentContainer>
+        <S.ContentContainer>
+          <S.Title>
+            최근에 만든 롤링 페이퍼⭐️{isLoading && <div>로딩중...</div>}
+          </S.Title>
+          <S.ButtonCardsContainer>
+            <ArrowLeftButton
+              onClick={() => scrollCards("left", cardsContainerRef2)}
+            />
+            <S.CardsContainer ref={cardsContainerRef2}>
+              {recentRecipients.map(
+                (recipient) => (
+                  console.log(recipient),
+                  (
+                    <S.Card
+                      key={recipient.id}
+                      onClick={() => handleCardClick(recipient)}
+                    >
+                      <Card data={recipient} />
+                    </S.Card>
+                  )
+                )
+              )}
+            </S.CardsContainer>
+            <ArrowRightButton
+              onClick={() => scrollCards("right", cardsContainerRef2)}
+            />
+          </S.ButtonCardsContainer>{" "}
+        </S.ContentContainer>
+        <S.BottomButtonWrapper>
+          <Button
+            variant="primary"
+            size={56}
+            onClick={() => onClick("papercreate")}
+          >
+            나도 만들어보기
+          </Button>
+        </S.BottomButtonWrapper>
+      </S.HomePageWrapper>
     )
   );
 };
