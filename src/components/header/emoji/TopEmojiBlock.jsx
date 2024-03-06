@@ -13,7 +13,7 @@ function TopEmojiBlock ({...props}) {
                 new Array(Math.min(maxLength, Object.keys(emojiData).length)).fill(0).map((x, index) => {
                     let emoji = emojiData[index].emoji;
                     let count = emojiData[index].count;
-                    return <ReactionBadge key={index} emoji={emoji} count={count} />
+                    return count !== 0 ? <ReactionBadge key={index} emoji={emoji} count={count} /> : null
                 })
             }
         </S.EmojiWrapper>
