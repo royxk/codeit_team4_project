@@ -95,7 +95,7 @@ function Papers() {
           <S.PaperList>
             {editPermission && (
               <S.DeleteBtn>
-                <Button variant={'primary'} size={40} text="삭제하기" />
+                <Button variant={'primary'} size={40} >삭제하기</Button>
               </S.DeleteBtn>
             )}
             {editPermission || (
