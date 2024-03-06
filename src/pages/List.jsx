@@ -84,6 +84,7 @@ const List = () => {
         );
         setPopularRecipients(sortedByPopularity.slice(0, 9));
         setRecentRecipients(sortedByRecent.slice(0, 9));
+
         setIsLoading(false);
         return res.data.results;
       });
