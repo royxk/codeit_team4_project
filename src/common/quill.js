@@ -1,6 +1,4 @@
 import theme from "../styles/theme.js";
-import DOMPurify from 'dompurify';
-import whitelist from "./whitelist.js";
 
 export const QUILL_MODULES = {
     toolbar: {
