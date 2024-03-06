@@ -5,7 +5,7 @@ import loading from "../../assets/images/Loading.svg"
 function Loading ({loading}) {
 
     return (
-        <S.Loading />
+        <S.Loading loading={loading}/>
     )
 }
 
@@ -13,7 +13,7 @@ export default Loading;
 
 const S = {
     Loading:styled.div`
-      display: ${loading ? 'flex' : 'none'};
+      display: ${(props) => props.loading ? 'flex' : 'none'};
       position: fixed;
       justify-content: center;
       align-items: center;
