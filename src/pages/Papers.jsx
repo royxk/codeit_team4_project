@@ -30,6 +30,7 @@ function Papers() {
   const { id } = useParams();
   const location = useLocation();
   const editPermission = location.pathname.includes('/edit');
+  const endData = useRef(false);
 
   if (recipientInfo) {
     switch (recipientInfo.backgroundColor) {
@@ -46,7 +47,6 @@ function Papers() {
         recipientInfo.backgroundColor = theme.colors.green[200];
         break;
       default:
-        recipientInfo.backgroundColor = theme.colors.orange[200];
         break;
     }
   }
@@ -67,10 +67,14 @@ function Papers() {
 
   const handleGetPaperData = useCallback(async () => {
     setIsLoading(true);
-    const response = await getRecipientMessages(id, paperOffset, 6);
+    const response = await getRecipientMessages(id, 6);
     const { results } = response.data;
+    console.log(response);
     setIsLoading(false);
     setPaperList(results);
+    if (JSON.stringify(results) === JSON.stringify(paperList)) {
+      endData.current = true;
+    }
   }, [id, paperOffset]);
 
   const handleGetRecipientData = useCallback(async () => {
@@ -95,7 +99,9 @@ function Papers() {
           <S.PaperList>
             {editPermission && (
               <S.DeleteBtn>
-                <Button variant={'primary'} size={40} >삭제하기</Button>
+                <Button variant={'primary'} size={40}>
+                  삭제하기
+                </Button>
               </S.DeleteBtn>
             )}
             {editPermission || (
@@ -111,7 +117,7 @@ function Papers() {
                   </div>
                 );
               })}
-            <FetchMore loading={isLoading} setPage={setPaperOffset} />
+            {endData.current || <FetchMore loading={isLoading} setPage={setPaperOffset} />}
           </S.PaperList>
         </S.PaperListWrap>
       </S.Container>
