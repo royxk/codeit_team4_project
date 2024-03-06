@@ -42,7 +42,7 @@ function RollingPaper({ cardData = CARD_DATA_INIT, editPermission }) {
               </div>
             )}
           </S.CardHeader>
-          <S.CardContent>{ChangeInnerHTMLSafely(cardData?.content)}</S.CardContent>
+          <S.CardContent font={cardData.font}>{ChangeInnerHTMLSafely(cardData?.content)}</S.CardContent>
         </div>
         <S.CreateAt>{cardData?.createdAt.substring(0, 10)}</S.CreateAt>
       </S.FlexColum>
@@ -82,6 +82,7 @@ const S = {
     -webkit-line-clamp: 3;
     font-size: ${theme.fontSizes.xs};
     line-height: ${theme.lineHeights.lg};
+    font-family: ${({ font }) => font};
     ${media.tablet`
       font-size: ${theme.fontSizes.base};
       line-height: ${theme.lineHeights.xxl}

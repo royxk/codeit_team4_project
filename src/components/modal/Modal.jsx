@@ -56,7 +56,7 @@ function Modal({ cardData = CARD_DATA_INIT, onClose }) {
               </S.FlexBox>
               <S.CreateAt>{cardData?.createdAt.substring(0, 10)}</S.CreateAt>
             </S.ModalHeader>
-            <S.ModalContent>{ChangeInnerHTMLSafely(cardData?.content)}</S.ModalContent>
+            <S.ModalContent font={cardData.font}>{ChangeInnerHTMLSafely(cardData?.content)}</S.ModalContent>
             <S.ModalButton onClick={handleCloseClick}>
               <Button variant={'primary'} size={40}>
                 확인
@@ -111,6 +111,7 @@ const S = {
     height: 250px;
     word-wrap: break-word;
     overflow-y: auto;
+    font-family: ${({ font }) => font};
     font-size: ${theme.fontSizes.base};
     line-height: ${theme.lineHeights.xxl};
   `,
