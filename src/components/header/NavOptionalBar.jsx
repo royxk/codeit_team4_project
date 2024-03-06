@@ -114,21 +114,20 @@ function NavOptionalBar({data, onToast}) {
                                         <S.EmojiListModalInnerWrapper>
                                             {
                                                 emojiListChange ?
-                                                    new Array(Math.min(4, Math.max(Object.keys(emojiData).length - 6, 0))).fill(0).map((x, index) => {
+                                                    new Array(Math.min(4, Math.max(Object.keys(emojiData).length - 7, 0))).fill(0).map((x, index) => {
                                                         let emoji = emojiData[index + 7].emoji;
                                                         let count = emojiData[index + 7].count;
                                                         return <ReactionBadge key={index} emoji={emoji} count={count} />
                                                     })
-                                                    : new Array(Math.min(3, Math.max(Object.keys(emojiData).length - 3, 0))).fill(0).map((x, index) => {
-                                                        let emoji = emojiData[index + 5].emoji;
-                                                        let count = emojiData[index + 5].count;
+                                                    : new Array(Math.min(3, Math.max(Object.keys(emojiData).length - 6, 0))).fill(0).map((x, index) => {
+                                                        let emoji = emojiData[index + 6].emoji;
+                                                        let count = emojiData[index + 6].count;
                                                         return <ReactionBadge key={index} emoji={emoji} count={count} />
                                                     })
                                             }
                                         </S.EmojiListModalInnerWrapper>
                                     </S.EmojiListModal> : null
                             }
-
                         </S.EmojiOpenButton>
                     </S.ViewEmojiWrapper>
                     <S.ControllerWrapper>
