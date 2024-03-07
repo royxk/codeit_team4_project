@@ -23,15 +23,15 @@ const Button = styled.button`
     background-color: transparent;
 
     &:hover {
-        border: 2px solid ${({ theme }) => theme.colors.purple[800]};
+        border: 2px solid ${({ theme }) => theme.colors.purple[400]};
       }
 
       &:active {
-        border : ${({ theme }) => theme.colors.purple[800]};
+        border : ${({ theme }) => theme.colors.purple[500]};
         color: ${theme.colors.purple[700]}; 
 
         &:focus {
-            border: 2px solid ${({ theme }) => theme.colors.purple[900]};
+            border: 2px solid ${({ theme }) => theme.colors.purple[500]};
           }
       }
   ${(props) =>
