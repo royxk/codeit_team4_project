@@ -32,8 +32,8 @@ function Papers() {
   const { id } = useParams();
   const location = useLocation();
   const editPermission = location.pathname.includes('/edit');
-  const endData = useRef(false);
   const navigate = useNavigate();
+  const endData = useRef(false);
 
   if (recipientInfo) {
     switch (recipientInfo.backgroundColor) {
@@ -82,13 +82,13 @@ function Papers() {
 
   const handleGetPaperData = useCallback(async () => {
     setIsLoading(true);
-    const response = await getRecipientMessages(id, 5);
+    const response = await getRecipientMessages(id, 7, paperOffset);
     const { results } = response.data;
     setIsLoading(false);
-    setPaperList(results);
-    if (JSON.stringify(results) === JSON.stringify(paperList)) {
-      //endData.current = true;
+    if (results.length === 0) {
+      endData.current = true;
     }
+    setPaperList((prevData) => [...prevData, ...results]);
   }, [id, paperOffset]);
 
   const handleGetRecipientData = useCallback(async () => {
@@ -97,7 +97,9 @@ function Papers() {
   }, [id]);
 
   useEffect(() => {
-    handleGetPaperData();
+    if (!endData.current) {
+      handleGetPaperData();
+    }
     handleGetRecipientData();
     setModalInfo(false);
   }, [handleGetPaperData, handleGetRecipientData]);
@@ -106,8 +108,8 @@ function Papers() {
       {ModalInfo.open && <Modal cardData={ModalInfo.data} onClose={() => setModalInfo(false)} />}
       <S.Container background={recipientInfo}>
         <S.HeaderBox>
-          <NavBar buttonVisible={false} paddingInline="24px"/>
-          {recipientInfo && <NavOptionalBar data={recipientInfo} onToast={handleUrlCopyClick} inlinePadding="24px"/>}
+          <NavBar buttonVisible={false} paddingInline="24px" />
+          {recipientInfo && <NavOptionalBar data={recipientInfo} onToast={handleUrlCopyClick} inlinePadding="24px" />}
         </S.HeaderBox>
         <S.ContentWrap>
           {editPermission && (
@@ -132,7 +134,7 @@ function Papers() {
                     </div>
                   );
                 })}
-              {endData.current || <FetchMore loading={isLoading} setPage={setPaperOffset} />}
+              {endData.current || <FetchMore loading={paperOffset !== 0 && isLoading} setPage={setPaperOffset} />}
             </S.PaperList>
           </S.PaperListWrap>
         </S.ContentWrap>
@@ -167,7 +169,7 @@ const S = {
   PaperListWrap: styled.div`
     padding-inline: 24px;
     overflow-y: auto;
-    height: 75vh;
+    height: 70vh;
     -ms-overflow-style: none;
     scrollbar-width: none;
     &::-webkit-scrollbar {

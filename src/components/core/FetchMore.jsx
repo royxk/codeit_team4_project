@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const FetchMore = ({ loading, setPage }) => {
   const fetchMoreTrigger = useRef(null);
   const fetchMoreObserver = new IntersectionObserver(([{ isIntersecting }]) => {
-    if (isIntersecting) setPage((prev) => prev + 6);
+    if (isIntersecting) setPage((prev) => prev + 7);
   });
 
   useEffect(() => {
@@ -33,7 +33,7 @@ const S = {
       background-color: transparent;
     }
     &.loading:after {
-      content: '  ';
+      content: ' ';
     }
   `,
 };
