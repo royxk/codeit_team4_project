@@ -47,7 +47,7 @@ const List = () => {
   const scrollCards = (direction, ref) => {
     if (ref.current) {
       const { current } = ref;
-      const scrollAmount = 500;
+      const scrollAmount = 700;
       const scrollPosition =
         direction === "left"
           ? current.scrollLeft - scrollAmount
@@ -69,8 +69,6 @@ const List = () => {
   };
 
   useEffect(() => {
-    // fetch2777();
-
     setIsLoading(true);
     async function fetchData() {
       const index = await getTotalRecipients();
@@ -91,13 +89,6 @@ const List = () => {
       });
     }
     fetchData();
-
-    // const fetchData = async () => {
-    //   const count = await getTotalRecipients();
-    //   console.log(count);
-    //   await fetchRecipients(count);
-    // };
-    // fetchData();
   }, []);
 
   return (
@@ -133,8 +124,6 @@ const List = () => {
                   <Card data={recipient} />
                 </S.Card>
               ))}
-
-              {/* <FetchMoreRecipients loading={loading} setPage={setPage} /> */}
             </S.CardsContainer>
             <ArrowRightButton
               onClick={() => scrollCards("right", cardsContainerRef1)}
@@ -284,9 +273,26 @@ const S = {
     -webkit-overflow-scrolling: touch;
     scroll-snap-align: center;
     gap: 50px;
-    /* &::-webkit-scrollbar {
-      display: none;
-    } */
+    &::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #f1f1f1; /* Color of the track */
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #888; /* Color of the scrollbar thumb */
+      border-radius: 4px; /* Rounded corners on the scrollbar thumb */
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background: #555; /* Color of the scrollbar thumb on hover */
+    }
+
+    /* Custom scrollbar for Firefox */
+    scrollbar-width: thin; /* "auto" or "thin" */
+    scrollbar-color: #888 #f1f1f1; /* thumb and track color */
   `,
   Card: styled.div`
     flex: 0 0 auto;
