@@ -12,7 +12,9 @@ import { getRecipientReaction } from "../../apiFetcher/recipients/getRecipientRe
 import { isEqual } from "lodash";
 import theme from "../../styles/theme.js";
 import TopEmojiBlock from "./emoji/TopEmojiBlock.jsx";
-import { handleShareKakao } from "../../apiFetcher/kakao/shareKakao.js";
+
+import {handleShareKakao} from "../../apiFetcher/kakao/shareKakao.js";
+import useOutSideClick from "../../hooks/useOutSideClick.js";
 
 function NavOptionalBar({ data, onToast, inlinePadding }) {
   const KAKAO_API_KEY = import.meta.env.VITE_KAKAO_API_KEY;
@@ -28,34 +30,58 @@ function NavOptionalBar({ data, onToast, inlinePadding }) {
     } else {
       setViewModal(modalIndex);
     }
-  };
 
-  const DESKTOP_WIDTH = theme.breakpoints.desktop;
-  const emojiStorage = new Set();
-  const initialData = {};
-  const [viewModal, setViewModal] = useState(-1);
-  const [isLoading, setIsLoading] = useState(false);
-  const [emojiData, setEmojiData] = useState(initialData);
-  const [emojiListChange, setEmojiListChange] = useState(
-    window.innerWidth >= DESKTOP_WIDTH
-  );
-  const whetherClick = useRef(emojiStorage);
-  const lastWidth = useRef(window.innerWidth);
+    const DESKTOP_WIDTH = theme.breakpoints.desktop;
+    const emojiStorage = new Set();
+    const initialData = {};
+    const [viewModal, setViewModal] = useState(-1);
+    const [isLoading, setIsLoading] = useState(false);
+    const [emojiData, setEmojiData] = useState(initialData);
+    const [emojiListChange, setEmojiListChange] = useState(window.innerWidth >= DESKTOP_WIDTH)
+    const whetherClick = useRef(emojiStorage);
+    const lastWidth = useRef(window.innerWidth);
+    const modalRef = useRef();
 
-  useEffect(() => {
-    const getEmojiData = async () => {
-      const response = await getRecipientReaction(data.id, 11, 0);
-      const newData = response.data.results;
-      setEmojiData(newData);
-    };
+    useEffect(() => {
+        const getEmojiData = async () => {
+            const response = await getRecipientReaction(data.id, 11, 0);
+            const newData = response.data.results;
+            setEmojiData(newData);
+        }
 
-    getEmojiData();
-  }, []);
+        getEmojiData();
+    }, []);
 
-  useEffect(() => {
-    if (!window.Kakao.isInitialized()) {
-      window.Kakao.init(KAKAO_API_KEY);
-      console.log(window.Kakao);
+    useEffect(() => {
+        if(!window.Kakao.isInitialized()) {
+            window.Kakao.init(KAKAO_API_KEY);
+            console.log(window.Kakao);
+        }
+    }, []);
+
+    useEffect(() => {
+        const handleResize = () => {
+            if(emojiListChange && (window.innerWidth < DESKTOP_WIDTH)) {
+                setEmojiListChange(false);
+                console.log('데스크탑 사이즈 미만 변경');
+            } else if(!emojiListChange && (window.innerWidth >= DESKTOP_WIDTH)) {
+                setEmojiListChange(true);
+                console.log('데스크탑 사이즈 이상 변경');
+            }
+            lastWidth.current = window.innerWidth;
+        }
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        }
+    }, [emojiListChange]);
+
+    useOutSideClick(modalRef, () => setViewModal(-1));
+
+    if(emojiData === initialData) {
+        return <></>
     }
   }, []);
 
@@ -198,70 +224,108 @@ function NavOptionalBar({ data, onToast, inlinePadding }) {
                         if (whetherClick.current.has(emoji)) {
                           await postRecipientReaction(
                             {
-                              emoji: emoji,
-                              type: "decrease",
-                            },
-                            data.id
-                          );
-                          whetherClick.current.delete(emoji);
-                        } else {
-                          await postRecipientReaction(
+                                viewModal === 1 ?
+                                    <S.EmojiListModal ref={modalRef}>
+                                        <S.EmojiListModalInnerWrapper>
+                                            {
+                                                emojiListChange ?
+                                                    new Array(Math.min(4, Math.max(Object.keys(emojiData).length - 3, 0))).fill(0).map((x, index) => {
+                                                        let emoji = emojiData[index + 3].emoji;
+                                                        let count = emojiData[index + 3].count;
+                                                        return <ReactionBadge key={index} emoji={emoji} count={count} />
+                                                    })
+                                                    : new Array(Math.min(3, Math.max(Object.keys(emojiData).length - 3, 0))).fill(0).map((x, index) => {
+                                                        let emoji = emojiData[index + 2].emoji;
+                                                        let count = emojiData[index + 2].count;
+                                                        return <ReactionBadge key={index} emoji={emoji} count={count} />
+                                                    })
+                                            }
+                                        </S.EmojiListModalInnerWrapper>
+                                        <S.EmojiListModalInnerWrapper>
+                                            {
+                                                emojiListChange ?
+                                                    new Array(Math.min(4, Math.max(Object.keys(emojiData).length - 7, 0))).fill(0).map((x, index) => {
+                                                        let emoji = emojiData[index + 7].emoji;
+                                                        let count = emojiData[index + 7].count;
+                                                        return <ReactionBadge key={index} emoji={emoji} count={count} />
+                                                    })
+                                                    : new Array(Math.min(3, Math.max(Object.keys(emojiData).length - 6, 0))).fill(0).map((x, index) => {
+                                                        let emoji = emojiData[index + 6].emoji;
+                                                        let count = emojiData[index + 6].count;
+                                                        return <ReactionBadge key={index} emoji={emoji} count={count} />
+                                                    })
+                                            }
+                                        </S.EmojiListModalInnerWrapper>
+                                    </S.EmojiListModal> : null
+                            }
+                        </S.EmojiOpenButton>
+                    </S.ViewEmojiWrapper>
+                    <S.ControllerWrapper>
+                        <S.EmojiButton $imageURL={smileEmoji} onClick={() => modalOpenButton(2)}>
+                                {
+                                    viewModal === 2 ? (
+                                        <S.EmojiPickerContainer ref={modalRef}>
+                                            <EmojiPicker
+                                            skinTonesDisabled={true}
+                                            searchDisabled={true}
+                                            emojiStyle='native'
+                                            onEmojiClick={async (emojiClickData) => {
+                                                try {
+                                                    setIsLoading(true);
+                                                    let emoji = emojiClickData.emoji;
+                                                    console.log(emojiData);
+
+                                                    if(whetherClick.current.has(emoji)) {
+                                                        await postRecipientReaction({
+                                                            "emoji": emoji,
+                                                            "type": "decrease"
+                                                        }, data.id);
+                                                        whetherClick.current.delete(emoji);
+                                                    }
+                                                    else {
+                                                        await postRecipientReaction({
+                                                            "emoji": emoji,
+                                                            "type": "increase"
+                                                        }, data.id);
+                                                        whetherClick.current.add(emoji);
+                                                    }
+
+                                                    const response = await getRecipientReaction(data.id, 11, 0);
+                                                    const newData = response.data.results;
+
+                                                    if(!isEqual(newData, emojiData)) {
+                                                        setEmojiData(newData);
+                                                    }
+
+                                                } catch (error) {
+                                                    console.error("데이터를 불러올 수 없습니다.");
+                                                    console.log(error);
+                                                } finally {
+                                                    setIsLoading(false);
+                                                }
+                                            }}/>
+                                        </S.EmojiPickerContainer>) : null
+                                }
+                        </S.EmojiButton>
+                        <VerticalRule />
+                        <S.EmojiButton $imageURL = {shareEmoji} onClick={() => modalOpenButton(3)}>
                             {
-                              emoji: emoji,
-                              type: "increase",
-                            },
-                            data.id
-                          );
-                          whetherClick.current.add(emoji);
-                        }
+                                viewModal === 3 ? <S.ShareModal ref={modalRef}
+                                >
+                                    <S.InnerShare onClick={() => handleShareKakao(data)}>카카오톡 공유</S.InnerShare>
+                                    <S.InnerShare onClick={() => {
+                                        console.log(onToast);
+                                        onToast();
+                                    }}>URL 공유</S.InnerShare>
+                                </S.ShareModal>: null
+                            }
+                        </S.EmojiButton>
+                    </S.ControllerWrapper>
+                </S.OptionWrapper>
+            </S.EntireOptionWrapper>
 
-                        const response = await getRecipientReaction(
-                          data.id,
-                          11,
-                          0
-                        );
-                        const newData = response.data.results;
-
-                        if (!isEqual(newData, emojiData)) {
-                          setEmojiData(newData);
-                        }
-                      } catch (error) {
-                        console.error("데이터를 불러올 수 없습니다.");
-                        console.log(error);
-                      } finally {
-                        setIsLoading(false);
-                      }
-                    }}
-                  />
-                ) : null}
-              </S.EmojiPickerContainer>
-            </S.EmojiButton>
-            <VerticalRule />
-            <S.EmojiButton
-              $imageURL={shareEmoji}
-              onClick={() => modalOpenButton(3)}
-            >
-              {viewModal === 3 ? (
-                <S.ShareModal>
-                  <S.InnerShare onClick={() => handleShareKakao(data)}>
-                    카카오톡 공유
-                  </S.InnerShare>
-                  <S.InnerShare
-                    onClick={() => {
-                      console.log(onToast);
-                      onToast();
-                    }}
-                  >
-                    URL 공유
-                  </S.InnerShare>
-                </S.ShareModal>
-              ) : null}
-            </S.EmojiButton>
-          </S.ControllerWrapper>
-        </S.OptionWrapper>
-      </S.EntireOptionWrapper>
-    </S.EntireWrapper>
-  );
+        </S.EntireWrapper>
+    )
 }
 
 export default NavOptionalBar;
