@@ -96,18 +96,7 @@ const List = () => {
     (
       <S.HomePageWrapper>
         {isLoading && <Loading isLoading={isLoading}></Loading>}
-        <S.NavContainer>
-          <NavBar onClick={() => onClick("")} />
-          <S.ButtonWrapper>
-            <Button
-              variant="outLine"
-              size={40}
-              onClick={() => onClick("papercreate")}
-            >
-              롤링 페이퍼 만들기
-            </Button>
-          </S.ButtonWrapper>
-        </S.NavContainer>
+        <NavBar buttonVisible={true} paddingInline="24px" />
         <S.ContentContainer>
           <S.Title>인기 롤링 페이퍼 🔥 TOP10</S.Title>
 
@@ -203,17 +192,6 @@ const S = {
     ${media.widescreen`
     padding: 0 200px;
   `}
-  `,
-  NavContainer: styled.div`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    padding: 0 40px;
-    border-bottom: 2px solid ${({ theme }) => theme.colors.grey[200]};
-    ${media.widescreen`
-    padding: 0 200px;
-    `}
   `,
 
   ButtonWrapper: styled.div`

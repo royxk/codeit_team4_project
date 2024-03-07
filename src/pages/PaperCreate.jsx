@@ -89,9 +89,7 @@ const PaperCreate = () => {
 
   return (
     <>
-      <S.NavBarContainer>
-        <NavBar />
-      </S.NavBarContainer>
+      <NavBar blockVisible={false} paddingInline="24px"/>
       <S.PaperCreateContainer>
         <S.Container>
           <S.InputContainer>
@@ -176,22 +174,6 @@ const S = {
     margin-top: 70px;
     gap: 20px;
     padding: 0 50px;
-  `,
-
-  NavBarContainer: styled.div`
-    display: flex;
-    align-items: start;
-    justify-content: start;
-    width: 100%;
-    border-bottom: 2px solid ${({ theme }) => theme.colors.grey[200]};
-    padding: 0 50px;
-    display: none;
-    ${media.tablet`
-  display: block;
-  `}
-    ${media.widescreen`
-  padding: 0 200px;
-  `}
   `,
   Container: styled.div`
     width: 100%;
