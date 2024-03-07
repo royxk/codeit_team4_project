@@ -107,7 +107,7 @@ function Papers() {
       <S.Container background={recipientInfo}>
         <S.HeaderBox>
           <NavBar buttonVisible={false} paddingInline="24px"/>
-          {recipientInfo && <NavOptionalBar data={recipientInfo} onToast={handleUrlCopyClick} />}
+          {recipientInfo && <NavOptionalBar data={recipientInfo} onToast={handleUrlCopyClick} inlinePadding="24px"/>}
         </S.HeaderBox>
         <S.ContentWrap>
           {editPermission && (
