@@ -99,7 +99,7 @@ const PaperCreate = () => {
   return (
     <>
       <S.NavBarContainer>
-        <NavBar onClick={() => onClick("")} />
+        <NavBar />
       </S.NavBarContainer>
       <S.PaperCreateContainer>
         <S.Container>

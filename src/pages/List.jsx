@@ -296,26 +296,9 @@ const S = {
     scroll-snap-align: center;
     position: relative;
     gap: 50px;
-    &::-webkit-scrollbar {
-      height: 8px;
-    }
-
-    &::-webkit-scrollbar-track {
-      background: #f1f1f1; /* Color of the track */
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background: #888; /* Color of the scrollbar thumb */
-      border-radius: 4px; /* Rounded corners on the scrollbar thumb */
-    }
-
-    &::-webkit-scrollbar-thumb:hover {
-      background: #555; /* Color of the scrollbar thumb on hover */
-    }
-
-    /* Custom scrollbar for Firefox */
-    scrollbar-width: thin; /* "auto" or "thin" */
-    scrollbar-color: #888 #f1f1f1; /* thumb and track color */
+    /* &::-webkit-scrollbar {
+      display: none;
+    } */
   `,
 
   Card: styled.div`
