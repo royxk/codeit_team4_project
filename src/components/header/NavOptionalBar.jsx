@@ -14,7 +14,7 @@ import theme from "../../styles/theme.js";
 import TopEmojiBlock from "./emoji/TopEmojiBlock.jsx";
 import {handleShareKakao} from "../../apiFetcher/kakao/shareKakao.js";
 
-function NavOptionalBar({data, onToast}) {
+function NavOptionalBar({data, onToast, inlinePadding}) {
     const KAKAO_API_KEY = import.meta.env.VITE_KAKAO_API_KEY;
 
     let innerMessageCount = data.messageCount > 99 ?
@@ -80,10 +80,10 @@ function NavOptionalBar({data, onToast}) {
     }
     return(
         <S.EntireWrapper>
-            <S.UserBox>
+            <S.UserBox inlinePadding={inlinePadding}>
                 {`To. ${data.name}`}
             </S.UserBox>
-            <S.EntireOptionWrapper>
+            <S.EntireOptionWrapper inlinePadding={inlinePadding}>
                 <S.RecipientListBlockWrapper>
                     <RecipientListBlock data = {data}/>
                     <S.RecipientCounter>{innerMessageCount}</S.RecipientCounter>
@@ -211,7 +211,9 @@ const S= {
       display: flex;
       flex-direction: column;
       width: 100%;
-      height: 94px;
+      height: fit-content;
+      background-color: ${({theme}) => theme.colors.white};
+      border-bottom: 1px solid ${({theme}) => theme.colors.grey["300"]};
       
       ${media.tablet`
           display: flex;
@@ -220,18 +222,26 @@ const S= {
           flex-direction: row;
           width: 100%;
           height: 68px;
-          gap: 263px;
       `}
     `,
 
     UserBox:styled.div`
-      width: 227px;
-      height: 42px;
+      width: 100%;
+      height: fit-content;
+      line-height: 42px;
+      white-space: nowrap;
+      padding: 5px;
 
+      padding-inline: ${(props) => props.inlinePadding};
       font-family: ${({theme}) => theme.fontFamily.bold};
       font-size: ${({theme}) => theme.fontSizes.xxl};
-      line-height: 42px;  
       color: ${({theme}) => theme.colors.grey["800"]};
+      border-bottom: 1px solid ${({theme}) => theme.colors.grey["300"]};
+      
+      ${media.tablet`
+          width: 227px;
+          border: none;
+      `}
     `,
 
     EntireOptionWrapper:styled.div`
@@ -239,8 +249,10 @@ const S= {
       justify-content: center;
       align-items: center;
       width: 100%;
-      height: 36px;
+      height: fit-content;
       gap: 28px;
+      padding: 10px;
+      padding-inline: ${(props) => props.inlinePadding};
 
       > ${VerticalRule} {
         display: none;
@@ -286,6 +298,7 @@ const S= {
       align-items: center;
       width: fit-content;
       height: 27px;
+      white-space: nowrap;
       
       font-family: ${({theme}) => theme.fontFamily.base};
       font-size: ${({theme}) => theme.fontSizes.sm};
