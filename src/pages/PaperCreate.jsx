@@ -12,6 +12,7 @@ import { media } from "../styles/utils/mediaQuery";
 import NavBar from "../components/core/NavBar";
 import { useNavigate } from "react-router-dom";
 import Button from "../components/core/Button/Button";
+import ToggleButton from "../components/core/Button/ToggleButton";
 
 const PaperCreate = () => {
   const navigate = useNavigate();
@@ -86,16 +87,6 @@ const PaperCreate = () => {
     setSelectedImage(image);
   };
 
-  const handleSelectColor = (e) => {
-    e.preventDefault();
-    setSelectionType("color");
-  };
-
-  const handleSelectImage = (e) => {
-    e.preventDefault();
-    setSelectionType("image");
-  };
-
   return (
     <>
       <S.NavBarContainer>
@@ -117,24 +108,11 @@ const PaperCreate = () => {
           <S.ButtonColorWrapper>
             <S.BoldText>배경화면을 선택해 주세요</S.BoldText>
             <S.LightText> 컬러를 선택하거나 이미지를 선택해주세요</S.LightText>
-            <div>
-              <button
-                onClick={handleSelectColor}
-                style={{
-                  backgroundColor: selectionType === "color" ? "white" : "gray",
-                }}
-              >
-                Select Color
-              </button>
-              <button
-                onClick={handleSelectImage}
-                style={{
-                  backgroundColor: selectionType === "color" ? "gray" : "white",
-                }}
-              >
-                Select Image
-              </button>
-            </div>
+
+            <ToggleButton
+              activeOption={selectionType}
+              setActiveOption={setSelectionType}
+            />
           </S.ButtonColorWrapper>
 
           <S.ButtonContainer>
