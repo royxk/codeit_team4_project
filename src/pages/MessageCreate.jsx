@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {useNavigate, useParams} from "react-router-dom";
 import NavBar from "../components/core/NavBar.jsx";
 import styled from "styled-components";
@@ -10,14 +10,20 @@ import {DEFAULT_QUILL_STYLE, QUILL_MODULES} from "../common/quill.js";
 import {uploadImage} from "../apiFetcher/s3/uploadImage.js";
 import {v4 as uuidv4} from 'uuid';
 import {postRecipientMessage} from "../apiFetcher/recipients/postRecipientMessage.js";
+import Input from "../components/Input/Input.jsx";
+import {isValidName} from "../common/validation/validateName.js";
+import useOutSideClick from "../hooks/useOutSideClick.js";
+import theme from "../styles/theme.js";
 
 const MessageCreate = () => {
     const {id} = useParams();
+    const eventRef = useRef();
 
     const [profile, setProfile] = useState({
         "file": null,
         "fileSrc": userIcon
     });
+    const [sender, setSender] = useState('');
     const formData = useRef({
         "sender": "",
         "profileImageURL": "",
@@ -116,17 +122,29 @@ const MessageCreate = () => {
         handleUpload();
     }
 
+    useOutSideClick(eventRef, () => {
+        setSender(formData.current.sender);
+    });
+
     return (
         <>
             <S.EntireWrapper>
                 <S.NavWrapper>
-                    <NavBar />
+                    <NavBar buttonVisible={false} paddingInline="24px"/>
                 </S.NavWrapper>
                 <S.FormWrapper>
                     <S.Form id="message" onSubmit={(e) => submitFormData(e)}>
                         <S.InputContentWrapper>
                             <S.Label htmlFor="sender">From.</S.Label>
-                            <S.TextInput id="sender" placeholder="이름을 입력해 주세요." onChange={(e) => handleChange(e)}/>
+                            <Input
+                                id="sender"
+                                placeholder="이름을 입력해 주세요."
+                                onChange={(e) => handleChange(e)}
+                                maxLength="10"
+                                error={isValidName(sender, 2, 10)}
+                                errorMessage="2~5글자의 한글 또는 2~10글자의 영어로 작성해주세요."
+                                reference={eventRef}
+                               />
                         </S.InputContentWrapper>
                         <S.InputContentWrapper>
                             <S.Label htmlFor="profileImageURL">프로필 이미지</S.Label>
@@ -189,7 +207,6 @@ const S = {
             align-items: center;
             width: 100%;
             height: 64px;
-            padding: 11px 50px;
         `};
     `,
 
@@ -263,7 +280,7 @@ const S = {
       height: 100px;
       border-radius: 100px;
       padding: 24px;
-      background-color: ${({theme}) => theme.colors.grey["300"]};
+      background-color: ${(props) => props.$image === userIcon ? theme.colors.grey["300"] : theme.colors.white};
       background-image: url(${(props) => props.$image});
       background-size: ${(props) => props.$image === userIcon ? "initial" : "cover"};
       background-repeat: no-repeat;
