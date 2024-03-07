@@ -89,9 +89,8 @@ const PaperCreate = () => {
 
   return (
     <>
-      <S.NavBarContainer>
-        <NavBar />
-      </S.NavBarContainer>
+      <NavBar />
+
       <S.PaperCreateContainer>
         <S.Container>
           <S.InputContainer>
