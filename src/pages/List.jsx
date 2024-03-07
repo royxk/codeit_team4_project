@@ -102,83 +102,74 @@ const List = () => {
   return (
     console.log(populartRecipients),
     (
-      <S.HomePageWrapper>
-        <S.NavContainer>
-          <NavBar onClick={() => onClick("")} />
-          <S.ButtonWrapper>
+      <>
+      <NavBar buttonVisible={true} paddingInline="24px"/>
+        <S.HomePageWrapper>
+          <S.ContentContainer>
+            <S.Title>
+              인기 롤링 페이퍼 🔥 {isLoading && <div>로딩중...</div>}
+            </S.Title>
+
+            <S.ButtonCardsContainer>
+              <ArrowLeftButton
+                onClick={() => scrollCards("left", cardsContainerRef1)}
+              />
+              <S.CardsContainer ref={cardsContainerRef1}>
+                {populartRecipients.map((recipient) => (
+                  <S.Card
+                    key={recipient.id}
+                    onClick={() => handleCardClick(recipient)}
+                  >
+                    <Card data={recipient} />
+                  </S.Card>
+                ))}
+
+                {/* <FetchMoreRecipients loading={loading} setPage={setPage} /> */}
+              </S.CardsContainer>
+              <ArrowRightButton
+                onClick={() => scrollCards("right", cardsContainerRef1)}
+              />
+            </S.ButtonCardsContainer>
+          </S.ContentContainer>
+          <S.ContentContainer>
+            <S.Title>
+              최근에 만든 롤링 페이퍼⭐️{isLoading && <div>로딩중...</div>}
+            </S.Title>
+            <S.ButtonCardsContainer>
+              <ArrowLeftButton
+                onClick={() => scrollCards("left", cardsContainerRef2)}
+              />
+              <S.CardsContainer ref={cardsContainerRef2}>
+                {recentRecipients.map(
+                  (recipient) => (
+                    console.log(recipient),
+                    (
+                      <S.Card
+                        key={recipient.id}
+                        onClick={() => handleCardClick(recipient)}
+                      >
+                        <Card data={recipient} />
+                      </S.Card>
+                    )
+                  )
+                )}
+              </S.CardsContainer>
+              <ArrowRightButton
+                onClick={() => scrollCards("right", cardsContainerRef2)}
+              />
+            </S.ButtonCardsContainer>{" "}
+          </S.ContentContainer>
+          <S.BottomButtonWrapper>
             <Button
-              variant="outLine"
-              size={40}
+              variant="primary"
+              size={56}
               onClick={() => onClick("papercreate")}
             >
-              롤링 페이퍼 만들기
+              나도 만들어보기
             </Button>
-          </S.ButtonWrapper>
-        </S.NavContainer>
-        <S.ContentContainer>
-          <S.Title>
-            인기 롤링 페이퍼 🔥 {isLoading && <div>로딩중...</div>}
-          </S.Title>
-
-          <S.ButtonCardsContainer>
-            <ArrowLeftButton
-              onClick={() => scrollCards("left", cardsContainerRef1)}
-            />
-            <S.CardsContainer ref={cardsContainerRef1}>
-              {populartRecipients.map((recipient) => (
-                <S.Card
-                  key={recipient.id}
-                  onClick={() => handleCardClick(recipient)}
-                >
-                  <Card data={recipient} />
-                </S.Card>
-              ))}
-
-              {/* <FetchMoreRecipients loading={loading} setPage={setPage} /> */}
-            </S.CardsContainer>
-            <ArrowRightButton
-              onClick={() => scrollCards("right", cardsContainerRef1)}
-            />
-          </S.ButtonCardsContainer>
-        </S.ContentContainer>
-        <S.ContentContainer>
-          <S.Title>
-            최근에 만든 롤링 페이퍼⭐️{isLoading && <div>로딩중...</div>}
-          </S.Title>
-          <S.ButtonCardsContainer>
-            <ArrowLeftButton
-              onClick={() => scrollCards("left", cardsContainerRef2)}
-            />
-            <S.CardsContainer ref={cardsContainerRef2}>
-              {recentRecipients.map(
-                (recipient) => (
-                  console.log(recipient),
-                  (
-                    <S.Card
-                      key={recipient.id}
-                      onClick={() => handleCardClick(recipient)}
-                    >
-                      <Card data={recipient} />
-                    </S.Card>
-                  )
-                )
-              )}
-            </S.CardsContainer>
-            <ArrowRightButton
-              onClick={() => scrollCards("right", cardsContainerRef2)}
-            />
-          </S.ButtonCardsContainer>{" "}
-        </S.ContentContainer>
-        <S.BottomButtonWrapper>
-          <Button
-            variant="primary"
-            size={56}
-            onClick={() => onClick("papercreate")}
-          >
-            나도 만들어보기
-          </Button>
-        </S.BottomButtonWrapper>
-      </S.HomePageWrapper>
+          </S.BottomButtonWrapper>
+        </S.HomePageWrapper>
+      </>
     )
   );
 };
@@ -191,7 +182,7 @@ const S = {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    align-items: center;
+    margin-top: 20px;
     gap: 50px;
     width: 100%;
   `,

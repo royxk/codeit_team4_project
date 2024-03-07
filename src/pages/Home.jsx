@@ -16,70 +16,52 @@ const Home = () => {
   };
 
   return (
-    <S.HomePageWrapper>
-      <S.ContentWrapper>
-        <S.NavContainer>
-          <NavBar />
-          <S.ButtonWrapper>
-            <Button
-              variant="outLine"
-              size={40}
-              onClick={() => onClick("papercreate")}
-            >
-              롤링 페이퍼 만들기
-            </Button>
-          </S.ButtonWrapper>
+    <>
+      <NavBar buttonVisible={true} paddingInline="24px"/>
+      <S.HomePageWrapper>
+        <S.ContentWrapper>
+          <S.ContentContainer>
+            <S.TextContainer>
+              <PointBox>Point. 01</PointBox>
+              <S.Title>
+                누구나 손쉽게, 온라인 롤링 페이퍼를 만들 수 있어요
+              </S.Title>
+              <S.Description>로그인 없이 자유롭게 만들어요.</S.Description>
+            </S.TextContainer>
 
-          {/* <Link to={"/PaperCreate"}></Link> */}
-        </S.NavContainer>
-        <S.ContentContainer>
-          <S.TextContainer>
-            <PointBox>Point. 01</PointBox>
-            <S.Title>
-              누구나 손쉽게, 온라인 롤링 페이퍼를 만들 수 있어요
-            </S.Title>
-            <S.Description>로그인 없이 자유롭게 만들어요.</S.Description>
-          </S.TextContainer>
-
-          <S.ImageContainer>
-            <S.Image src={homeImage1} alt="homeImage1" />
-          </S.ImageContainer>
-        </S.ContentContainer>
-        <S.ContentContainer reverseOnWidescreen>
-          <S.TextContainer>
-            <PointBox>Point. 02</PointBox>
-            <S.Title>서로에게 이모지로 감정을 표현해보세요</S.Title>
-            <S.Description>로그인 없이 자유롭게 만들어요.</S.Description>
-          </S.TextContainer>
-          <S.ImageContainer>
-            <S.Image secondImg src={homeImage2} alt="homeImage1" />
-          </S.ImageContainer>
-        </S.ContentContainer>
-        {/* <Link to={"/list"}>구경해보기</Link> */}
-        <Button variant="primary" size={50} onClick={() => onClick("list")}>
-          구경해보기
-        </Button>
-      </S.ContentWrapper>
-    </S.HomePageWrapper>
+            <S.ImageContainer>
+              <S.Image src={homeImage1} alt="homeImage1" />
+            </S.ImageContainer>
+          </S.ContentContainer>
+          <S.ContentContainer reverseOnWidescreen>
+            <S.TextContainer>
+              <PointBox>Point. 02</PointBox>
+              <S.Title>서로에게 이모지로 감정을 표현해보세요</S.Title>
+              <S.Description>로그인 없이 자유롭게 만들어요.</S.Description>
+            </S.TextContainer>
+            <S.ImageContainer>
+              <S.Image secondImg src={homeImage2} alt="homeImage1" />
+            </S.ImageContainer>
+          </S.ContentContainer>
+          {/* <Link to={"/list"}>구경해보기</Link> */}
+          <Button variant="primary" size={50} onClick={() => onClick("list")}>
+            구경해보기
+          </Button>
+        </S.ContentWrapper>
+      </S.HomePageWrapper>
+    </>
   );
 };
 
 export default Home;
 
 const S = {
-  NavContainer: styled.div`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    gap: 20px;
-  `,
   HomePageWrapper: styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    align-items: center;
+    margin-top: 20px;
     gap: 20px;
     width: 100%;
   `,
