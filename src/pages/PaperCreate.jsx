@@ -98,7 +98,9 @@ const PaperCreate = () => {
 
   return (
     <>
-      <NavBar buttonVisible={false} paddingInline="24px" />
+      <S.NavBarContainer>
+        <NavBar />
+      </S.NavBarContainer>
       <S.PaperCreateContainer>
         <S.Container>
           <S.InputContainer>
