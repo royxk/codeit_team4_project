@@ -2,6 +2,7 @@ import styled from "styled-components";
 import logo from "../../assets/images/logo.svg";
 import {Link} from "react-router-dom";
 import Button from "./Button/Button.jsx";
+import {media} from "../../styles/utils/mediaQuery.ts";
 
 function NavBar({ ...props }) {
     console.log(props);
@@ -77,5 +78,9 @@ const S = {
       background-color: ${({theme}) => theme.colors.white};
       padding-inline: ${(props) => props.paddingInline};
       border-bottom: 1px solid ${({theme}) => theme.colors.grey["300"]};
+
+      ${media.widescreen`
+        padding: 0 200px;
+      `}
     `
 };

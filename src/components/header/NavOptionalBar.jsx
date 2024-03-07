@@ -242,6 +242,12 @@ const S= {
           width: 227px;
           border: none;
       `}
+
+      ${media.widescreen`
+          width: 227px;
+          border: none;
+          padding-inline: 200px;
+      `}
     `,
 
     EntireOptionWrapper:styled.div`
@@ -257,8 +263,8 @@ const S= {
       > ${VerticalRule} {
         display: none;
         ${media.desktop`
-                display: block;
-            `}
+            display: block;
+        `}
       }
       
       ${media.tablet`
@@ -268,6 +274,23 @@ const S= {
           width: fit-content;
           height: 36px;
           gap: 28px;
+          
+          > ${VerticalRule} {
+            display: none;
+            ${media.desktop`
+                display: block;
+            `}
+          }
+      `}
+
+      ${media.widescreen`
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          width: fit-content;
+          height: 36px;
+          gap: 28px;
+          padding-inline: 200px;
           
           > ${VerticalRule} {
             display: none;
