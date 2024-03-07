@@ -74,5 +74,8 @@ const S = {
     background-color: ${({ theme }) => theme.colors.white};
     padding-inline: ${(props) => props.paddingInline};
     border-bottom: 1px solid ${({ theme }) => theme.colors.grey["300"]};
+    ${media.widescreen`
+        padding: 0 200px;
+      `}
   `,
 };
