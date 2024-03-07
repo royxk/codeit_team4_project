@@ -106,7 +106,7 @@ function Papers() {
       {ModalInfo.open && <Modal cardData={ModalInfo.data} onClose={() => setModalInfo(false)} />}
       <S.Container background={recipientInfo}>
         <S.HeaderBox>
-          <NavBar />
+          <NavBar buttonVisible={false} paddingInline="24px"/>
           {recipientInfo && <NavOptionalBar data={recipientInfo} onToast={handleUrlCopyClick} />}
         </S.HeaderBox>
         <S.ContentWrap>
@@ -212,7 +212,6 @@ const S = {
   `,
   HeaderBox: styled.div`
     width: 100%;
-    padding-inline: 24px;
     margin: 0 auto;
     background-color: ${theme.colors.white};
   `,

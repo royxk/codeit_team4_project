@@ -95,9 +95,7 @@ const PaperCreate = () => {
 
   return (
     <>
-      <S.NavBarContainer>
-        <NavBar />
-      </S.NavBarContainer>
+      <NavBar buttonVisible={false} paddingInline="24px"/>
       <S.PaperCreateContainer>
         <S.Container>
           <S.InputContainer>
@@ -191,7 +189,7 @@ const S = {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-top: 50px;
+    margin-top: 70px;
     gap: 20px;
     padding: 0 50px;
   `,
