@@ -4,7 +4,7 @@ import styled from "styled-components";
 const Input = ({...props}) => {
     console.log(props);
   return (
-      <S.EntireInputBox width>
+      <S.EntireInputBox>
         <S.Input type="text"
                  id={props.id}
                  placeholder={props.placeholder}
