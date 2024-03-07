@@ -12,6 +12,7 @@ import { media } from "../styles/utils/mediaQuery";
 import NavBar from "../components/core/NavBar";
 import { useNavigate } from "react-router-dom";
 import Button from "../components/core/Button/Button";
+import ToggleButton from "../components/core/Button/ToggleButton";
 
 const PaperCreate = () => {
   const navigate = useNavigate();
@@ -24,6 +25,9 @@ const PaperCreate = () => {
   const [backgroundImages, setBackgroundImages] = useState([]);
   const [selectedImagge, setSelectedImage] = useState(null);
 
+  const onClick = (link) => {
+    navigate(`/${link}`);
+  };
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name === "name" && value.length > 10) {
@@ -83,23 +87,15 @@ const PaperCreate = () => {
     setSelectedImage(image);
   };
 
-  const handleSelectColor = (e) => {
-    e.preventDefault();
-    setSelectionType("color");
-  };
-
-  const handleSelectImage = (e) => {
-    e.preventDefault();
-    setSelectionType("image");
-  };
-
   return (
     <>
-      <NavBar buttonVisible={false} paddingInline="24px"/>
+      <S.NavBarContainer>
+        <NavBar />
+      </S.NavBarContainer>
       <S.PaperCreateContainer>
         <S.Container>
           <S.InputContainer>
-            <label>To.</label>
+            <S.BoldText>To.</S.BoldText>
             <Input
               id="name"
               name="name"
@@ -109,28 +105,16 @@ const PaperCreate = () => {
               받는사람 이름을 입력해주세요
             </Input>
           </S.InputContainer>
-          <div>
-            <p>배경화면을 선택해 주세요</p>
-            <p> 컬러를 선택하거나 이미지를 선택해주세요</p>
-          </div>
-          <div>
-            <button
-              onClick={handleSelectColor}
-              style={{
-                backgroundColor: selectionType === "color" ? "white" : "gray",
-              }}
-            >
-              Select Color
-            </button>
-            <button
-              onClick={handleSelectImage}
-              style={{
-                backgroundColor: selectionType === "color" ? "gray" : "white",
-              }}
-            >
-              Select Image
-            </button>
-          </div>
+          <S.ButtonColorWrapper>
+            <S.BoldText>배경화면을 선택해 주세요</S.BoldText>
+            <S.LightText> 컬러를 선택하거나 이미지를 선택해주세요</S.LightText>
+
+            <ToggleButton
+              activeOption={selectionType}
+              setActiveOption={setSelectionType}
+            />
+          </S.ButtonColorWrapper>
+
           <S.ButtonContainer>
             {selectionType === "color" && (
               <S.ColorButtonContainer>
@@ -172,7 +156,7 @@ const PaperCreate = () => {
             )}
           </S.ButtonContainer>
           <Button variant="primary" size={40} onClick={handleSubmit}>
-            데이터추가
+            생성하기
           </Button>
         </S.Container>
       </S.PaperCreateContainer>
@@ -219,6 +203,23 @@ const S = {
     ${media.widescreen`
       width: 50%;
     `}
+  `,
+  ButtonColorWrapper: styled.div`
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    width: 100%;
+  `,
+  BoldText: styled.div`
+    font-weight: ${({ theme }) => theme.fontWeights.bold};
+    font-size: ${({ theme }) => theme.fontSizes.xxl};
+  `,
+  LightText: styled.div`
+    font-weight: ${({ theme }) => theme.fontWeights.regular};
+    font-size: ${({ theme }) => theme.fontSizes.xs};
+    color: ${({ theme }) => theme.colors.grey[400]};
   `,
   InputContainer: styled.div`
     width: 100%;

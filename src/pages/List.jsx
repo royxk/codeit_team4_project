@@ -12,6 +12,7 @@ import { media } from "../styles/utils/mediaQuery";
 import Button from "../components/core/Button/Button";
 import ArrowLeftButton from "../components/core/Button/ArrowLeftButton";
 import ArrowRightButton from "../components/core/Button/ArrowRightButton";
+import Loading from "../components/core/Loading";
 const List = () => {
   const navigate = useNavigate();
   const [populartRecipients, setPopularRecipients] = useState([]);
@@ -46,7 +47,7 @@ const List = () => {
   const scrollCards = (direction, ref) => {
     if (ref.current) {
       const { current } = ref;
-      const scrollAmount = 500;
+      const scrollAmount = 600;
       const scrollPosition =
         direction === "left"
           ? current.scrollLeft - scrollAmount
@@ -68,8 +69,6 @@ const List = () => {
   };
 
   useEffect(() => {
-    // fetch2777();
-
     setIsLoading(true);
     async function fetchData() {
       const index = await getTotalRecipients();
@@ -83,93 +82,98 @@ const List = () => {
         const sortedByRecent = [...res.data.results].sort(
           (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
         );
-        setPopularRecipients(sortedByPopularity);
-        setRecentRecipients(sortedByRecent);
+        setPopularRecipients(sortedByPopularity.slice(0, 9));
+        setRecentRecipients(sortedByRecent.slice(0, 9));
         setIsLoading(false);
         return res.data.results;
       });
     }
     fetchData();
-
-    // const fetchData = async () => {
-    //   const count = await getTotalRecipients();
-    //   console.log(count);
-    //   await fetchRecipients(count);
-    // };
-    // fetchData();
   }, []);
 
   return (
     console.log(populartRecipients),
     (
-      <>
-      <NavBar buttonVisible={true} paddingInline="24px"/>
-        <S.HomePageWrapper>
-          <S.ContentContainer>
-            <S.Title>
-              인기 롤링 페이퍼 🔥 {isLoading && <div>로딩중...</div>}
-            </S.Title>
+      <S.HomePageWrapper>
+        {isLoading && <Loading isLoading={isLoading}></Loading>}
+        <S.NavContainer>
+          <NavBar onClick={() => onClick("")} />
+          <S.ButtonWrapper>
+            <Button
+              variant="outLine"
+              size={40}
+              onClick={() => onClick("papercreate")}
+            >
+              롤링 페이퍼 만들기
+            </Button>
+          </S.ButtonWrapper>
+        </S.NavContainer>
+        <S.ContentContainer>
+          <S.Title>인기 롤링 페이퍼 🔥 TOP10</S.Title>
 
-            <S.ButtonCardsContainer>
+          <S.ButtonCardsContainer>
+            <S.ArrowButtonStyle className="left">
               <ArrowLeftButton
                 onClick={() => scrollCards("left", cardsContainerRef1)}
               />
-              <S.CardsContainer ref={cardsContainerRef1}>
-                {populartRecipients.map((recipient) => (
-                  <S.Card
-                    key={recipient.id}
-                    onClick={() => handleCardClick(recipient)}
-                  >
-                    <Card data={recipient} />
-                  </S.Card>
-                ))}
-
-                {/* <FetchMoreRecipients loading={loading} setPage={setPage} /> */}
-              </S.CardsContainer>
+            </S.ArrowButtonStyle>
+            <S.CardsContainer ref={cardsContainerRef1}>
+              {populartRecipients.map((recipient) => (
+                <S.Card
+                  key={recipient.id}
+                  onClick={() => handleCardClick(recipient)}
+                >
+                  <Card data={recipient} />
+                </S.Card>
+              ))}
+            </S.CardsContainer>
+            <S.ArrowButtonStyle className="right">
               <ArrowRightButton
                 onClick={() => scrollCards("right", cardsContainerRef1)}
               />
-            </S.ButtonCardsContainer>
-          </S.ContentContainer>
-          <S.ContentContainer>
-            <S.Title>
-              최근에 만든 롤링 페이퍼⭐️{isLoading && <div>로딩중...</div>}
-            </S.Title>
-            <S.ButtonCardsContainer>
+            </S.ArrowButtonStyle>
+          </S.ButtonCardsContainer>
+        </S.ContentContainer>
+        <S.ContentContainer>
+          <S.Title>최근에 만든 롤링 페이퍼⭐️ TOP10</S.Title>
+          <S.ButtonCardsContainer>
+            <S.ArrowButtonStyle className="left">
               <ArrowLeftButton
                 onClick={() => scrollCards("left", cardsContainerRef2)}
               />
-              <S.CardsContainer ref={cardsContainerRef2}>
-                {recentRecipients.map(
-                  (recipient) => (
-                    console.log(recipient),
-                    (
-                      <S.Card
-                        key={recipient.id}
-                        onClick={() => handleCardClick(recipient)}
-                      >
-                        <Card data={recipient} />
-                      </S.Card>
-                    )
+            </S.ArrowButtonStyle>
+            <S.CardsContainer ref={cardsContainerRef2}>
+              {recentRecipients.map(
+                (recipient) => (
+                  console.log(recipient),
+                  (
+                    <S.Card
+                      key={recipient.id}
+                      onClick={() => handleCardClick(recipient)}
+                    >
+                      <Card data={recipient} />
+                    </S.Card>
                   )
-                )}
-              </S.CardsContainer>
+                )
+              )}
+            </S.CardsContainer>
+            <S.ArrowButtonStyle className="right">
               <ArrowRightButton
                 onClick={() => scrollCards("right", cardsContainerRef2)}
               />
-            </S.ButtonCardsContainer>{" "}
-          </S.ContentContainer>
-          <S.BottomButtonWrapper>
-            <Button
-              variant="primary"
-              size={56}
-              onClick={() => onClick("papercreate")}
-            >
-              나도 만들어보기
-            </Button>
-          </S.BottomButtonWrapper>
-        </S.HomePageWrapper>
-      </>
+            </S.ArrowButtonStyle>
+          </S.ButtonCardsContainer>{" "}
+        </S.ContentContainer>
+        <S.BottomButtonWrapper>
+          <Button
+            variant="primary"
+            size={40}
+            onClick={() => onClick("papercreate")}
+          >
+            나도 만들어보기
+          </Button>
+        </S.BottomButtonWrapper>
+      </S.HomePageWrapper>
     )
   );
 };
@@ -250,10 +254,11 @@ const S = {
 
   ButtonCardsContainer: styled.div`
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     width: 100%;
     gap: 20px;
+    position: relative;
 
     button {
       display: none;
@@ -267,6 +272,21 @@ const S = {
     `}
   `,
 
+  ArrowButtonStyle: styled.div`
+    position: absolute;
+    top: 50%; /* Center vertically */
+    transform: translateY(-50%); /* Adjust for exact centering */
+    cursor: pointer; /* Optional: makes it clear the arrows are clickable */
+    z-index: 1;
+    &.left {
+      left: 200px; /* Position at the start (left side) */
+    }
+
+    &.right {
+      right: 180px; /* Position at the end (right side) */
+    }
+  `,
+
   CardsContainer: styled.div`
     padding-left: 20px;
     display: flex;
@@ -274,11 +294,13 @@ const S = {
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     scroll-snap-align: center;
+    position: relative;
     gap: 50px;
     /* &::-webkit-scrollbar {
       display: none;
     } */
   `,
+
   Card: styled.div`
     flex: 0 0 auto;
     width: 250px;

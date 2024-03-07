@@ -66,7 +66,7 @@ const S = {
     width: 100%;
   `,
   ButtonWrapper: styled.div`
-    width: 300px;
+    width: 320px;
   `,
   ContentWrapper: styled.div`
     display: flex;
