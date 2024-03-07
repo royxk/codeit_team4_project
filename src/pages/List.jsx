@@ -47,7 +47,7 @@ const List = () => {
   const scrollCards = (direction, ref) => {
     if (ref.current) {
       const { current } = ref;
-      const scrollAmount = 700;
+      const scrollAmount = 600;
       const scrollPosition =
         direction === "left"
           ? current.scrollLeft - scrollAmount
@@ -82,8 +82,8 @@ const List = () => {
         const sortedByRecent = [...res.data.results].sort(
           (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
         );
-        setPopularRecipients(sortedByPopularity.slice(0, 7));
-        setRecentRecipients(sortedByRecent.slice(0, 7));
+        setPopularRecipients(sortedByPopularity.slice(0, 9));
+        setRecentRecipients(sortedByRecent.slice(0, 9));
         setIsLoading(false);
         return res.data.results;
       });
@@ -109,12 +109,14 @@ const List = () => {
           </S.ButtonWrapper>
         </S.NavContainer>
         <S.ContentContainer>
-          <S.Title>인기 롤링 페이퍼 🔥 </S.Title>
+          <S.Title>인기 롤링 페이퍼 🔥 TOP10</S.Title>
 
           <S.ButtonCardsContainer>
-            <ArrowLeftButton
-              onClick={() => scrollCards("left", cardsContainerRef1)}
-            />
+            <S.ArrowButtonStyle className="left">
+              <ArrowLeftButton
+                onClick={() => scrollCards("left", cardsContainerRef1)}
+              />
+            </S.ArrowButtonStyle>
             <S.CardsContainer ref={cardsContainerRef1}>
               {populartRecipients.map((recipient) => (
                 <S.Card
@@ -125,17 +127,21 @@ const List = () => {
                 </S.Card>
               ))}
             </S.CardsContainer>
-            <ArrowRightButton
-              onClick={() => scrollCards("right", cardsContainerRef1)}
-            />
+            <S.ArrowButtonStyle className="right">
+              <ArrowRightButton
+                onClick={() => scrollCards("right", cardsContainerRef1)}
+              />
+            </S.ArrowButtonStyle>
           </S.ButtonCardsContainer>
         </S.ContentContainer>
         <S.ContentContainer>
-          <S.Title>최근에 만든 롤링 페이퍼⭐️</S.Title>
+          <S.Title>최근에 만든 롤링 페이퍼⭐️ TOP10</S.Title>
           <S.ButtonCardsContainer>
-            <ArrowLeftButton
-              onClick={() => scrollCards("left", cardsContainerRef2)}
-            />
+            <S.ArrowButtonStyle className="left">
+              <ArrowLeftButton
+                onClick={() => scrollCards("left", cardsContainerRef2)}
+              />
+            </S.ArrowButtonStyle>
             <S.CardsContainer ref={cardsContainerRef2}>
               {recentRecipients.map(
                 (recipient) => (
@@ -151,15 +157,17 @@ const List = () => {
                 )
               )}
             </S.CardsContainer>
-            <ArrowRightButton
-              onClick={() => scrollCards("right", cardsContainerRef2)}
-            />
+            <S.ArrowButtonStyle className="right">
+              <ArrowRightButton
+                onClick={() => scrollCards("right", cardsContainerRef2)}
+              />
+            </S.ArrowButtonStyle>
           </S.ButtonCardsContainer>{" "}
         </S.ContentContainer>
         <S.BottomButtonWrapper>
           <Button
             variant="primary"
-            size={56}
+            size={40}
             onClick={() => onClick("papercreate")}
           >
             나도 만들어보기
@@ -246,10 +254,11 @@ const S = {
 
   ButtonCardsContainer: styled.div`
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     width: 100%;
     gap: 20px;
+    position: relative;
 
     button {
       display: none;
@@ -263,6 +272,21 @@ const S = {
     `}
   `,
 
+  ArrowButtonStyle: styled.div`
+    position: absolute;
+    top: 50%; /* Center vertically */
+    transform: translateY(-50%); /* Adjust for exact centering */
+    cursor: pointer; /* Optional: makes it clear the arrows are clickable */
+    z-index: 1;
+    &.left {
+      left: 200px; /* Position at the start (left side) */
+    }
+
+    &.right {
+      right: 180px; /* Position at the end (right side) */
+    }
+  `,
+
   CardsContainer: styled.div`
     padding-left: 20px;
     display: flex;
@@ -270,10 +294,16 @@ const S = {
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     scroll-snap-align: center;
+    position: relative;
     gap: 50px;
     &::-webkit-scrollbar {
       height: 8px;
     }
+    ${media.widescreen`
+     &::-webkit-scrollbar {
+      display: none;
+    }
+    `}
 
     &::-webkit-scrollbar-track {
       background: #f1f1f1; /* Color of the track */
@@ -287,11 +317,8 @@ const S = {
     &::-webkit-scrollbar-thumb:hover {
       background: #555; /* Color of the scrollbar thumb on hover */
     }
-
-    /* Custom scrollbar for Firefox */
-    scrollbar-width: thin; /* "auto" or "thin" */
-    scrollbar-color: #888 #f1f1f1; /* thumb and track color */
   `,
+
   Card: styled.div`
     flex: 0 0 auto;
     width: 250px;
