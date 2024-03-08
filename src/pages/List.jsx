@@ -95,7 +95,7 @@ const List = () => {
     console.log(populartRecipients),
     (
       <S.HomePageWrapper>
-        {isLoading && <Loading isLoading={isLoading}></Loading>}
+        {isLoading && <Loading loading={isLoading}></Loading>}
         <NavBar buttonVisible={true} paddingInline="24px" />
         <S.ContentContainer>
           <S.Title>인기 롤링 페이퍼 🔥 TOP10</S.Title>
@@ -253,7 +253,7 @@ const S = {
   ArrowButtonStyle: styled.div`
     position: absolute;
     top: 50%; /* Center vertically */
-    transform: translateY(-50%); /* Adjust for exact centering */
+    transform: translateY(-70%); /* Adjust for exact centering */
     cursor: pointer; /* Optional: makes it clear the arrows are clickable */
     z-index: 1;
     &.left {
