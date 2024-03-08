@@ -42,9 +42,7 @@ function Modal({ cardData = CARD_DATA_INIT, onClose }) {
           <S.ModalContainer>
             <S.ModalHeader>
               <S.FlexBox>
-                <S.ProfileImg>
-                  <img src={cardData?.profileImageURL} alt="profile" />
-                </S.ProfileImg>
+                <S.ProfileImg imgUrl={cardData?.profileImageURL} />
                 <S.FlexColum>
                   <S.Sender>
                     From. <span>{cardData?.sender}</span>
@@ -139,6 +137,9 @@ const S = {
     border-radius: 100px;
     overflow: hidden;
     border: 1px solid ${theme.colors.grey[200]};
+    background-image: url(${({ imgUrl }) => imgUrl});
+    background-size: cover;
+    background-repeat: no-repeat;
     img {
       width: 100%;
       object-fit: cover;
