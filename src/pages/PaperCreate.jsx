@@ -34,24 +34,12 @@ const PaperCreate = () => {
   };
 
   const handleInputValue = (e) => {
-    const { name, value } = e.target;
-    if (name === "name" && value.length > 10) {
-      alert("10자 이내로 입력해주세요");
-      return;
-    }
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-
-    if (errorMessages.message !== "") {
-      setErrorMessages({ message: "", error: false });
-    }
+    const { id, value } = e.target;
+    formData.name = value;
   };
 
   const handleFocusOut = (e) => {
     const { name, value } = e.target;
-    //input legnth is empty and more than 10 return true
     if (name === "name" && value.length > 10) {
       setErrorMessages({
         message: "10자 이내로 입력해주세요",
@@ -129,13 +117,13 @@ const PaperCreate = () => {
               id="name"
               name="name"
               value={formData.name}
-              handleChange={handleInputValue}
+              onChange={handleInputValue}
               onBlur={handleFocusOut}
-              error={errorMessages.error}
-            >
-              받는사람 이름을 입력해주세요
-            </Input>
-            <div>{errorMessages.message}</div>
+              maxLength={10}
+              error={errorMessages.error.toString()}
+              placeholder="받는사람 이름을 입력해주세요"
+              errorMessage={errorMessages.message}
+            />
           </S.InputContainer>
           <S.ButtonColorWrapper>
             <S.BoldText>배경화면을 선택해 주세요</S.BoldText>
