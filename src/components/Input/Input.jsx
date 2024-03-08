@@ -1,25 +1,31 @@
 import React from "react";
 import styled from "styled-components";
+import { useState } from "react";
+
+//Message 변수로 받기
+//Error Message 변수로 받기
 
 const Input = ({
   id,
   name,
-  formData,
+  value,
   handleChange,
   error,
   disabled,
   children,
+  onBlur,
 }) => {
   return (
     <S.Input
       type="text"
       id={id}
       name={name}
-      value={formData[name]}
+      value={value}
       onChange={handleChange}
       placeholder={children}
       error={error}
       disabled={disabled}
+      onBlur={onBlur}
     />
   );
 };

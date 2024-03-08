@@ -1,16 +1,16 @@
 import React, { useEffect } from "react";
-import Input from "../components/Input/Input";
-import styled from "styled-components";
-import ColorButton from "../components/core/ColorButton";
 import { useState } from "react";
 import theme from "../styles/theme";
 import { postRecipient } from "../apiFetcher/recipients/postRecipient";
 import { getAllRecipients } from "../apiFetcher/recipients/getAllRecipients";
 import { getBackgroundImages } from "../apiFetcher/backgroundImages";
-import ImageButton from "../components/core/ImageButton";
 import { media } from "../styles/utils/mediaQuery";
-import NavBar from "../components/core/NavBar";
 import { useNavigate } from "react-router-dom";
+import Input from "../components/Input/Input";
+import styled from "styled-components";
+import ColorButton from "../components/core/ColorButton";
+import ImageButton from "../components/core/ImageButton";
+import NavBar from "../components/core/NavBar";
 import Button from "../components/core/Button/Button";
 import ToggleButton from "../components/core/Button/ToggleButton";
 
@@ -24,11 +24,16 @@ const PaperCreate = () => {
   const [selectionType, setSelectionType] = useState("color");
   const [backgroundImages, setBackgroundImages] = useState([]);
   const [selectedImagge, setSelectedImage] = useState(null);
+  const [errorMessages, setErrorMessages] = useState({
+    message: "",
+    error: false,
+  });
 
   const onClick = (link) => {
     navigate(`/${link}`);
   };
-  const handleChange = (e) => {
+
+  const handleInputValue = (e) => {
     const { name, value } = e.target;
     if (name === "name" && value.length > 10) {
       alert("10자 이내로 입력해주세요");
@@ -38,17 +43,36 @@ const PaperCreate = () => {
       ...formData,
       [name]: value,
     });
+
+    if (errorMessages.message !== "") {
+      setErrorMessages({ message: "", error: false });
+    }
   };
 
-  useEffect(() => {
-    const response = getBackgroundImages().then((res) => {
-      setBackgroundImages(res.data.imageUrls);
-      return res.data;
-    });
-  }, []);
+  const handleFocusOut = (e) => {
+    const { name, value } = e.target;
+    //input legnth is empty and more than 10 return true
+    if (name === "name" && value.length > 10) {
+      setErrorMessages({
+        message: "10자 이내로 입력해주세요",
+        error: true,
+      });
+      return;
+    } else if (name === "name" && value.length === 0) {
+      setErrorMessages({
+        message: "받는사람 이름을 입력해주세요",
+        error: true,
+      });
+      return;
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (formData.name.length === 0) {
+      alert("받는사람 이름을 입력해주세요");
+      return;
+    }
 
     try {
       await postRecipient(formData);
@@ -87,9 +111,16 @@ const PaperCreate = () => {
     setSelectedImage(image);
   };
 
+  useEffect(() => {
+    getBackgroundImages().then((res) => {
+      setBackgroundImages(res.data.imageUrls);
+      return res.data;
+    });
+  }, []);
+
   return (
     <>
-      <NavBar blockVisible={false} paddingInline="24px"/>
+      <NavBar blockVisible={false} paddingInline="24px" />
       <S.PaperCreateContainer>
         <S.Container>
           <S.InputContainer>
@@ -97,11 +128,14 @@ const PaperCreate = () => {
             <Input
               id="name"
               name="name"
-              formData={formData}
-              handleChange={handleChange}
+              value={formData.name}
+              handleChange={handleInputValue}
+              onBlur={handleFocusOut}
+              error={errorMessages.error}
             >
               받는사람 이름을 입력해주세요
             </Input>
+            <div>{errorMessages.message}</div>
           </S.InputContainer>
           <S.ButtonColorWrapper>
             <S.BoldText>배경화면을 선택해 주세요</S.BoldText>

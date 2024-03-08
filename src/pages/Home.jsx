@@ -17,7 +17,7 @@ const Home = () => {
 
   return (
     <>
-      <NavBar buttonVisible={true} paddingInline="24px"/>
+      <NavBar buttonVisible={true} paddingInline="24px" />
       <S.HomePageWrapper>
         <S.ContentWrapper>
           <S.ContentContainer>
@@ -43,10 +43,11 @@ const Home = () => {
               <S.Image secondImg src={homeImage2} alt="homeImage1" />
             </S.ImageContainer>
           </S.ContentContainer>
-          {/* <Link to={"/list"}>구경해보기</Link> */}
-          <Button variant="primary" size={50} onClick={() => onClick("list")}>
-            구경해보기
-          </Button>
+          <S.BottomButtonWrapper>
+            <Button variant="primary" size={50} onClick={() => onClick("list")}>
+              구경해보기
+            </Button>
+          </S.BottomButtonWrapper>
         </S.ContentWrapper>
       </S.HomePageWrapper>
     </>
@@ -142,5 +143,17 @@ const S = {
   Description: styled.div`
     font-size: ${({ theme }) => theme.fontSizes.l};
     font-weight: lighter;
+  `,
+  BottomButtonWrapper: styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 40px;
+
+    width: 100%;
+    padding: 0 20px;
+    ${media.widescreen`
+  width: 300px;
+  `}
   `,
 };
