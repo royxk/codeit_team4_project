@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useState } from "react";
 import theme from "../styles/theme";
 import { postRecipient } from "../apiFetcher/recipients/postRecipient";
@@ -34,33 +34,21 @@ const PaperCreate = () => {
   };
 
   const handleInputValue = (e) => {
-    const { id, value } = e.target;
+    const { name, value } = e.target;
     formData.name = value;
   };
 
-  const handleFocusOut = (e) => {
-    const { name, value } = e.target;
-    if (name === "name" && value.length > 10) {
-      setErrorMessages({
-        message: "10자 이내로 입력해주세요",
-        error: true,
-      });
-      return;
-    } else if (name === "name" && value.length === 0) {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (formData.name.trim().length === 0) {
       setErrorMessages({
         message: "받는사람 이름을 입력해주세요",
         error: true,
       });
       return;
     }
-  };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (formData.name.length === 0) {
-      alert("받는사람 이름을 입력해주세요");
-      return;
-    }
+    setErrorMessages({ message: "", error: false });
 
     try {
       await postRecipient(formData);
@@ -77,6 +65,10 @@ const PaperCreate = () => {
       }
     } catch (error) {
       console.error("Submission error:", error);
+      setErrorMessages({
+        message: "받는사람 이름을 입력해주세요",
+        error: true,
+      });
     }
   };
 
@@ -113,17 +105,21 @@ const PaperCreate = () => {
         <S.Container>
           <S.InputContainer>
             <S.BoldText>To.</S.BoldText>
-            <Input
-              id="name"
-              name="name"
-              value={formData.name}
-              onChange={handleInputValue}
-              onBlur={handleFocusOut}
-              maxLength={10}
-              error={errorMessages.error.toString()}
-              placeholder="받는사람 이름을 입력해주세요"
-              errorMessage={errorMessages.message}
-            />
+            <S.InputContentWrapper>
+              <Input
+                id="name"
+                name="name"
+                value={formData.name}
+                onChange={handleInputValue}
+                maxLength="10"
+                error={errorMessages.error}
+                placeholder="받는사람 이름을 입력해주세요"
+                errorMessage={errorMessages.message}
+              />
+              {errorMessages.error && (
+                <S.ErrorMessage>{errorMessages.message}</S.ErrorMessage>
+              )}
+            </S.InputContentWrapper>
           </S.InputContainer>
           <S.ButtonColorWrapper>
             <S.BoldText>배경화면을 선택해 주세요</S.BoldText>
@@ -256,5 +252,18 @@ const S = {
     ${media.tablet`
       grid-template-columns: repeat(4, 1fr);
     `}
+  `,
+
+  InputContentWrapper: styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: space-between;
+    gap: 12px;
+  `,
+
+  ErrorMessage: styled.div`
+    color: ${({ theme }) => theme.colors.error};
+    font-size: ${({ theme }) => theme.fontSizes.xxxs};
   `,
 };

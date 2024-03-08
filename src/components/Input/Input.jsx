@@ -2,11 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useState } from "react";
 
-//Message 변수로 받기
-//Error Message 변수로 받기
-
 const Input = ({ ...props }) => {
-  console.log(props);
   return (
     <S.EntireInputBox>
       <S.Input
