@@ -18,9 +18,9 @@ const Card = ({ data }) => {
           </S.profileList>
           <S.messageCount>{data.messageCount}명이 작성했어요!</S.messageCount>
         </S.information>
-        <S.emoji>
-          <TopEmojiBlock emojiData={data.topReactions} maxLength={3} />
-        </S.emoji>
+            <S.emoji>
+              <TopEmojiBlock emojiData={data.topReactions} maxLength={3} />
+            </S.emoji>
       </S.contents>
       <S.pattern className={background}></S.pattern>
     </S.container>
@@ -53,7 +53,10 @@ const S = {
       background-color: ${({ theme }) => theme.colors.green[200]};
     }
     &.picture {
-      background-image: url(${(props) => props.backgroundImageURL});
+      background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(${(props) => props.backgroundImageURL});
+      color: ${({theme}) => theme.colors.white};
+      border: 1px solid #0000001A;
+      box-shadow: 0px 2px 12px 0px #00000014;
       background-size: cover;
       background-position: center;
     }
@@ -68,7 +71,7 @@ const S = {
   `,
 
   information: styled.div`
-    width: 125px;
+    width: 200px;
     height: 114px;
     gap: 12px;
     position: absolute;
@@ -80,6 +83,10 @@ const S = {
   name: styled.div`
     ${textStyle("base", "bold", "xl")}
     line-height: 36px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    
   `,
 
   profileList: styled.div`
@@ -115,8 +122,11 @@ const S = {
     height: 53px;
     gap: 16px;
     position: absolute;
+    border-top: 1px solid #0000001F;
     top: 210px;
     transform: translateY(-100%);
+    display: flex;
+    align-items: end;
   `,
 
   pattern: styled.div`
