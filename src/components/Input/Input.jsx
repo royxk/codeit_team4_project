@@ -1,27 +1,32 @@
 import React from "react";
 import styled from "styled-components";
+import { useState } from "react";
 
-const Input = ({...props}) => {
-    console.log(props);
+//Message 변수로 받기
+//Error Message 변수로 받기
+
+const Input = ({ ...props }) => {
+  console.log(props);
   return (
-      <S.EntireInputBox>
-        <S.Input type="text"
-                 id={props.id}
-                 placeholder={props.placeholder}
-                 onChange={props.onChange}
-                 $error={props.error}
-                 maxLength={props.maxLength}
-                 ref={props.reference}
-        />
-        <S.ErrorBox $error={props.error}>{props.errorMessage}</S.ErrorBox>
-      </S.EntireInputBox>
+    <S.EntireInputBox>
+      <S.Input
+        type="text"
+        id={props.id}
+        placeholder={props.placeholder}
+        onChange={props.onChange}
+        $error={props.error}
+        maxLength={props.maxLength}
+        ref={props.reference}
+      />
+      <S.ErrorBox $error={props.error}>{props.errorMessage}</S.ErrorBox>
+    </S.EntireInputBox>
   );
 };
 
 export default Input;
 
 const S = {
-  EntireInputBox:styled.div`
+  EntireInputBox: styled.div`
     display: flex;
     justify-content: flex-start;
     flex-direction: column;
@@ -62,10 +67,10 @@ const S = {
     }
   `,
 
-  ErrorBox:styled.div`
-    display: ${(props) => props.$error === "true" ? 'flex' : 'none'};
-    color: ${({theme}) => theme.colors.error};
-    font-size: ${({theme}) => theme.fontSizes.xxxs};
+  ErrorBox: styled.div`
+    display: ${(props) => (props.$error === "true" ? "flex" : "none")};
+    color: ${({ theme }) => theme.colors.error};
+    font-size: ${({ theme }) => theme.fontSizes.xxxs};
     padding-left: 6px;
-  `
+  `,
 };
