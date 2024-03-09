@@ -1,12 +1,12 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
-import theme from "../styles/theme";
 import { postRecipient } from "../apiFetcher/recipients/postRecipient";
 import { getAllRecipients } from "../apiFetcher/recipients/getAllRecipients";
 import { getBackgroundImages } from "../apiFetcher/backgroundImages";
 import { media } from "../styles/utils/mediaQuery";
 import { useNavigate } from "react-router-dom";
-import Input from "../components/Input/Input";
+import theme from "../styles/theme";
+import Input2 from "../components/Input/Input2";
 import styled from "styled-components";
 import ColorButton from "../components/core/ColorButton";
 import ImageButton from "../components/core/ImageButton";
@@ -16,39 +16,25 @@ import ToggleButton from "../components/core/Button/ToggleButton";
 
 const PaperCreate = () => {
   const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     team: "4",
     name: "",
     backgroundColor: "beige",
   });
   const [selectionType, setSelectionType] = useState("color");
-  const [backgroundImages, setBackgroundImages] = useState([]);
   const [selectedImagge, setSelectedImage] = useState(null);
+  const [backgroundImages, setBackgroundImages] = useState([]);
   const [errorMessages, setErrorMessages] = useState({
     message: "",
     error: false,
   });
 
-  const onClick = (link) => {
-    navigate(`/${link}`);
-  };
-
-  const handleInputValue = (e) => {
-    const { name, value } = e.target;
-    formData.name = value;
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (formData.name.trim().length === 0) {
-      setErrorMessages({
-        message: "받는사람 이름을 입력해주세요",
-        error: true,
-      });
-      return;
+    if (formData.name === "") {
+      alert("받는사람 이름을 입력해주세요");
     }
-
-    setErrorMessages({ message: "", error: false });
 
     try {
       await postRecipient(formData);
@@ -56,7 +42,6 @@ const PaperCreate = () => {
       const results = res.data.results;
       if (results.length > 0) {
         const { id, backgroundColor, backgroundImageURL } = results[0];
-        console.log(id);
         navigate(`/post/${id}`, {
           state: { color: backgroundColor, img: backgroundImageURL },
         });
@@ -72,9 +57,28 @@ const PaperCreate = () => {
     }
   };
 
+  const handleInputValue = (e) => {
+    const { value } = e.target;
+    formData.name = value;
+  };
+
+  const handleBlur = (e) => {
+    const { value } = e.target;
+    if (value === "") {
+      setErrorMessages({
+        message: "받는사람 이름을 입력해주세요",
+        error: true,
+      });
+    } else {
+      setErrorMessages({
+        message: "",
+        error: false,
+      });
+    }
+  };
+
   const handleColorChange = (color) => (e) => {
     e.preventDefault();
-
     setFormData((prevFormData) => ({
       ...prevFormData,
       backgroundColor: color,
@@ -83,7 +87,6 @@ const PaperCreate = () => {
 
   const handleImageChange = (image) => (e) => {
     e.preventDefault();
-
     setFormData((prevFormData) => ({
       ...prevFormData,
       backgroundImageURL: image,
@@ -106,7 +109,7 @@ const PaperCreate = () => {
           <S.InputContainer>
             <S.BoldText>To.</S.BoldText>
             <S.InputContentWrapper>
-              <Input
+              <Input2
                 id="name"
                 name="name"
                 value={formData.name}
@@ -114,16 +117,14 @@ const PaperCreate = () => {
                 maxLength="10"
                 error={errorMessages.error}
                 placeholder="받는사람 이름을 입력해주세요"
+                onBlur={handleBlur}
                 errorMessage={errorMessages.message}
               />
-              {errorMessages.error && (
-                <S.ErrorMessage>{errorMessages.message}</S.ErrorMessage>
-              )}
             </S.InputContentWrapper>
           </S.InputContainer>
           <S.ButtonColorWrapper>
             <S.BoldText>배경화면을 선택해 주세요</S.BoldText>
-            <S.LightText> 컬러를 선택하거나 이미지를 선택해주세요</S.LightText>
+            <S.LightText>컬러를 선택하거나 이미지를 선택해주세요</S.LightText>
 
             <ToggleButton
               activeOption={selectionType}
@@ -193,6 +194,7 @@ const S = {
     gap: 20px;
     padding: 0 50px;
   `,
+
   Container: styled.div`
     width: 100%;
     display: flex;
@@ -204,6 +206,7 @@ const S = {
       width: 50%;
     `}
   `,
+
   ButtonColorWrapper: styled.div`
     display: flex;
     gap: 20px;
@@ -212,15 +215,18 @@ const S = {
     justify-content: center;
     width: 100%;
   `,
+
   BoldText: styled.div`
     font-weight: ${({ theme }) => theme.fontWeights.bold};
     font-size: ${({ theme }) => theme.fontSizes.xxl};
   `,
+
   LightText: styled.div`
     font-weight: ${({ theme }) => theme.fontWeights.regular};
     font-size: ${({ theme }) => theme.fontSizes.xs};
     color: ${({ theme }) => theme.colors.grey[400]};
   `,
+
   InputContainer: styled.div`
     width: 100%;
     display: flex;
@@ -230,6 +236,7 @@ const S = {
     gap: 10px;
     margin-bottom: 50px;
   `,
+
   ButtonContainer: styled.div`
     display: flex;
     flex-direction: column;
@@ -240,6 +247,7 @@ const S = {
       align-items: start;
     `}
   `,
+
   ColorButtonContainer: styled.div`
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -260,10 +268,5 @@ const S = {
     width: 100%;
     justify-content: space-between;
     gap: 12px;
-  `,
-
-  ErrorMessage: styled.div`
-    color: ${({ theme }) => theme.colors.error};
-    font-size: ${({ theme }) => theme.fontSizes.xxxs};
   `,
 };
