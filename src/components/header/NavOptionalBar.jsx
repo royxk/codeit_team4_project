@@ -90,12 +90,12 @@ function NavOptionalBar({data, onToast, inlinePadding}) {
                                                     new Array(Math.min(4, Math.max(Object.keys(emojiData).length - 3, 0))).fill(0).map((x, index) => {
                                                         let emoji = emojiData[index + 3].emoji;
                                                         let count = emojiData[index + 3].count;
-                                                        return <ReactionBadge key={index} emoji={emoji} count={count} />
+                                                        return count !== 0 ? <ReactionBadge key={index} emoji={emoji} count={count} /> : null
                                                     })
                                                     : new Array(Math.min(3, Math.max(Object.keys(emojiData).length - 3, 0))).fill(0).map((x, index) => {
                                                         let emoji = emojiData[index + 2].emoji;
                                                         let count = emojiData[index + 2].count;
-                                                        return <ReactionBadge key={index} emoji={emoji} count={count} />
+                                                        return count !== 0 ? <ReactionBadge key={index} emoji={emoji} count={count} /> : null
                                                     })
                                             }
                                         </S.EmojiListModalInnerWrapper>
@@ -105,12 +105,12 @@ function NavOptionalBar({data, onToast, inlinePadding}) {
                                                     new Array(Math.min(4, Math.max(Object.keys(emojiData).length - 7, 0))).fill(0).map((x, index) => {
                                                         let emoji = emojiData[index + 7].emoji;
                                                         let count = emojiData[index + 7].count;
-                                                        return <ReactionBadge key={index} emoji={emoji} count={count} />
+                                                        return count !== 0 ? <ReactionBadge key={index} emoji={emoji} count={count} /> : null
                                                     })
                                                     : new Array(Math.min(3, Math.max(Object.keys(emojiData).length - 6, 0))).fill(0).map((x, index) => {
                                                         let emoji = emojiData[index + 6].emoji;
                                                         let count = emojiData[index + 6].count;
-                                                        return <ReactionBadge key={index} emoji={emoji} count={count} />
+                                                        return count !== 0 ? <ReactionBadge key={index} emoji={emoji} count={count} /> : null
                                                     })
                                             }
                                         </S.EmojiListModalInnerWrapper>
