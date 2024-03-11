@@ -13,7 +13,6 @@ import {isEqual} from "lodash";
 import theme from "../../styles/theme.js";
 import TopEmojiBlock from "./emoji/TopEmojiBlock.jsx";
 import {handleShareKakao} from "../../apiFetcher/kakao/shareKakao.js";
-import useOutSideClick from "../../hooks/useOutSideClick.js";
 
 function NavOptionalBar({data, onToast, inlinePadding}) {
     const KAKAO_API_KEY = import.meta.env.VITE_KAKAO_API_KEY;
@@ -39,7 +38,6 @@ function NavOptionalBar({data, onToast, inlinePadding}) {
     const [emojiListChange, setEmojiListChange] = useState(window.innerWidth >= DESKTOP_WIDTH)
     const whetherClick = useRef(emojiStorage);
     const lastWidth = useRef(window.innerWidth);
-    const modalRef = useRef();
 
     useEffect(() => {
         const getEmojiData = async () => {
@@ -77,8 +75,6 @@ function NavOptionalBar({data, onToast, inlinePadding}) {
         }
     }, [emojiListChange]);
 
-    useOutSideClick(modalRef, () => setViewModal(-1));
-
     if(emojiData === initialData) {
         return <></>
     }
@@ -99,7 +95,7 @@ function NavOptionalBar({data, onToast, inlinePadding}) {
                         <S.EmojiOpenButton onClick={() => modalOpenButton(1)}>
                             {
                                 viewModal === 1 ?
-                                    <S.EmojiListModal ref={modalRef}>
+                                    <S.EmojiListModal>
                                         <S.EmojiListModalInnerWrapper>
                                             {
                                                 emojiListChange ?
@@ -135,56 +131,56 @@ function NavOptionalBar({data, onToast, inlinePadding}) {
                         </S.EmojiOpenButton>
                     </S.ViewEmojiWrapper>
                     <S.ControllerWrapper>
-                        <S.EmojiButton $imageURL={smileEmoji} onClick={() => modalOpenButton(2)}>
+                        <S.EmojiButton imageURL={smileEmoji} onClick={() => modalOpenButton(2)}>
+                            <S.EmojiPickerContainer>
                                 {
-                                    viewModal === 2 ? (
-                                        <S.EmojiPickerContainer ref={modalRef}>
-                                            <EmojiPicker
-                                            skinTonesDisabled={true}
-                                            searchDisabled={true}
-                                            emojiStyle='native'
-                                            onEmojiClick={async (emojiClickData) => {
-                                                try {
-                                                    setIsLoading(true);
-                                                    let emoji = emojiClickData.emoji;
-                                                    console.log(emojiData);
+                                    viewModal === 2 ? <EmojiPicker
+                                        skinTonesDisabled={true}
+                                        searchDisabled={true}
+                                        emojiStyle='native'
+                                        onEmojiClick={async (emojiClickData) => {
+                                            try {
+                                                setIsLoading(true);
+                                                let emoji = emojiClickData.emoji;
+                                                console.log(emojiData);
 
-                                                    if(whetherClick.current.has(emoji)) {
-                                                        await postRecipientReaction({
-                                                            "emoji": emoji,
-                                                            "type": "decrease"
-                                                        }, data.id);
-                                                        whetherClick.current.delete(emoji);
-                                                    }
-                                                    else {
-                                                        await postRecipientReaction({
-                                                            "emoji": emoji,
-                                                            "type": "increase"
-                                                        }, data.id);
-                                                        whetherClick.current.add(emoji);
-                                                    }
-
-                                                    const response = await getRecipientReaction(data.id, 11, 0);
-                                                    const newData = response.data.results;
-
-                                                    if(!isEqual(newData, emojiData)) {
-                                                        setEmojiData(newData);
-                                                    }
-
-                                                } catch (error) {
-                                                    console.error("데이터를 불러올 수 없습니다.");
-                                                    console.log(error);
-                                                } finally {
-                                                    setIsLoading(false);
+                                                if(whetherClick.current.has(emoji)) {
+                                                    await postRecipientReaction({
+                                                        "emoji": emoji,
+                                                        "type": "decrease"
+                                                    }, data.id);
+                                                    whetherClick.current.delete(emoji);
                                                 }
-                                            }}/>
-                                        </S.EmojiPickerContainer>) : null
+                                                else {
+                                                    await postRecipientReaction({
+                                                        "emoji": emoji,
+                                                        "type": "increase"
+                                                    }, data.id);
+                                                    whetherClick.current.add(emoji);
+                                                }
+
+                                                const response = await getRecipientReaction(data.id, 11, 0);
+                                                const newData = response.data.results;
+
+                                                if(!isEqual(newData, emojiData)) {
+                                                    setEmojiData(newData);
+                                                }
+
+                                            } catch (error) {
+                                                console.error("데이터를 불러올 수 없습니다.");
+                                                console.log(error);
+                                            } finally {
+                                                setIsLoading(false);
+                                            }
+                                        }}
+                                    /> : null
                                 }
+                            </S.EmojiPickerContainer>
                         </S.EmojiButton>
                         <VerticalRule />
-                        <S.EmojiButton $imageURL = {shareEmoji} onClick={() => modalOpenButton(3)}>
+                        <S.EmojiButton imageURL = {shareEmoji} onClick={() => modalOpenButton(3)}>
                             {
-                                viewModal === 3 ? <S.ShareModal ref={modalRef}
+                                viewModal === 3 ? <S.ShareModal
                                 >
                                     <S.InnerShare onClick={() => handleShareKakao(data)}>카카오톡 공유</S.InnerShare>
                                     <S.InnerShare onClick={() => {
@@ -445,7 +441,7 @@ const S= {
       padding: 6px 8px;
       gap: 10px;
       background-color: rgba(255, 255, 255, 1);
-      background-image: url(${(props) => props.$imageURL});
+      background-image: url(${(props) => props.imageURL});
       background-size: initial;
       background-repeat: no-repeat;
       background-position: center;
