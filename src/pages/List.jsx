@@ -13,6 +13,8 @@ import Button from "../components/core/Button/Button";
 import ArrowLeftButton from "../components/core/Button/ArrowLeftButton";
 import ArrowRightButton from "../components/core/Button/ArrowRightButton";
 import Loading from "../components/core/Loading";
+import FetchMore1 from "../pages/FetchMore1";
+import FetchMore2 from "../pages/FetchMore2";
 const List = () => {
   const navigate = useNavigate();
   const [populartRecipients, setPopularRecipients] = useState([]);
@@ -21,13 +23,17 @@ const List = () => {
   const cardsContainerRef1 = useRef();
   const cardsContainerRef2 = useRef();
 
+  // Add new state variables
+  const [page, setPage1] = useState(0);
+  const [slice, setSlice] = useState(0);
+
   const onClick = (link) => {
     navigate(`/${link}`);
   };
 
-  const getTotalRecipients = async () => {
-    const response = getAllRecipients().then((res) => {
-      return res.data.count;
+  const getTotalRecipients = async (index) => {
+    const response = getAllRecipients(index, 0).then((res) => {
+      return res.data.results.length;
     });
     return response;
   };
@@ -71,10 +77,9 @@ const List = () => {
   useEffect(() => {
     setIsLoading(true);
     async function fetchData() {
-      const index = await getTotalRecipients();
-      const list = await getAllRecipients(index).then((res) => {
-        console.log("전체조회...");
-        console.log(res.data.results.length);
+      const index = await getTotalRecipients(slice);
+      console.log(page);
+      await getAllRecipients(index).then((res) => {
         const sortedByPopularity = [...res.data.results].sort(
           (a, b) =>
             b.messageCount - a.messageCount || b.reactionCount - a.reactionCount
@@ -82,14 +87,14 @@ const List = () => {
         const sortedByRecent = [...res.data.results].sort(
           (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
         );
-        setPopularRecipients(sortedByPopularity.slice(0, 9));
-        setRecentRecipients(sortedByRecent.slice(0, 9));
+        setPopularRecipients(sortedByPopularity);
+        setRecentRecipients(sortedByRecent);
         setIsLoading(false);
         return res.data.results;
       });
     }
     fetchData();
-  }, []);
+  }, [page]);
 
   return (
     <S.HomePageWrapper>
@@ -113,6 +118,11 @@ const List = () => {
                 <Card data={recipient} />
               </S.Card>
             ))}
+            <FetchMore1
+              loading={page !== 0 && isLoading}
+              setPage={setPage1}
+              slice={setSlice}
+            />
           </S.CardsContainer>
           <S.ArrowButtonStyle className="right">
             <ArrowRightButton
@@ -130,19 +140,19 @@ const List = () => {
             />
           </S.ArrowButtonStyle>
           <S.CardsContainer ref={cardsContainerRef2}>
-            {recentRecipients.map(
-              (recipient) => (
-                console.log(recipient),
-                (
-                  <S.Card
-                    key={recipient.id}
-                    onClick={() => handleCardClick(recipient)}
-                  >
-                    <Card data={recipient} />
-                  </S.Card>
-                )
-              )
-            )}
+            {recentRecipients.map((recipient) => (
+              <S.Card
+                key={recipient.id}
+                onClick={() => handleCardClick(recipient)}
+              >
+                <Card data={recipient} />
+              </S.Card>
+            ))}
+            <FetchMore2
+              loading={page !== 0 && isLoading}
+              setPage={setPage1}
+              slice={setSlice}
+            />
           </S.CardsContainer>
           <S.ArrowButtonStyle className="right">
             <ArrowRightButton
