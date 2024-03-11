@@ -2,10 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import {
-  getAllRecipients,
-  getRecipient,
-} from "../apiFetcher/recipients/getAllRecipients";
+import { getAllRecipients } from "../apiFetcher/recipients/getAllRecipients";
 import Card from "../components/core/CardList/Card";
 import NavBar from "../components/core/NavBar";
 import { media } from "../styles/utils/mediaQuery";
@@ -23,7 +20,6 @@ const List = () => {
   const cardsContainerRef1 = useRef();
   const cardsContainerRef2 = useRef();
 
-  // Add new state variables
   const [page, setPage1] = useState(0);
   const [slice, setSlice] = useState(0);
 
@@ -35,18 +31,6 @@ const List = () => {
     const response = getAllRecipients(index, 0).then((res) => {
       return res.data.results.length;
     });
-    return response;
-  };
-
-  const fetchRecipients = async (index) => {
-    const response = await getAllRecipients(index).then((res) => {
-      console.log("전체조회...");
-      console.log(res.data.results.length);
-      setRecipients(res.data.results);
-      setIndex((prev) => prev + 7);
-      return res.data.results;
-    });
-
     return response;
   };
 
@@ -101,7 +85,7 @@ const List = () => {
       {isLoading && <Loading loading={isLoading}></Loading>}
       <NavBar buttonVisible={true} paddingInline="24px" />
       <S.ContentContainer>
-        <S.Title>인기 롤링 페이퍼 🔥 TOP10</S.Title>
+        <S.Title>인기 롤링 페이퍼 🔥 TOP10..</S.Title>
 
         <S.ButtonCardsContainer>
           <S.ArrowButtonStyle className="left">
@@ -132,7 +116,7 @@ const List = () => {
         </S.ButtonCardsContainer>
       </S.ContentContainer>
       <S.ContentContainer>
-        <S.Title>최근에 만든 롤링 페이퍼⭐️ TOP10</S.Title>
+        <S.Title>최근에 만든 롤링 페이퍼⭐️ TOP10..</S.Title>
         <S.ButtonCardsContainer>
           <S.ArrowButtonStyle className="left">
             <ArrowLeftButton
