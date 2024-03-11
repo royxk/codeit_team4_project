@@ -4,7 +4,6 @@ import NavBar from '../components/core/NavBar.jsx';
 import styled from 'styled-components';
 import { media } from '../styles/utils/mediaQuery.ts';
 import { FONT_LIST, IMAGE_TYPES, RELATION_LIST } from '../common/types.js';
-import userIcon from '../assets/images/userIcon.svg';
 import ReactQuill from 'react-quill';
 import { DEFAULT_QUILL_STYLE, QUILL_MODULES } from '../common/quill.js';
 import { uploadImage } from '../apiFetcher/s3/uploadImage.js';
@@ -24,7 +23,7 @@ const MessageCreate = () => {
 
   const [profile, setProfile] = useState({
     file: null,
-    fileSrc: userIcon,
+    fileSrc: "https://rolling-bucket.s3.ap-northeast-2.amazonaws.com/assets/userIcon.svg",
   });
   const [sender, setSender] = useState('');
   const formData = useRef({
@@ -277,9 +276,9 @@ const S = {
     height: 100px;
     border-radius: 100px;
     padding: 24px;
-    background-color: ${(props) => (props.$image === userIcon ? theme.colors.grey['300'] : theme.colors.white)};
+    background-color: ${(props) => (props.$image === "https://rolling-bucket.s3.ap-northeast-2.amazonaws.com/assets/userIcon.svg" ? theme.colors.grey['300'] : theme.colors.white)};
     background-image: url(${(props) => props.$image});
-    background-size: ${(props) => (props.$image === userIcon ? 'initial' : 'cover')};
+    background-size: ${(props) => (props.$image === "https://rolling-bucket.s3.ap-northeast-2.amazonaws.com/assets/userIcon.svg" ? 'initial' : 'cover')};
     background-repeat: no-repeat;
     background-position: center;
   `,
