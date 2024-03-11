@@ -85,7 +85,7 @@ const List = () => {
       {isLoading && <Loading loading={isLoading}></Loading>}
       <NavBar buttonVisible={true} paddingInline="24px" />
       <S.ContentContainer>
-        <S.Title>인기 롤링 페이퍼 🔥 TOP10..</S.Title>
+        <S.Title>인기 롤링 페이퍼 🔥..</S.Title>
 
         <S.ButtonCardsContainer>
           <S.ArrowButtonStyle className="left">
@@ -116,7 +116,7 @@ const List = () => {
         </S.ButtonCardsContainer>
       </S.ContentContainer>
       <S.ContentContainer>
-        <S.Title>최근에 만든 롤링 페이퍼⭐️ TOP10..</S.Title>
+        <S.Title>최근에 만든 롤링 페이퍼⭐️..</S.Title>
         <S.ButtonCardsContainer>
           <S.ArrowButtonStyle className="left">
             <ArrowLeftButton
