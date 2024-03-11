@@ -1,8 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { useState } from "react";
 
-const Input = ({ ...props }) => {
+const Input2 = ({ ...props }) => {
   return (
     <S.EntireInputBox>
       <S.Input
@@ -10,16 +9,18 @@ const Input = ({ ...props }) => {
         id={props.id}
         placeholder={props.placeholder}
         onChange={props.onChange}
+        onBlur={props.onBlur}
         $error={props.error}
         maxLength={props.maxLength}
-        ref={props.reference}
       />
-      <S.ErrorBox $error={props.error}>{props.errorMessage}</S.ErrorBox>
+      {props.error && (
+        <S.ErrorBox $error={props.error}>{props.errorMessage}</S.ErrorBox>
+      )}
     </S.EntireInputBox>
   );
 };
 
-export default Input;
+export default Input2;
 
 const S = {
   EntireInputBox: styled.div`
@@ -35,15 +36,11 @@ const S = {
     height: 50px;
     border-radius: 8px;
     padding: 12px 16px;
-    border: 1px solid ${({ theme }) => theme.colors.grey[200]};
+    border: 1px solid
+      ${({ theme, $error }) =>
+        $error ? theme.colors.error : theme.colors.grey[200]};
     margin: 10px 0;
     overflow: hidden;
-
-    &.error {
-      // hintInput쪽에서 에러 상태를 알고 있으니
-      // hint Input쪽에서 에러 상태라면 error class를 추가해주면 끝
-      border: 1px solid ${({ theme }) => theme.colors.error};
-    }
 
     &:focus {
       outline: none;
@@ -70,7 +67,7 @@ const S = {
   `,
 
   ErrorBox: styled.div`
-    display: ${(props) => (props.$error === "true" ? "flex" : "none")};
+    display: flex;
     color: ${({ theme }) => theme.colors.error};
     font-size: ${({ theme }) => theme.fontSizes.xxxs};
     padding-left: 6px;
