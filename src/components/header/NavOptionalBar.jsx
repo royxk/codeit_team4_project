@@ -2,9 +2,6 @@ import styled from "styled-components";
 import RecipientListBlock from "../core/RecipientListBlock.jsx";
 import ReactionBadge from "../core/ReactionBadge.jsx";
 import {media} from "../../styles/utils/mediaQuery.ts";
-import arrowDown from "../../assets/images/arrowDown.svg";
-import smileEmoji from "../../assets/images/Smile.svg";
-import shareEmoji from "../../assets/images/share.svg";
 import EmojiPicker from "emoji-picker-react";
 import {useEffect, useRef, useState} from "react";
 import {postRecipientReaction} from "../../apiFetcher/recipients/postRecipientReaction.js";
@@ -122,7 +119,7 @@ function NavOptionalBar({data, onToast, inlinePadding}) {
                         </S.EmojiOpenButton>
                     </S.ViewEmojiWrapper>
                     <S.ControllerWrapper>
-                        <S.EmojiButton imageURL={smileEmoji} onClick={() => modalOpenButton(2)}>
+                        <S.EmojiButton types={"emoji"} onClick={() => modalOpenButton(2)}>
                             <S.EmojiPickerContainer>
                                 {
                                     viewModal === 2 ? <EmojiPicker
@@ -169,7 +166,7 @@ function NavOptionalBar({data, onToast, inlinePadding}) {
                             </S.EmojiPickerContainer>
                         </S.EmojiButton>
                         <VerticalRule />
-                        <S.EmojiButton imageURL = {shareEmoji} onClick={() => modalOpenButton(3)}>
+                        <S.EmojiButton types={"share"} onClick={() => modalOpenButton(3)}>
                             {
                                 viewModal === 3 ? <S.ShareModal
                                 >
@@ -367,7 +364,7 @@ const S= {
       width: 36px;
       height: 36px;
       border: 0;
-      background-image: url(${arrowDown});
+      background-image: url(https://rolling-bucket.s3.ap-northeast-2.amazonaws.com/assets/arrowDown.svg);
       background-size: initial;
       background-repeat: no-repeat;
       background-position: center;
@@ -432,7 +429,9 @@ const S= {
       padding: 6px 8px;
       gap: 10px;
       background-color: rgba(255, 255, 255, 1);
-      background-image: url(${(props) => props.imageURL});
+      background-image: url(${(props) => props.types === "emoji" ? 
+              "https://rolling-bucket.s3.ap-northeast-2.amazonaws.com/assets/Smile.svg" :
+              "https://rolling-bucket.s3.ap-northeast-2.amazonaws.com/assets/share.svg"});
       background-size: initial;
       background-repeat: no-repeat;
       background-position: center;
