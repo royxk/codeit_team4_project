@@ -1,32 +1,39 @@
 import React from "react";
 import styled from "styled-components";
+import { useState } from "react";
 
-const Input = ({
-  id,
-  name,
-  formData,
-  handleChange,
-  error,
-  disabled,
-  children,
-}) => {
+//Message 변수로 받기
+//Error Message 변수로 받기
+
+const Input = ({ ...props }) => {
+  console.log(props);
   return (
-    <S.Input
-      type="text"
-      id={id}
-      name={name}
-      value={formData[name]}
-      onChange={handleChange}
-      placeholder={children}
-      error={error}
-      disabled={disabled}
-    />
+    <S.EntireInputBox>
+      <S.Input
+        type="text"
+        id={props.id}
+        placeholder={props.placeholder}
+        onChange={props.onChange}
+        $error={props.error}
+        maxLength={props.maxLength}
+        ref={props.reference}
+      />
+      <S.ErrorBox $error={props.error}>{props.errorMessage}</S.ErrorBox>
+    </S.EntireInputBox>
   );
 };
 
 export default Input;
 
 const S = {
+  EntireInputBox: styled.div`
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    height: fit-content;
+    gap: 4px;
+  `,
+
   Input: styled.input`
     width: 100%;
     height: 50px;
@@ -34,6 +41,7 @@ const S = {
     padding: 12px 16px;
     border: 1px solid ${({ theme }) => theme.colors.grey[200]};
     margin: 10px 0;
+    overflow: hidden;
 
     &:focus {
       outline: none;
@@ -57,5 +65,12 @@ const S = {
       color: ${({ theme }) => theme.colors.grey[400]};
       cursor: not-allowed;
     }
+  `,
+
+  ErrorBox: styled.div`
+    display: ${(props) => (props.$error === "true" ? "flex" : "none")};
+    color: ${({ theme }) => theme.colors.error};
+    font-size: ${({ theme }) => theme.fontSizes.xxxs};
+    padding-left: 6px;
   `,
 };
