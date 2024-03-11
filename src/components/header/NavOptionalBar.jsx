@@ -131,7 +131,7 @@ function NavOptionalBar({data, onToast, inlinePadding}) {
                         </S.EmojiOpenButton>
                     </S.ViewEmojiWrapper>
                     <S.ControllerWrapper>
-                        <S.EmojiButton $imageURL={smileEmoji} onClick={() => modalOpenButton(2)}>
+                        <S.EmojiButton imageURL={smileEmoji} onClick={() => modalOpenButton(2)}>
                             <S.EmojiPickerContainer>
                                 {
                                     viewModal === 2 ? <EmojiPicker
@@ -178,7 +178,7 @@ function NavOptionalBar({data, onToast, inlinePadding}) {
                             </S.EmojiPickerContainer>
                         </S.EmojiButton>
                         <VerticalRule />
-                        <S.EmojiButton $imageURL = {shareEmoji} onClick={() => modalOpenButton(3)}>
+                        <S.EmojiButton imageURL = {shareEmoji} onClick={() => modalOpenButton(3)}>
                             {
                                 viewModal === 3 ? <S.ShareModal
                                 >
@@ -441,7 +441,7 @@ const S= {
       padding: 6px 8px;
       gap: 10px;
       background-color: rgba(255, 255, 255, 1);
-      background-image: url(${(props) => props.$imageURL});
+      background-image: url(${(props) => props.imageURL});
       background-size: initial;
       background-repeat: no-repeat;
       background-position: center;
