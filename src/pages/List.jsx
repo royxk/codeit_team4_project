@@ -10,8 +10,8 @@ import Button from "../components/core/Button/Button";
 import ArrowLeftButton from "../components/core/Button/ArrowLeftButton";
 import ArrowRightButton from "../components/core/Button/ArrowRightButton";
 import Loading from "../components/core/Loading";
-import FetchMore1 from "../pages/FetchMore1";
-import FetchMore2 from "../pages/FetchMore2";
+import FetchMore1 from "../utils/FetchMore1";
+import FetchMore2 from "../utils/FetchMore2";
 const List = () => {
   const navigate = useNavigate();
   const [populartRecipients, setPopularRecipients] = useState([]);
