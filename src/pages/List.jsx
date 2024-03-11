@@ -2,10 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import {
-  getAllRecipients,
-  getRecipient,
-} from "../apiFetcher/recipients/getAllRecipients";
+import { getAllRecipients } from "../apiFetcher/recipients/getAllRecipients";
 import Card from "../components/core/CardList/Card";
 import NavBar from "../components/core/NavBar";
 import { media } from "../styles/utils/mediaQuery";
@@ -13,6 +10,8 @@ import Button from "../components/core/Button/Button";
 import ArrowLeftButton from "../components/core/Button/ArrowLeftButton";
 import ArrowRightButton from "../components/core/Button/ArrowRightButton";
 import Loading from "../components/core/Loading";
+import FetchMore1 from "../pages/FetchMore1";
+import FetchMore2 from "../pages/FetchMore2";
 const List = () => {
   const navigate = useNavigate();
   const [populartRecipients, setPopularRecipients] = useState([]);
@@ -21,26 +20,17 @@ const List = () => {
   const cardsContainerRef1 = useRef();
   const cardsContainerRef2 = useRef();
 
+  const [page, setPage1] = useState(0);
+  const [slice, setSlice] = useState(0);
+
   const onClick = (link) => {
     navigate(`/${link}`);
   };
 
-  const getTotalRecipients = async () => {
-    const response = getAllRecipients().then((res) => {
-      return res.data.count;
+  const getTotalRecipients = async (index) => {
+    const response = getAllRecipients(index, 0).then((res) => {
+      return res.data.results.length;
     });
-    return response;
-  };
-
-  const fetchRecipients = async (index) => {
-    const response = await getAllRecipients(index).then((res) => {
-      console.log("전체조회...");
-      console.log(res.data.results.length);
-      setRecipients(res.data.results);
-      setIndex((prev) => prev + 7);
-      return res.data.results;
-    });
-
     return response;
   };
 
@@ -71,10 +61,9 @@ const List = () => {
   useEffect(() => {
     setIsLoading(true);
     async function fetchData() {
-      const index = await getTotalRecipients();
-      const list = await getAllRecipients(index).then((res) => {
-        console.log("전체조회...");
-        console.log(res.data.results.length);
+      const index = await getTotalRecipients(slice);
+      console.log(page);
+      await getAllRecipients(index).then((res) => {
         const sortedByPopularity = [...res.data.results].sort(
           (a, b) =>
             b.messageCount - a.messageCount || b.reactionCount - a.reactionCount
@@ -82,21 +71,21 @@ const List = () => {
         const sortedByRecent = [...res.data.results].sort(
           (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
         );
-        setPopularRecipients(sortedByPopularity.slice(0, 9));
-        setRecentRecipients(sortedByRecent.slice(0, 9));
+        setPopularRecipients(sortedByPopularity);
+        setRecentRecipients(sortedByRecent);
         setIsLoading(false);
         return res.data.results;
       });
     }
     fetchData();
-  }, []);
+  }, [page]);
 
   return (
     <S.HomePageWrapper>
       {isLoading && <Loading loading={isLoading}></Loading>}
       <NavBar buttonVisible={true} paddingInline="24px" />
       <S.ContentContainer>
-        <S.Title>인기 롤링 페이퍼 🔥 TOP10</S.Title>
+        <S.Title>인기 롤링 페이퍼 🔥 TOP10..</S.Title>
 
         <S.ButtonCardsContainer>
           <S.ArrowButtonStyle className="left">
@@ -113,6 +102,11 @@ const List = () => {
                 <Card data={recipient} />
               </S.Card>
             ))}
+            <FetchMore1
+              loading={page !== 0 && isLoading}
+              setPage={setPage1}
+              slice={setSlice}
+            />
           </S.CardsContainer>
           <S.ArrowButtonStyle className="right">
             <ArrowRightButton
@@ -122,7 +116,7 @@ const List = () => {
         </S.ButtonCardsContainer>
       </S.ContentContainer>
       <S.ContentContainer>
-        <S.Title>최근에 만든 롤링 페이퍼⭐️ TOP10</S.Title>
+        <S.Title>최근에 만든 롤링 페이퍼⭐️ TOP10..</S.Title>
         <S.ButtonCardsContainer>
           <S.ArrowButtonStyle className="left">
             <ArrowLeftButton
@@ -130,19 +124,19 @@ const List = () => {
             />
           </S.ArrowButtonStyle>
           <S.CardsContainer ref={cardsContainerRef2}>
-            {recentRecipients.map(
-              (recipient) => (
-                console.log(recipient),
-                (
-                  <S.Card
-                    key={recipient.id}
-                    onClick={() => handleCardClick(recipient)}
-                  >
-                    <Card data={recipient} />
-                  </S.Card>
-                )
-              )
-            )}
+            {recentRecipients.map((recipient) => (
+              <S.Card
+                key={recipient.id}
+                onClick={() => handleCardClick(recipient)}
+              >
+                <Card data={recipient} />
+              </S.Card>
+            ))}
+            <FetchMore2
+              loading={page !== 0 && isLoading}
+              setPage={setPage1}
+              slice={setSlice}
+            />
           </S.CardsContainer>
           <S.ArrowButtonStyle className="right">
             <ArrowRightButton
