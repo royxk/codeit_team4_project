@@ -4,7 +4,6 @@ import NavBar from '../components/core/NavBar.jsx';
 import styled from 'styled-components';
 import { media } from '../styles/utils/mediaQuery.ts';
 import { FONT_LIST, IMAGE_TYPES, RELATION_LIST } from '../common/types.js';
-import userIcon from '../assets/images/userIcon.svg';
 import ReactQuill from 'react-quill';
 import { DEFAULT_QUILL_STYLE, QUILL_MODULES } from '../common/quill.js';
 import { uploadImage } from '../apiFetcher/s3/uploadImage.js';
