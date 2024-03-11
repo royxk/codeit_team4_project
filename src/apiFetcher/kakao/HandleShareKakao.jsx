@@ -3,13 +3,13 @@ import styled from "styled-components";
 
 
 export function HandleShareKakao({data}) {
-    const KAKAO_API_KEY = import.meta.env.VITE_KAKAO_API_KEY;
+    const KAKAO_JS_KEY = import.meta.env.VITE_KAKAO_JS_KEY;
 
     useEffect(() => {
         Kakao.cleanup();
 
         if(!window.Kakao.isInitialized()) {
-            window.Kakao.init(KAKAO_API_KEY);
+            window.Kakao.init(KAKAO_JS_KEY);
             console.log(window.Kakao);
         }
     }, []);
