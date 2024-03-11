@@ -22,7 +22,7 @@ export function HandleShareKakao({data}) {
                 description: '',
                 imageUrl: data.backgroundImageURL || '',
                 link: {
-                    webUrl: `http://localhost:5173/post/${data.id}`
+                    webUrl: `https://codeit-team4-project-gamma.vercel.app/post/${data.id}`
                 },
             },
             social: {
