@@ -63,7 +63,9 @@ const DropdownMenu = styled.div`
   z-index: 1;
   visibility: ${({ isOpen }) => (isOpen ? 'visible' : 'hidden')};
   opacity: ${({ isOpen }) => (isOpen ? '1' : '0')};
-  transition: visibility 0.2s, opacity 0.2s;
+  transition:
+    visibility 0.2s,
+    opacity 0.2s;
 `;
 
 const DropdownItem = styled.div`
@@ -96,12 +98,12 @@ const Dropdown = ({ children, event, ...props }) => {
   const optionRef = useRef(null);
   const id = useRef(props.id);
 
-  const handleToggleDropdown = (e) => {
+  const handleToggleDropdown = e => {
     e.preventDefault();
-    setIsOpen((prev) => !prev);
+    setIsOpen(prev => !prev);
   };
 
-  const handleItemClick = (element) => {
+  const handleItemClick = element => {
     setSelectedItem(element);
     setIsOpen(false);
   };

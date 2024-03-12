@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { useRef } from "react";
-import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
-import { getAllRecipients } from "../apiFetcher/recipients/getAllRecipients";
-import Card from "../components/core/CardList/Card";
-import NavBar from "../components/core/NavBar";
-import { media } from "../styles/utils/mediaQuery";
-import Button from "../components/core/Button/Button";
-import ArrowLeftButton from "../components/core/Button/ArrowLeftButton";
-import ArrowRightButton from "../components/core/Button/ArrowRightButton";
-import Loading from "../components/core/Loading";
-import FetchMore1 from "../utils/FetchMore1";
-import FetchMore2 from "../utils/FetchMore2";
+import React, { useEffect, useState } from 'react';
+import { useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import { getAllRecipients } from '../apiFetcher/recipients/getAllRecipients';
+import Card from '../components/core/CardList/Card';
+import NavBar from '../components/core/NavBar';
+import { media } from '../styles/utils/mediaQuery';
+import Button from '../components/core/Button/Button';
+import ArrowLeftButton from '../components/core/Button/ArrowLeftButton';
+import ArrowRightButton from '../components/core/Button/ArrowRightButton';
+import Loading from '../components/core/Loading';
+import FetchMore1 from '../utils/FetchMore1';
+import FetchMore2 from '../utils/FetchMore2';
 const List = () => {
   const navigate = useNavigate();
   const [populartRecipients, setPopularRecipients] = useState([]);
@@ -23,12 +23,12 @@ const List = () => {
   const [page, setPage1] = useState(0);
   const [slice, setSlice] = useState(0);
 
-  const onClick = (link) => {
+  const onClick = link => {
     navigate(`/${link}`);
   };
 
-  const getTotalRecipients = async (index) => {
-    const response = getAllRecipients(index, 0).then((res) => {
+  const getTotalRecipients = async index => {
+    const response = getAllRecipients(index, 0).then(res => {
       return res.data.results.length;
     });
     return response;
@@ -39,18 +39,18 @@ const List = () => {
       const { current } = ref;
       const scrollAmount = 600;
       const scrollPosition =
-        direction === "left"
+        direction === 'left'
           ? current.scrollLeft - scrollAmount
           : current.scrollLeft + scrollAmount;
 
       current.scrollTo({
         left: scrollPosition,
-        behavior: "smooth",
+        behavior: 'smooth',
       });
     }
   };
 
-  const handleCardClick = (recipient) => {
+  const handleCardClick = recipient => {
     const { id, backgroundColor, backgroundImageURL } = recipient;
 
     navigate(`/post/${id}`, {
@@ -63,13 +63,14 @@ const List = () => {
     async function fetchData() {
       const index = await getTotalRecipients(slice);
       console.log(page);
-      await getAllRecipients(index).then((res) => {
+      await getAllRecipients(index).then(res => {
         const sortedByPopularity = [...res.data.results].sort(
           (a, b) =>
-            b.messageCount - a.messageCount || b.reactionCount - a.reactionCount
+            b.messageCount - a.messageCount ||
+            b.reactionCount - a.reactionCount,
         );
         const sortedByRecent = [...res.data.results].sort(
-          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
         );
         setPopularRecipients(sortedByPopularity);
         setRecentRecipients(sortedByRecent);
@@ -90,11 +91,11 @@ const List = () => {
         <S.ButtonCardsContainer>
           <S.ArrowButtonStyle className="left">
             <ArrowLeftButton
-              onClick={() => scrollCards("left", cardsContainerRef1)}
+              onClick={() => scrollCards('left', cardsContainerRef1)}
             />
           </S.ArrowButtonStyle>
           <S.CardsContainer ref={cardsContainerRef1}>
-            {populartRecipients.map((recipient) => (
+            {populartRecipients.map(recipient => (
               <S.Card
                 key={recipient.id}
                 onClick={() => handleCardClick(recipient)}
@@ -110,7 +111,7 @@ const List = () => {
           </S.CardsContainer>
           <S.ArrowButtonStyle className="right">
             <ArrowRightButton
-              onClick={() => scrollCards("right", cardsContainerRef1)}
+              onClick={() => scrollCards('right', cardsContainerRef1)}
             />
           </S.ArrowButtonStyle>
         </S.ButtonCardsContainer>
@@ -120,11 +121,11 @@ const List = () => {
         <S.ButtonCardsContainer>
           <S.ArrowButtonStyle className="left">
             <ArrowLeftButton
-              onClick={() => scrollCards("left", cardsContainerRef2)}
+              onClick={() => scrollCards('left', cardsContainerRef2)}
             />
           </S.ArrowButtonStyle>
           <S.CardsContainer ref={cardsContainerRef2}>
-            {recentRecipients.map((recipient) => (
+            {recentRecipients.map(recipient => (
               <S.Card
                 key={recipient.id}
                 onClick={() => handleCardClick(recipient)}
@@ -140,16 +141,16 @@ const List = () => {
           </S.CardsContainer>
           <S.ArrowButtonStyle className="right">
             <ArrowRightButton
-              onClick={() => scrollCards("right", cardsContainerRef2)}
+              onClick={() => scrollCards('right', cardsContainerRef2)}
             />
           </S.ArrowButtonStyle>
-        </S.ButtonCardsContainer>{" "}
+        </S.ButtonCardsContainer>{' '}
       </S.ContentContainer>
       <S.BottomButtonWrapper>
         <Button
           variant="primary"
           size={40}
-          onClick={() => onClick("papercreate")}
+          onClick={() => onClick('papercreate')}
         >
           나도 만들어보기
         </Button>

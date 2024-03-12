@@ -1,9 +1,9 @@
-import styled, { css } from "styled-components";
-import { textStyle } from "./ButtonText";
-import Smile from "../../../assets/images/Smile.svg";
+import styled, { css } from 'styled-components';
+import { textStyle } from './ButtonText';
+import Smile from '../../../assets/images/Smile.svg';
 
-const Button = ({ variant = "primary", size, ...props }) => {
-  const SmileImage = variant == "outLineSmile" ? Smile : null;
+const Button = ({ variant = 'primary', size, ...props }) => {
+  const SmileImage = variant == 'outLineSmile' ? Smile : null;
 
   const { children } = props;
   return (
@@ -22,7 +22,7 @@ const S = {
     display: flex;
     align-items: center;
     justify-content: center;
-    ${textStyle("base", 400)};
+    ${textStyle('base', 400)};
     display: inline-flex;
     outline: none;
     border: none;
@@ -149,24 +149,24 @@ const buttonVariantMap = {
 
 const buttonSizeMap = {
   56: css`
-    ${textStyle("bold", "bold", "base", "xxl")};
+    ${textStyle('bold', 'bold', 'base', 'xxl')};
     height: 56px;
     border-radius: 12px;
   `,
 
   40: css`
-    ${textStyle("base", 400, "sm", "xl")};
+    ${textStyle('base', 400, 'sm', 'xl')};
     height: 40px;
   `,
 
   36: css`
-    ${textStyle("base", 500, "sm")};
+    ${textStyle('base', 500, 'sm')};
     line-heights: 24px;
     height: 36px;
   `,
 
   28: css`
-    ${textStyle("base", 400, "xxs")};
+    ${textStyle('base', 400, 'xxs')};
     line-heights: 20px;
     height: 28px;
   `,

@@ -1,9 +1,9 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Home from "./pages/Home";
-import List from "./pages/List";
-import Papers from "./pages/Papers";
-import MessageCreate from "./pages/MessageCreate.jsx";
-import PaperCreate from "./pages/PaperCreate";
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Home from './pages/Home';
+import List from './pages/List';
+import Papers from './pages/Papers';
+import MessageCreate from './pages/MessageCreate.jsx';
+import PaperCreate from './pages/PaperCreate';
 
 const Router = () => {
   return (

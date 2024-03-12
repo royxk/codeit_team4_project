@@ -1,6 +1,6 @@
 import customAxios from '../customAxios.js';
 
-export const deleteMessage = async (id) => {
+export const deleteMessage = async id => {
   return await customAxios({
     method: 'delete',
     url: `/messages/${id}/`,

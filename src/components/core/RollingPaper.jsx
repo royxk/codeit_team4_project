@@ -9,7 +9,8 @@ const CARD_DATA_INIT = {
   id: 0,
   recipientId: 0,
   sender: '테스트',
-  profileImageURL: 'https://fastly.picsum.photos/id/311/200/200.jpg?hmac=CHiYGYQ3Xpesshw5eYWH7U0Kyl9zMTZLQuRDU4OtyH8',
+  profileImageURL:
+    'https://fastly.picsum.photos/id/311/200/200.jpg?hmac=CHiYGYQ3Xpesshw5eYWH7U0Kyl9zMTZLQuRDU4OtyH8',
   relationship: '지인',
   content: '테스트입니다',
   font: 'Pretendard',
@@ -18,7 +19,7 @@ const CARD_DATA_INIT = {
 
 // eslint-disable-next-line react/prop-types
 function RollingPaper({ cardData = CARD_DATA_INIT, editPermission, onDelete }) {
-  const handleDeleteBtnClick = (e) => {
+  const handleDeleteBtnClick = e => {
     e.stopPropagation();
     onDelete();
   };
@@ -44,7 +45,9 @@ function RollingPaper({ cardData = CARD_DATA_INIT, editPermission, onDelete }) {
               </div>
             )}
           </S.CardHeader>
-          <S.CardContent font={cardData.font}>{ChangeInnerHTMLSafely(cardData?.content)}</S.CardContent>
+          <S.CardContent font={cardData.font}>
+            {ChangeInnerHTMLSafely(cardData?.content)}
+          </S.CardContent>
         </div>
         <S.CreateAt>{cardData?.createdAt.substring(0, 10)}</S.CreateAt>
       </S.FlexColum>
@@ -95,7 +98,7 @@ const S = {
     line-height: ${theme.lineHeights.lg};
     span {
       font-weight: ${theme.fontWeights.bold};
-      font-family: ${(cardData) => cardData.font};
+      font-family: ${cardData => cardData.font};
     }
     ${media.tablet`
       font-size: ${theme.fontSizes.lg}

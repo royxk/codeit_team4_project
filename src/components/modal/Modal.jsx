@@ -12,7 +12,8 @@ const CARD_DATA_INIT = {
   id: 0,
   recipientId: 0,
   sender: '테스트',
-  profileImageURL: 'https://fastly.picsum.photos/id/311/200/200.jpg?hmac=CHiYGYQ3Xpesshw5eYWH7U0Kyl9zMTZLQuRDU4OtyH8',
+  profileImageURL:
+    'https://fastly.picsum.photos/id/311/200/200.jpg?hmac=CHiYGYQ3Xpesshw5eYWH7U0Kyl9zMTZLQuRDU4OtyH8',
   relationship: '지인',
   content: '테스트입니다',
   font: 'Pretendard',
@@ -54,7 +55,9 @@ function Modal({ cardData = CARD_DATA_INIT, onClose }) {
               </S.FlexBox>
               <S.CreateAt>{cardData?.createdAt.substring(0, 10)}</S.CreateAt>
             </S.ModalHeader>
-            <S.ModalContent font={cardData.font}>{ChangeInnerHTMLSafely(cardData?.content)}</S.ModalContent>
+            <S.ModalContent font={cardData.font}>
+              {ChangeInnerHTMLSafely(cardData?.content)}
+            </S.ModalContent>
             <S.ModalButton onClick={handleCloseClick}>
               <Button variant={'primary'} size={40}>
                 확인
@@ -122,7 +125,7 @@ const S = {
     line-height: ${theme.lineHeights.lg};
     span {
       font-weight: ${theme.fontWeights.bold};
-      font-family: ${(cardData) => cardData.font};
+      font-family: ${cardData => cardData.font};
     }
   `,
   CreateAt: styled.div`

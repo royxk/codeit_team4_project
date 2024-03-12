@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const FetchMore = ({ loading, setPage }) => {
   const fetchMoreTrigger = useRef(null);
   const fetchMoreObserver = new IntersectionObserver(([{ isIntersecting }]) => {
-    if (isIntersecting) setPage((prev) => prev + 7);
+    if (isIntersecting) setPage(prev => prev + 7);
   });
 
   useEffect(() => {
@@ -14,7 +14,13 @@ const FetchMore = ({ loading, setPage }) => {
     };
   }, []);
 
-  return <S.Observer className={loading ? 'loading' : ''} id="fetchMore" ref={fetchMoreTrigger} />;
+  return (
+    <S.Observer
+      className={loading ? 'loading' : ''}
+      id="fetchMore"
+      ref={fetchMoreTrigger}
+    />
+  );
 };
 
 export default FetchMore;

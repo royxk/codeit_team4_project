@@ -53,7 +53,7 @@ function Papers() {
         break;
     }
   }
-  const handlePaperCardClick = (data) => {
+  const handlePaperCardClick = data => {
     setModalInfo({
       open: true,
       data: data,
@@ -62,16 +62,18 @@ function Papers() {
 
   const handleUrlCopyClick = () => {
     setIsToast(true);
-    navigator.clipboard.writeText(`${window.location.origin}${location.pathname}`);
+    navigator.clipboard.writeText(
+      `${window.location.origin}${location.pathname}`,
+    );
     setTimeout(() => {
       setIsToast(false);
     }, 5000);
   };
 
-  const handleDeletePaper = async (msgId) => {
+  const handleDeletePaper = async msgId => {
     await deleteMessage(msgId);
     alert('메세지가 삭제되었습니다');
-    setPaperList((prev) => prev.filter((value) => value.id !== msgId));
+    setPaperList(prev => prev.filter(value => value.id !== msgId));
   };
 
   const handleDeleteRecipient = async () => {
@@ -88,7 +90,7 @@ function Papers() {
     if (results.length === 0) {
       endData.current = true;
     }
-    setPaperList((prevData) => [...prevData, ...results]);
+    setPaperList(prevData => [...prevData, ...results]);
   }, [id, paperOffset]);
 
   const handleGetRecipientData = useCallback(async () => {
@@ -105,11 +107,19 @@ function Papers() {
   }, [handleGetPaperData, handleGetRecipientData]);
   return (
     <>
-      {ModalInfo.open && <Modal cardData={ModalInfo.data} onClose={() => setModalInfo(false)} />}
+      {ModalInfo.open && (
+        <Modal cardData={ModalInfo.data} onClose={() => setModalInfo(false)} />
+      )}
       <S.Container background={recipientInfo}>
         <S.HeaderBox>
           <NavBar buttonVisible={false} paddingInline="24px" />
-          {recipientInfo && <NavOptionalBar data={recipientInfo} onToast={handleUrlCopyClick} inlinePadding="24px" />}
+          {recipientInfo && (
+            <NavOptionalBar
+              data={recipientInfo}
+              onToast={handleUrlCopyClick}
+              inlinePadding="24px"
+            />
+          )}
         </S.HeaderBox>
         <S.ContentWrap>
           {editPermission && (
@@ -127,14 +137,26 @@ function Papers() {
                 </Link>
               )}
               {paperList &&
-                paperList.map((data) => {
+                paperList.map(data => {
                   return (
-                    <div key={data.id} onClick={() => handlePaperCardClick(data)}>
-                      <RollingPaper cardData={data} editPermission={editPermission} onDelete={() => handleDeletePaper(data.id)} />
+                    <div
+                      key={data.id}
+                      onClick={() => handlePaperCardClick(data)}
+                    >
+                      <RollingPaper
+                        cardData={data}
+                        editPermission={editPermission}
+                        onDelete={() => handleDeletePaper(data.id)}
+                      />
                     </div>
                   );
                 })}
-              {endData.current || <FetchMore loading={paperOffset !== 0 && isLoading} setPage={setPaperOffset} />}
+              {endData.current || (
+                <FetchMore
+                  loading={paperOffset !== 0 && isLoading}
+                  setPage={setPaperOffset}
+                />
+              )}
             </S.PaperList>
           </S.PaperListWrap>
         </S.ContentWrap>
@@ -153,7 +175,8 @@ export default Papers;
 const S = {
   Container: styled.div`
     background-color: ${({ background }) => background?.backgroundColor};
-    background-image: url(${({ background }) => background?.backgroundImageURL});
+    background-image: url(${({ background }) =>
+      background?.backgroundImageURL});
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;

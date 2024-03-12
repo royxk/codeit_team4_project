@@ -1,10 +1,10 @@
-import styled from "styled-components";
-import { textStyle } from "./CardText";
-import RecipientListBlock from "../../core/RecipientListBlock";
-import TopEmojiBlock from "../../header/emoji/TopEmojiBlock";
+import styled from 'styled-components';
+import { textStyle } from './CardText';
+import RecipientListBlock from '../../core/RecipientListBlock';
+import TopEmojiBlock from '../../header/emoji/TopEmojiBlock';
 
 const Card = ({ data }) => {
-  const background = data.backgroundImageURL ? "picture" : data.backgroundColor;
+  const background = data.backgroundImageURL ? 'picture' : data.backgroundColor;
 
   const backgroundImageURL = data.backgroundImageURL;
 
@@ -18,9 +18,9 @@ const Card = ({ data }) => {
           </S.profileList>
           <S.messageCount>{data.messageCount}명이 작성했어요!</S.messageCount>
         </S.information>
-            <S.emoji>
-              <TopEmojiBlock emojiData={data.topReactions} maxLength={3} />
-            </S.emoji>
+        <S.emoji>
+          <TopEmojiBlock emojiData={data.topReactions} maxLength={3} />
+        </S.emoji>
       </S.contents>
       <S.pattern className={background}></S.pattern>
     </S.container>
@@ -53,9 +53,10 @@ const S = {
       background-color: ${({ theme }) => theme.colors.green[200]};
     }
     &.picture {
-      background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(${(props) => props.backgroundImageURL});
-      color: ${({theme}) => theme.colors.white};
-      border: 1px solid #0000001A;
+      background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+        url(${props => props.backgroundImageURL});
+      color: ${({ theme }) => theme.colors.white};
+      border: 1px solid #0000001a;
       box-shadow: 0px 2px 12px 0px #00000014;
       background-size: cover;
       background-position: center;
@@ -81,12 +82,11 @@ const S = {
   `,
 
   name: styled.div`
-    ${textStyle("base", "bold", "xl")}
+    ${textStyle('base', 'bold', 'xl')}
     line-height: 36px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    
   `,
 
   profileList: styled.div`
@@ -110,11 +110,11 @@ const S = {
   `,
 
   profileCount: styled.div`
-    ${textStyle("base", "regular", "xxxs", "sm")}
+    ${textStyle('base', 'regular', 'xxxs', 'sm')}
   `,
 
   messageCount: styled.div`
-    ${textStyle("bold", "bold", "sm", "xl")}
+    ${textStyle('bold', 'bold', 'sm', 'xl')}
   `,
 
   emoji: styled.div`
@@ -122,7 +122,7 @@ const S = {
     height: 53px;
     gap: 16px;
     position: absolute;
-    border-top: 1px solid #0000001F;
+    border-top: 1px solid #0000001f;
     top: 210px;
     transform: translateY(-100%);
     display: flex;
@@ -145,7 +145,7 @@ const S = {
       border-top-right-radius: 45%;
       transform: rotate(-60deg) skewX(-30deg) scale(1, 0.866);
       &:before {
-        content: "";
+        content: '';
         position: absolute;
         background-color: inherit;
         width: 10em;
@@ -155,7 +155,7 @@ const S = {
           translate(0, -50%);
       }
       &:after {
-        content: "";
+        content: '';
         position: absolute;
         background-color: inherit;
         width: 10em;

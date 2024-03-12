@@ -2,7 +2,11 @@ import styled from 'styled-components';
 
 // eslint-disable-next-line react/prop-types
 function RelationBadge({ relationship = '지인' }) {
-  return <S.RelationBadge relationship={relationship}>{relationship}</S.RelationBadge>;
+  return (
+    <S.RelationBadge relationship={relationship}>
+      {relationship}
+    </S.RelationBadge>
+  );
 }
 
 export default RelationBadge;

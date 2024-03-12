@@ -1,5 +1,5 @@
-import arrowRightButton from "../../../assets/images/arrowRightButton.svg";
-import styled from "styled-components";
+import arrowRightButton from '../../../assets/images/arrowRightButton.svg';
+import styled from 'styled-components';
 
 const ArrowRightButton = ({ ...props }) => {
   return (

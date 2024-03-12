@@ -1,10 +1,10 @@
-import React from "react";
-import styled, { css } from "styled-components";
-import selectedImage from "../../assets/images/selectedImage.svg";
+import React from 'react';
+import styled, { css } from 'styled-components';
+import selectedImage from '../../assets/images/selectedImage.svg';
 
 function handleChange(e) {
   e.preventDefault();
-  console.log("ColorButton");
+  console.log('ColorButton');
   return;
 }
 
@@ -30,7 +30,7 @@ const S = {
     border-radius: 10px;
     gap: 20px;
     height: 154px;
-    background-color: ${({ color }) => color || "white"};
+    background-color: ${({ color }) => color || 'white'};
     ${({ selected }) =>
       selected &&
       css`

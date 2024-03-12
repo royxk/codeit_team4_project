@@ -1,14 +1,14 @@
-import { ThemeProvider } from "styled-components";
-import { GlobalStyle } from "./styles/GlobalStyle";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import theme from "./styles/theme";
+import { ThemeProvider } from 'styled-components';
+import { GlobalStyle } from './styles/GlobalStyle';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import theme from './styles/theme';
 
-import Router from "./Router";
+import Router from './Router';
 
 const queryClient = new QueryClient();
 
 function App() {
-  console.log("App");
+  console.log('App');
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>

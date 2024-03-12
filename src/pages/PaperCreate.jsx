@@ -1,39 +1,39 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
-import { postRecipient } from "../apiFetcher/recipients/postRecipient";
-import { getAllRecipients } from "../apiFetcher/recipients/getAllRecipients";
-import { getBackgroundImages } from "../apiFetcher/backgroundImages";
-import { media } from "../styles/utils/mediaQuery";
-import { useNavigate } from "react-router-dom";
-import theme from "../styles/theme";
-import Input2 from "../components/Input/Input2";
-import styled from "styled-components";
-import ColorButton from "../components/core/ColorButton";
-import ImageButton from "../components/core/ImageButton";
-import NavBar from "../components/core/NavBar";
-import Button from "../components/core/Button/Button";
-import ToggleButton from "../components/core/Button/ToggleButton";
+import React, { useEffect } from 'react';
+import { useState } from 'react';
+import { postRecipient } from '../apiFetcher/recipients/postRecipient';
+import { getAllRecipients } from '../apiFetcher/recipients/getAllRecipients';
+import { getBackgroundImages } from '../apiFetcher/backgroundImages';
+import { media } from '../styles/utils/mediaQuery';
+import { useNavigate } from 'react-router-dom';
+import theme from '../styles/theme';
+import Input2 from '../components/Input/Input2';
+import styled from 'styled-components';
+import ColorButton from '../components/core/ColorButton';
+import ImageButton from '../components/core/ImageButton';
+import NavBar from '../components/core/NavBar';
+import Button from '../components/core/Button/Button';
+import ToggleButton from '../components/core/Button/ToggleButton';
 
 const PaperCreate = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    team: "4",
-    name: "",
-    backgroundColor: "beige",
+    team: '4',
+    name: '',
+    backgroundColor: 'beige',
   });
-  const [selectionType, setSelectionType] = useState("color");
+  const [selectionType, setSelectionType] = useState('color');
   const [selectedImagge, setSelectedImage] = useState(null);
   const [backgroundImages, setBackgroundImages] = useState([]);
   const [errorMessages, setErrorMessages] = useState({
-    message: "",
+    message: '',
     error: false,
   });
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    if (formData.name === "") {
-      alert("받는사람 이름을 입력해주세요");
+    if (formData.name === '') {
+      alert('받는사람 이름을 입력해주세요');
     }
 
     try {
@@ -46,48 +46,48 @@ const PaperCreate = () => {
           state: { color: backgroundColor, img: backgroundImageURL },
         });
       } else {
-        console.log("No recipients found");
+        console.log('No recipients found');
       }
     } catch (error) {
-      console.error("Submission error:", error);
+      console.error('Submission error:', error);
       setErrorMessages({
-        message: "받는사람 이름을 입력해주세요",
+        message: '받는사람 이름을 입력해주세요',
         error: true,
       });
     }
   };
 
-  const handleInputValue = (e) => {
+  const handleInputValue = e => {
     const { value } = e.target;
     formData.name = value;
   };
 
-  const handleBlur = (e) => {
+  const handleBlur = e => {
     const { value } = e.target;
-    if (value === "") {
+    if (value === '') {
       setErrorMessages({
-        message: "받는사람 이름을 입력해주세요",
+        message: '받는사람 이름을 입력해주세요',
         error: true,
       });
     } else {
       setErrorMessages({
-        message: "",
+        message: '',
         error: false,
       });
     }
   };
 
-  const handleColorChange = (color) => (e) => {
+  const handleColorChange = color => e => {
     e.preventDefault();
-    setFormData((prevFormData) => ({
+    setFormData(prevFormData => ({
       ...prevFormData,
       backgroundColor: color,
     }));
   };
 
-  const handleImageChange = (image) => (e) => {
+  const handleImageChange = image => e => {
     e.preventDefault();
-    setFormData((prevFormData) => ({
+    setFormData(prevFormData => ({
       ...prevFormData,
       backgroundImageURL: image,
     }));
@@ -95,7 +95,7 @@ const PaperCreate = () => {
   };
 
   useEffect(() => {
-    getBackgroundImages().then((res) => {
+    getBackgroundImages().then(res => {
       setBackgroundImages(res.data.imageUrls);
       return res.data;
     });
@@ -133,33 +133,33 @@ const PaperCreate = () => {
           </S.ButtonColorWrapper>
 
           <S.ButtonContainer>
-            {selectionType === "color" && (
+            {selectionType === 'color' && (
               <S.ColorButtonContainer>
                 <ColorButton
-                  onClick={handleColorChange("beige")}
+                  onClick={handleColorChange('beige')}
                   color={theme.colors.orange[200]}
-                  selected={formData.backgroundColor === "beige"}
+                  selected={formData.backgroundColor === 'beige'}
                 />
                 <ColorButton
-                  onClick={handleColorChange("purple")}
+                  onClick={handleColorChange('purple')}
                   color={theme.colors.purple[200]}
-                  selected={formData.backgroundColor === "purple"}
+                  selected={formData.backgroundColor === 'purple'}
                 />
                 <ColorButton
-                  onClick={handleColorChange("blue")}
+                  onClick={handleColorChange('blue')}
                   color={theme.colors.blue[200]}
-                  selected={formData.backgroundColor === "blue"}
+                  selected={formData.backgroundColor === 'blue'}
                 />
                 <ColorButton
-                  onClick={handleColorChange("green")}
+                  onClick={handleColorChange('green')}
                   color={theme.colors.green[200]}
-                  selected={formData.backgroundColor === "green"}
+                  selected={formData.backgroundColor === 'green'}
                 />
               </S.ColorButtonContainer>
             )}
-            {selectionType === "image" && (
+            {selectionType === 'image' && (
               <S.ColorButtonContainer>
-                {backgroundImages.map((image) => {
+                {backgroundImages.map(image => {
                   return (
                     <ImageButton
                       key={image}

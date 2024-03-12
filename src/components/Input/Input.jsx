@@ -1,6 +1,6 @@
-import React from "react";
-import styled from "styled-components";
-import { useState } from "react";
+import React from 'react';
+import styled from 'styled-components';
+import { useState } from 'react';
 
 const Input = ({ ...props }) => {
   return (
@@ -70,7 +70,7 @@ const S = {
   `,
 
   ErrorBox: styled.div`
-    display: ${(props) => (props.$error === "true" ? "flex" : "none")};
+    display: ${props => (props.$error === 'true' ? 'flex' : 'none')};
     color: ${({ theme }) => theme.colors.error};
     font-size: ${({ theme }) => theme.fontSizes.xxxs};
     padding-left: 6px;

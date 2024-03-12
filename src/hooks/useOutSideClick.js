@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 function useOutSideClick(ref, callback) {
   useEffect(() => {
-    const handleClick = (event) => {
+    const handleClick = event => {
       if (ref.current && !ref.current.contains(event.target)) {
         callback?.();
       }

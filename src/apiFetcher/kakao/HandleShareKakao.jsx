@@ -1,44 +1,45 @@
-import {useEffect} from "react";
-import styled from "styled-components";
+import { useEffect } from 'react';
+import styled from 'styled-components';
 
+export function HandleShareKakao({ data }) {
+  const KAKAO_JS_KEY = import.meta.env.VITE_KAKAO_JS_KEY;
 
-export function HandleShareKakao({data}) {
-    const KAKAO_JS_KEY = import.meta.env.VITE_KAKAO_JS_KEY;
+  useEffect(() => {
+    Kakao.cleanup();
 
-    useEffect(() => {
-        Kakao.cleanup();
-
-        if(!window.Kakao.isInitialized()) {
-            window.Kakao.init(KAKAO_JS_KEY);
-            console.log(window.Kakao);
-        }
-    }, []);
-
-    const shareKakao = () => {
-        Kakao.Share.sendDefault({
-            objectType: "feed",
-            content: {
-                title: `${data.name}님의 롤링 페이퍼`,
-                description: '',
-                imageUrl: data.backgroundImageURL || '',
-                link: {
-                    webUrl: `https://codeit-team4-project-gamma.vercel.app/post/${data.id}`
-                },
-            },
-            social: {
-                likeCount: data.reactionCount,
-                commentCount: data.messageCount,
-                sharedCount: 0,
-            },
-            buttons: []
-        })
+    if (!window.Kakao.isInitialized()) {
+      window.Kakao.init(KAKAO_JS_KEY);
+      console.log(window.Kakao);
     }
+  }, []);
 
-    return <S.InnerShare onClick={() => shareKakao(data)}>카카오톡 공유</S.InnerShare>
+  const shareKakao = () => {
+    Kakao.Share.sendDefault({
+      objectType: 'feed',
+      content: {
+        title: `${data.name}님의 롤링 페이퍼`,
+        description: '',
+        imageUrl: data.backgroundImageURL || '',
+        link: {
+          webUrl: `https://codeit-team4-project-gamma.vercel.app/post/${data.id}`,
+        },
+      },
+      social: {
+        likeCount: data.reactionCount,
+        commentCount: data.messageCount,
+        sharedCount: 0,
+      },
+      buttons: [],
+    });
+  };
+
+  return (
+    <S.InnerShare onClick={() => shareKakao(data)}>카카오톡 공유</S.InnerShare>
+  );
 }
 
 const S = {
-    InnerShare:styled.div`
+  InnerShare: styled.div`
       display: flex;
       justify-content: normal;
       align-items: center;
@@ -48,9 +49,9 @@ const S = {
       gap: 10px;
 
       line-height: 26px;
-      font-family: ${({theme}) => theme.fontFamily.base};
-      font-size: ${({theme}) => theme.fontSizes.sm};
-      font-weight: ${({theme}) => theme.fontWeights.regular};
+      font-family: ${({ theme }) => theme.fontFamily.base};
+      font-size: ${({ theme }) => theme.fontSizes.sm};
+      font-weight: ${({ theme }) => theme.fontWeights.regular};
       
 
       &:hover {
@@ -72,5 +73,5 @@ const S = {
           color: rgba(255, 255, 255, 1);
           cursor: not-allowed;
         } 
-    `
-}
+    `,
+};

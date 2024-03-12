@@ -1,6 +1,6 @@
-import styled from "styled-components";
-import Trash from "../../../assets/images/Trash.svg";
-import ErrorTrash from "../../../assets/images/ErrorTrash.svg";
+import styled from 'styled-components';
+import Trash from '../../../assets/images/Trash.svg';
+import ErrorTrash from '../../../assets/images/ErrorTrash.svg';
 
 const TrashButton = () => {
   return (

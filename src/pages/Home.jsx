@@ -1,17 +1,17 @@
-import NavBar from "../components/core/NavBar";
-import styled from "styled-components";
-import PointBox from "../components/core/PointBox";
-import homeImage1 from "../assets/images/homepageImage1.svg";
-import homeImage2 from "../assets/images/homepageImg2.png";
-import { media } from "../styles/utils/mediaQuery";
-import { Link } from "react-router-dom";
-import Button from "../components/core/Button/Button";
-import { useNavigate } from "react-router-dom";
+import NavBar from '../components/core/NavBar';
+import styled from 'styled-components';
+import PointBox from '../components/core/PointBox';
+import homeImage1 from '../assets/images/homepageImage1.svg';
+import homeImage2 from '../assets/images/homepageImg2.png';
+import { media } from '../styles/utils/mediaQuery';
+import { Link } from 'react-router-dom';
+import Button from '../components/core/Button/Button';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
   const navigate = useNavigate();
 
-  const onClick = (link) => {
+  const onClick = link => {
     navigate(`/${link}`);
   };
 
@@ -44,7 +44,7 @@ const Home = () => {
             </S.ImageContainer>
           </S.ContentContainer>
           <S.BottomButtonWrapper>
-            <Button variant="primary" size={50} onClick={() => onClick("list")}>
+            <Button variant="primary" size={50} onClick={() => onClick('list')}>
               구경해보기
             </Button>
           </S.BottomButtonWrapper>

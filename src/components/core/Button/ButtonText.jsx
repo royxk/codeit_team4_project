@@ -1,13 +1,13 @@
-import { css } from "styled-components";
-import theme from "../../../styles/theme";
+import { css } from 'styled-components';
+import theme from '../../../styles/theme';
 
 const { fontSizes, lineHeights, fontWeights, fontFamily } = theme;
 
 export const textStyle = (
-  fontfamily = "base",
+  fontfamily = 'base',
   fontWeight = 400,
   fontSize,
-  lineHeight
+  lineHeight,
 ) => {
   return css`
     font-family: ${fontFamily[fontfamily]};

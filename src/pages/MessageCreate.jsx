@@ -23,7 +23,8 @@ const MessageCreate = () => {
 
   const [profile, setProfile] = useState({
     file: null,
-    fileSrc: "https://rolling-bucket.s3.ap-northeast-2.amazonaws.com/assets/userIcon.svg",
+    fileSrc:
+      'https://rolling-bucket.s3.ap-northeast-2.amazonaws.com/assets/userIcon.svg',
   });
   const [sender, setSender] = useState('');
   const formData = useRef({
@@ -38,7 +39,7 @@ const MessageCreate = () => {
   const extension = useRef('');
   const navigate = useNavigate();
 
-  const imageUpload = (e) => {
+  const imageUpload = e => {
     const MAX_SIZE = 500 * 1024;
 
     const file = e.target.files[0];
@@ -57,7 +58,7 @@ const MessageCreate = () => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
 
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       reader.onload = () => {
         console.log(reader);
         setProfile({
@@ -69,7 +70,7 @@ const MessageCreate = () => {
     });
   };
 
-  const handleChange = (e) => {
+  const handleChange = e => {
     const { id, value } = e.target;
     formData.current[id] = value;
   };
@@ -78,11 +79,11 @@ const MessageCreate = () => {
     formData.current[id.current] = value;
   };
 
-  const handleQuillChange = (content) => {
+  const handleQuillChange = content => {
     formData.current['content'] = content;
   };
 
-  const submitFormData = (e) => {
+  const submitFormData = e => {
     e.preventDefault();
 
     if (formData.current['sender'] === '' || formData.current['sender'] < 2) {
@@ -104,7 +105,10 @@ const MessageCreate = () => {
 
         const s3FormData = new FormData();
         s3FormData.append('imageFile', profile.file);
-        s3FormData.append('imageName', uuidv4().replaceAll('-', '') + '.' + extension.current);
+        s3FormData.append(
+          'imageName',
+          uuidv4().replaceAll('-', '') + '.' + extension.current,
+        );
 
         formData.current['profileImageURL'] = await uploadImage(s3FormData);
         postRecipientMessage(formData.current, id).then(() => {
@@ -132,13 +136,13 @@ const MessageCreate = () => {
           <NavBar buttonVisible={false} paddingInline="24px" />
         </S.NavWrapper>
         <S.FormWrapper>
-          <S.Form id="message" onSubmit={(e) => submitFormData(e)}>
+          <S.Form id="message" onSubmit={e => submitFormData(e)}>
             <S.InputContentWrapper>
               <S.Label htmlFor="sender">From.</S.Label>
               <Input
                 id="sender"
                 placeholder="이름을 입력해 주세요."
-                onChange={(e) => handleChange(e)}
+                onChange={e => handleChange(e)}
                 maxLength="10"
                 error={isValidName(sender, 2, 10)}
                 errorMessage="2~5글자의 한글 또는 2~10글자의 영어로 작성해주세요."
@@ -147,24 +151,45 @@ const MessageCreate = () => {
             </S.InputContentWrapper>
             <S.InputContentWrapper>
               <S.Label htmlFor="profileImageURL">프로필 이미지</S.Label>
-              <S.ImageInputLabel htmlFor="profileImageURL" $image={profile.fileSrc} />
-              <S.ImageInput id="profileImageURL" type="file" onChange={(e) => imageUpload(e)} />
+              <S.ImageInputLabel
+                htmlFor="profileImageURL"
+                $image={profile.fileSrc}
+              />
+              <S.ImageInput
+                id="profileImageURL"
+                type="file"
+                onChange={e => imageUpload(e)}
+              />
             </S.InputContentWrapper>
             <S.InputContentWrapper>
               <S.Label htmlFor="relationship">상대와의 관계</S.Label>
-              <DropDown item={RELATION_LIST} value={relationValue.current} id={'relationship'} event={(id, value) => handleDropDownClick(id, value)}>
+              <DropDown
+                item={RELATION_LIST}
+                value={relationValue.current}
+                id={'relationship'}
+                event={(id, value) => handleDropDownClick(id, value)}
+              >
                 {relationValue.current}
               </DropDown>
             </S.InputContentWrapper>
             <S.InputContentWrapper>
               <S.Label>내용을 입력해 주세요</S.Label>
               <S.QuillEditorContainer>
-                <ReactQuill style={DEFAULT_QUILL_STYLE} modules={QUILL_MODULES} onChange={handleQuillChange} />
+                <ReactQuill
+                  style={DEFAULT_QUILL_STYLE}
+                  modules={QUILL_MODULES}
+                  onChange={handleQuillChange}
+                />
               </S.QuillEditorContainer>
             </S.InputContentWrapper>
             <S.InputContentWrapper>
               <S.Label htmlFor="font">폰트 선택</S.Label>
-              <DropDown item={FONT_LIST} $value={fontValue.current} id={'font'} event={(id, value) => handleDropDownClick(id, value)}>
+              <DropDown
+                item={FONT_LIST}
+                $value={fontValue.current}
+                id={'font'}
+                event={(id, value) => handleDropDownClick(id, value)}
+              >
                 {fontValue.current}
               </DropDown>
             </S.InputContentWrapper>
@@ -276,9 +301,17 @@ const S = {
     height: 100px;
     border-radius: 100px;
     padding: 24px;
-    background-color: ${(props) => (props.$image === "https://rolling-bucket.s3.ap-northeast-2.amazonaws.com/assets/userIcon.svg" ? theme.colors.grey['300'] : theme.colors.white)};
-    background-image: url(${(props) => props.$image});
-    background-size: ${(props) => (props.$image === "https://rolling-bucket.s3.ap-northeast-2.amazonaws.com/assets/userIcon.svg" ? 'initial' : 'cover')};
+    background-color: ${props =>
+      props.$image ===
+      'https://rolling-bucket.s3.ap-northeast-2.amazonaws.com/assets/userIcon.svg'
+        ? theme.colors.grey['300']
+        : theme.colors.white};
+    background-image: url(${props => props.$image});
+    background-size: ${props =>
+      props.$image ===
+      'https://rolling-bucket.s3.ap-northeast-2.amazonaws.com/assets/userIcon.svg'
+        ? 'initial'
+        : 'cover'};
     background-repeat: no-repeat;
     background-position: center;
   `,

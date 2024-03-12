@@ -1,4 +1,9 @@
 module.exports = {
+  'linebreak-style': [
+    'error',
+    require('os').EOL === '\r\n' ? 'windows' : 'unix',
+  ],
+  'prettier/prettier': ['error', { endOfLine: 'auto' }],
   root: true,
   env: { browser: true, es2020: true },
   extends: [

@@ -1,6 +1,6 @@
-import { useState } from "react";
-import styled from "styled-components";
-import theme from "../../../styles/theme";
+import { useState } from 'react';
+import styled from 'styled-components';
+import theme from '../../../styles/theme';
 
 const ButtonContainer = styled.div`
   display: flex;
@@ -33,7 +33,7 @@ const Button = styled.button`
       border: 2px solid ${({ theme }) => theme.colors.purple[500]};
     }
   }
-  ${(props) =>
+  ${props =>
     props.active
       ? `
         font-weight: ${theme.fontWeights.bold};
@@ -50,16 +50,16 @@ const ToggleButton = ({ activeOption, setActiveOption }) => {
   return (
     <ButtonContainer>
       <Button
-        active={activeOption === "color"}
+        active={activeOption === 'color'}
         onClick={() => {
-          setActiveOption("color");
+          setActiveOption('color');
         }}
       >
         컬러
       </Button>
       <Button
-        active={activeOption === "image"}
-        onClick={() => setActiveOption("image")}
+        active={activeOption === 'image'}
+        onClick={() => setActiveOption('image')}
       >
         이미지
       </Button>

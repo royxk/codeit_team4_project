@@ -1,5 +1,5 @@
-import { set } from "lodash";
-import React, { useEffect, useRef } from "react";
+import { set } from 'lodash';
+import React, { useEffect, useRef } from 'react';
 
 const FetchMore2 = ({ loading, setPage, slice }) => {
   const fetchMoreTrigger = useRef(null);
@@ -8,10 +8,10 @@ const FetchMore2 = ({ loading, setPage, slice }) => {
     const fetchMoreObserver = new IntersectionObserver(
       ([{ isIntersecting }]) => {
         if (isIntersecting) {
-          setPage((prev) => prev + 1);
-          slice((prev) => prev + 5);
+          setPage(prev => prev + 1);
+          slice(prev => prev + 5);
         }
-      }
+      },
     );
     if (fetchMoreTrigger.current) {
       fetchMoreObserver.observe(fetchMoreTrigger.current);
@@ -25,7 +25,7 @@ const FetchMore2 = ({ loading, setPage, slice }) => {
   return (
     <div
       id="fetchMore2"
-      className={loading ? "loading" : ""}
+      className={loading ? 'loading' : ''}
       ref={fetchMoreTrigger}
     />
   );

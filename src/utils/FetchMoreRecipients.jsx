@@ -1,14 +1,14 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect } from 'react';
 
 const FetchMoreRecipients = ({ loading, setPage }) => {
   const fetchMoreTrigger = useRef(null);
 
   useEffect(() => {
     // Define the observer inside useEffect to ensure it's tied to the component's lifecycle
-    const fetchMoreObserver = new IntersectionObserver((entries) => {
+    const fetchMoreObserver = new IntersectionObserver(entries => {
       const [{ isIntersecting }] = entries;
       if (isIntersecting) {
-        setPage((prev) => prev + 1);
+        setPage(prev => prev + 1);
       }
     });
 

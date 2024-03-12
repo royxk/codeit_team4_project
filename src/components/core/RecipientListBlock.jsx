@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 function RecipientListBlock({ data }) {
   let visibleState = new Array(Math.min(3, data.messageCount || 0))
@@ -6,7 +6,7 @@ function RecipientListBlock({ data }) {
     .map((x, index) => {
       return index + 1 <= data.messageCount;
     });
-  let remainedCount = Math.min(data.messageCount - 3, 99).toString() + "+";
+  let remainedCount = Math.min(data.messageCount - 3, 99).toString() + '+';
 
   return (
     <S.RecipientListBlock>
@@ -17,7 +17,7 @@ function RecipientListBlock({ data }) {
           <S.ProfileBadge
             key={index}
             $imageUrl={imageURL}
-            $position={index * 16 + "px"}
+            $position={index * 16 + 'px'}
           />
         ) : null;
       })}
@@ -45,11 +45,11 @@ const S = {
     position: absolute;
     width: 28px;
     height: 28px;
-    left: ${(props) => props.$position};
+    left: ${props => props.$position};
     border: 1.4px solid ${({ theme }) => theme.colors.white};
     border-radius: 50px;
     background-size: cover;
-    background-image: url(${(props) => props.$imageUrl});
+    background-image: url(${props => props.$imageUrl});
     overflow: hidden;
   `,
 

@@ -1,6 +1,6 @@
-import React from "react";
-import styled, { css } from "styled-components";
-import selectedImage from "../../assets/images/selectedImage.svg";
+import React from 'react';
+import styled, { css } from 'styled-components';
+import selectedImage from '../../assets/images/selectedImage.svg';
 
 const ImageButton = ({ url, onClick, isSelected }) => {
   return (
