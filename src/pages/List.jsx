@@ -85,7 +85,7 @@ const List = () => {
       {isLoading && <Loading loading={isLoading}></Loading>}
       <NavBar buttonVisible={true} paddingInline="24px" />
       <S.ContentContainer>
-        <S.Title>인기 롤링 페이퍼 🔥..</S.Title>
+        <S.Title>인기 롤링 페이퍼 🔥</S.Title>
 
         <S.ButtonCardsContainer>
           <S.ArrowButtonStyle className="left">
@@ -116,7 +116,7 @@ const List = () => {
         </S.ButtonCardsContainer>
       </S.ContentContainer>
       <S.ContentContainer>
-        <S.Title>최근에 만든 롤링 페이퍼⭐️..</S.Title>
+        <S.Title>최근에 만든 롤링 페이퍼 ⭐️</S.Title>
         <S.ButtonCardsContainer>
           <S.ArrowButtonStyle className="left">
             <ArrowLeftButton
@@ -234,6 +234,7 @@ const S = {
 
     ${media.widescreen`
     padding: 0 200px;
+    
     button {
       display: inline-block;
     }
@@ -247,7 +248,7 @@ const S = {
     cursor: pointer; /* Optional: makes it clear the arrows are clickable */
     z-index: 1;
     &.left {
-      left: 200px; /* Position at the start (left side) */
+      left: 180px; /* Position at the start (left side) */
     }
 
     &.right {
@@ -264,9 +265,9 @@ const S = {
     scroll-snap-align: center;
     position: relative;
     gap: 50px;
-    /* &::-webkit-scrollbar {
+    &::-webkit-scrollbar {
       display: none;
-    } */
+    }
   `,
 
   Card: styled.div`
